@@ -1,0 +1,46 @@
+{
+  "name": "backend-engineering-forge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A backend-first, project-driven learning system for mastering JavaScript, TypeScript, Node.js, NestJS, PostgreSQL, security, cloud and practical full-stack engineering.",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "npm run test:unit",
+    "test:system": "node --test tools/forge-cli/lib/state.test.js tools/forge-cli/lib/commands/log.test.js tools/forge-core/*.test.js",
+    "test:unit": "node tools/forge-core/run-unit-tests.js",
+    "test:dsa": "node tools/forge-core/run-unit-tests.js dsa-01",
+    "test:all": "node --test",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p tools/forge-web/tsconfig.json",
+    "format": "prettier --write .",
+    "forge": "node tools/forge-cli/forge.js",
+    "forge:web": "node tools/forge-web/server.js",
+    "build:web": "vite build --config tools/forge-web/vite.config.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.4",
+    "eslint": "^10.8.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.8.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.65.0",
+    "vite": "^8.1.5"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "gray-matter": "^4.0.3",
+    "lucide-react": "^1.27.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-markdown": "^10.1.0"
+  }
+}

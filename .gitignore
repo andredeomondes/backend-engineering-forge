@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+.forge/
+tools/forge-web/dist/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+.claude/
+.obsidian/

@@ -1,0 +1,90 @@
+# Backend Engineering Forge
+
+Formação backend-first, orientada a projetos, para dominar JavaScript,
+TypeScript, Node.js, NestJS, PostgreSQL, segurança, cloud e engenharia
+full-stack aplicada.
+
+> Concluir esta trilha não transforma alguém automaticamente em
+> desenvolvedor pleno. Senioridade também exige experiência real,
+> responsabilidade em produção, colaboração e capacidade de lidar com
+> problemas ambíguos. O objetivo aqui é desenvolver **competências
+> técnicas e comportamentais compatíveis com um backend pleno**.
+
+## Estratégia
+
+```text
+80% backend e engenharia de software
+20% frontend para capacidade full-stack
+```
+
+Ordem macro:
+
+```text
+JavaScript → TypeScript → Node.js → HTTP → PostgreSQL/SQL
+→ API com framework leve → NestJS → autenticação/autorização/segurança
+→ Redis, filas e integrações → arquitetura e qualidade
+→ Docker, CI/CD, AWS e observabilidade → React → Tailwind CSS
+→ projeto full-stack
+```
+
+Não começamos por microsserviços, nem por Kubernetes, nem pelo frontend.
+
+## Estado atual
+
+- **Fase:** 0 — Ambiente profissional e fundamentos da Web (em andamento)
+- **Unidade ativa:** Fase 1 / Unidade 1 — valores, tipos e operadores
+- Veja `PROGRESS.md` para o detalhe.
+
+## Como rodar os testes
+
+```bash
+npm install
+npm test
+```
+
+`npm test` executa somente a unidade ativa. A infraestrutura tem uma suíte
+separada, que deve permanecer sempre verde:
+
+```bash
+npm run test:system
+npm run test:unit -- js-02
+npm run test:dsa
+npm run test:all
+```
+
+## Painel web local
+
+O Forge também pode ser usado pelo navegador, sem hospedagem ou conta:
+
+```bash
+npm run forge:web
+```
+
+Abra `http://127.0.0.1:4310`. O painel reúne a unidade atual, execução dos
+testes, dicas progressivas, gates, diário, revisões e métricas. Os materiais
+continuam em Markdown; progresso e sessões ficam no banco local
+`.forge/forge.db`.
+
+Para criar backups pelo terminal:
+
+```bash
+npm run forge -- export json
+npm run forge -- export csv
+```
+
+## Documentos de acompanhamento
+
+- `ROADMAP.md` — fases completas da formação.
+- `PROGRESS.md` — o que já foi liberado e concluído.
+- `STUDY_LOG.md` — diário de sessões de estudo.
+- `SKILLS_MATRIX.md` — estado de cada competência.
+- `LEARNING_CONTRACT.md` — regras do método de estudo e da mentoria.
+- `docs/architecture/forge-web-local.md` — arquitetura do painel local.
+
+## Comandos de mentoria
+
+Ver `LEARNING_CONTRACT.md` para a lista completa
+(`INICIAR`, `PROXIMA_UNIDADE`, `REVISAR`, `DICA_1/2/3`, `MOSTRAR_SOLUCAO`,
+`SIMULAR_BUG`, `SIMULAR_PR`, `AVALIAR_FASE`, `GERAR_PROJETO`, entre outros).
+
+A especificação completa da formação está em `BACKEND_ENGINEERING_FORGE.md`.
