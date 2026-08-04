@@ -6,7 +6,7 @@ resumo vivo de fases, liberado progressivamente — não gerado todo de uma vez.
 | Fase | Tema                                        | Status                              |
 | ---- | ------------------------------------------- | ----------------------------------- |
 | 0    | Ambiente profissional e fundamentos da Web  | 🟡 em andamento                     |
-| 1    | JavaScript profundo para backend            | 🟡 unidade 1 liberada               |
+| 1    | JavaScript profundo para backend            | 🟡 unidades 1-2 concluídas, unidade 3 ativa |
 | 2    | TypeScript profissional                     | 🟡 8/8 unidades geradas, nenhuma liberada para estudo |
 | 3    | Node.js por baixo dos frameworks            | ⚪ bloqueada                         |
 | 4    | SQL e PostgreSQL de verdade                 | ⚪ bloqueada                         |

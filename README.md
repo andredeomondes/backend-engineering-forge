@@ -32,7 +32,7 @@ Não começamos por microsserviços, nem por Kubernetes, nem pelo frontend.
 ## Estado atual
 
 - **Fase:** 0 — Ambiente profissional e fundamentos da Web (em andamento)
-- **Unidade ativa:** Fase 1 / Unidade 1 — valores, tipos e operadores
+- **Unidade ativa:** Fase 1 / Unidade 3 — funções (unidades 1-2 concluídas)
 - Veja `PROGRESS.md` para o detalhe.
 
 ## Como rodar os testes
