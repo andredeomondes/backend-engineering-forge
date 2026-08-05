@@ -138,3 +138,46 @@ Unidade 2 completa: 16/16 exercícios, suite verde (24/24 testes).
 
 Unidade 3 — funções (já gerada, aguardando início). Cadência
 combinada: 2-3 unidades/semana.
+
+## 2026-08-05 — dia 005 de estudo
+
+### Objetivo da sessão
+
+Unidade 3 — funções.
+
+### O que fiz
+
+Implementados 10/16 exercícios: `sum`, `greet` (parâmetros default
+nativos), `multiplyAll` (rest params + `for...of`), `isEven`,
+`makeAdder` (função retornando função), `describePerson`,
+`applyDiscount`, `firstArgumentType` — corrigido bug de índice
+inexistente (`args[i]` sem `i` declarado) e checagem errada de "sem
+argumentos" (`!args[0]` falha para `0`/`""` como primeiro argumento
+válido; corrigido para checar `args.length`).
+
+### Dificuldades
+
+Hoisting de `function` vs `const` com arrow function (resolvido com
+exemplos ao vivo). Diferença entre `for` clássico (`let i`,
+reatribuído) e `for...of` (`const x`, variável nova a cada volta —
+tabela de rodadas usada pra fixar). Confusão inicial se `let`/`const`
+afetava performance/Big O — esclarecido que não, são independentes.
+
+### Ajuda utilizada
+
+Guiado por perguntas/exemplos, sem solução colada — usuário escreveu
+todo o código.
+
+### Entrega concreta
+
+10/16 exercícios da unidade 3, suite com 16 testes passando (13
+ainda falhando: `composeTwo` em andamento, `invokeNTimes`,
+`curriedAdd`, `formatPrice`, `averageOrZero`, `makeMultiplier`,
+`buildOrderProcessor`).
+
+### Próximo passo
+
+Continuar unidade 3: `composeTwo` (composição de funções), depois
+`invokeNTimes`, `curriedAdd`, `formatPrice`, debugging
+(`averageOrZero`, `makeMultiplier`) e desafio integrador
+(`buildOrderProcessor`).

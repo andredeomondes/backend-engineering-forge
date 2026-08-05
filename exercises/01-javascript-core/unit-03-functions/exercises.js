@@ -6,43 +6,63 @@
 // --- Fundamentais ---------------------------------------------------------
 
 // test: node --test --test-name-pattern="sum" exercises/01-javascript-core/unit-03-functions/exercises.test.js
-export function sum(a, b) {
-  throw new Error("not implemented: sum");
+export function sum(a = 0, b = 0) {
+  return a + b;
 }
 
 // test: node --test --test-name-pattern="greet" exercises/01-javascript-core/unit-03-functions/exercises.test.js
-export function greet(name) {
-  throw new Error("not implemented: greet");
+export function greet(name = "visitante") {
+  return `Olá, ${name}!`;
 }
 
 // test: node --test --test-name-pattern="multiplyAll" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export const multiplyAll = (...numbers) => {
-  throw new Error("not implemented: multiplyAll");
+  let product = 1;
+
+  for (const number of numbers) {
+    product *= number;
+  }
+  return product;
 };
 
 // test: node --test --test-name-pattern="isEven" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export const isEven = (n) => {
-  throw new Error("not implemented: isEven");
+  if (n % 2 == 0) {
+    return true;
+  }
+  return false;
 };
 
 // test: node --test --test-name-pattern="makeAdder" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export function makeAdder(x) {
-  throw new Error("not implemented: makeAdder");
+  return (n) => x + n;
 }
 
 // test: node --test --test-name-pattern="describePerson" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export function describePerson({ name, age, city = "cidade não informada" } = {}) {
-  throw new Error("not implemented: describePerson");
+  return `${name}, ${age} anos, mora em ${city}`;
 }
 
 // test: node --test --test-name-pattern="applyDiscount" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export function applyDiscount(price, discountPercent = 0) {
-  throw new Error("not implemented: applyDiscount");
+  if (discountPercent < 0) {
+    throw new RangeError("Desconto não pode ser menor do que 0%");
+  }
+
+  if (discountPercent > 100) {
+    throw new RangeError("Desconto não pode ser maior do que 100%");
+  }
+
+  return price * (1.0 - discountPercent / 100);
 }
 
 // test: node --test --test-name-pattern="firstArgumentType" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export function firstArgumentType(...args) {
-  throw new Error("not implemented: firstArgumentType");
+  if (!args[0]) {
+    return "none";
+  }
+
+  return typeof args[0];
 }
 
 // --- Intermediários --------------------------------------------------------
