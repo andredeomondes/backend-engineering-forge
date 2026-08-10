@@ -1,9 +1,51 @@
-# Backend Engineering Forge — Formação Backend-First com TypeScript até competências técnicas de Pleno
+# Backend Engineering Forge — Formação Backend-First com TypeScript, do iniciante a competências de Sênior
 
 > **Como usar:** copie este arquivo inteiro e cole no Codex, Claude Code ou outra IA com acesso ao repositório.  
 > O objetivo é a IA criar e conduzir uma formação prática, com estrutura de pastas, exercícios, testes, projetos, avaliações e revisões de código.
 >
-> **Importante:** concluir este plano não transforma alguém automaticamente em desenvolvedor pleno. Senioridade também exige experiência real, responsabilidade em produção, colaboração, tomada de decisões e capacidade de lidar com problemas ambíguos. O plano busca desenvolver **competências técnicas e comportamentais compatíveis com um backend pleno**, começando do zero no ecossistema JavaScript/TypeScript.
+> **Importante:** concluir este plano não transforma alguém automaticamente em desenvolvedor pleno ou sênior. Senioridade também exige experiência real, responsabilidade em produção, colaboração, tomada de decisões e capacidade de lidar com problemas ambíguos. O plano busca desenvolver **competências técnicas e comportamentais**, começando do zero no ecossistema JavaScript/TypeScript.
+
+## Estrutura em partes
+
+```text
+PARTE I   — Backend Foundations              (Fases 0-3)
+PARTE II  — Professional Backend Engineering (Fases 4-8)
+PARTE III — Production Backend Engineering   (Fases 9-14, até Pleno + full-stack capability)
+PARTE IV  — Senior Backend Engineering       (Fases 15-27, após Pleno)
+```
+
+Progressão conceitual completa:
+
+```text
+Fundamentos
+↓
+Backend Engineering
+↓
+Backend Pleno
+↓
+Full-stack capability (Fase 13 — React/Vite integrado à API real)
+↓
+Production Engineering (Fase 15-16)
+↓
+Reliability Engineering (Fase 16-17)
+↓
+Distributed Systems (Fase 19)
+↓
+Senior Backend Engineering
+```
+
+Partes I-III formam a trilha original (iniciante → júnior → pleno,
+incluindo o frontend aplicado da Fase 13) e não mudam de filosofia aqui —
+ganham agrupamento conceitual e a Fase 13 foi aprofundada (Vite, React
+Hook Form, Zod, integração real com a API, módulo opcional de Next.js). A
+Parte IV é a evolução posterior: começa só depois da Definição de Pronto
+da seção 10 e trata senioridade como responsabilidade por sistemas em
+produção, não como "mais frameworks". Ver bloco "PARTE IV — Senior Backend
+Engineering Track" após a seção 10 para o detalhe completo. Concluir
+qualquer parte da trilha **não garante** cargo de pleno ou sênior —
+experiência real, responsabilidade por produção, colaboração e contexto de
+empresa continuam sendo necessários (reforçado na Definição de Pronto —
+Senior Backend Engineer, ao final da Parte IV).
 
 ---
 
@@ -296,23 +338,31 @@ Conteúdo antigo que precisa ser preservado sem poluir a trilha ativa.
 O projeto final, equivalente ao TCC, deve usar o codinome:
 
 ```text
-Project Atlas
+TicketAtlas
 ```
 
 Nome técnico da pasta:
 
 ```text
-projects/11-capstone-reseller-saas/
+projects/11-capstone-ticketing-saas/
 ```
 
 Título do projeto:
 
 ```text
-Project Atlas — Multi-tenant Reseller Operations SaaS
+TicketAtlas — Multi-tenant Live Ticketing, Resale & Proximity SaaS
 ```
 
+Decisão (2026-08-04): tema trocado de "estoque/cotações para revendedores"
+para plataforma de ingressos com mapa de assentos em tempo real. Motivo:
+domínio original mapeava os desafios técnicos do plano de forma abstrata
+demais; o novo tema cobre os mesmos desafios (multi-tenant, idempotência,
+concorrência, filas, PDF, webhooks) com cenários concretos e visualmente
+fortes (mapa de assento travando ao vivo, revenda P2P com transferência de
+posse). Ver Fase 14 para o detalhe completo do tema.
+
 O nome de produto definitivo poderá ser alterado depois. Durante a formação,
-`Project Atlas` deve funcionar como codinome estável do TCC.
+`TicketAtlas` deve funcionar como codinome estável do TCC.
 
 
 ---
@@ -568,17 +618,27 @@ Use preferencialmente:
 
 ## Frontend posterior
 
+Stack principal, obrigatória (~20% do tempo total, ver seção 3):
+
 - HTML semântico;
 - CSS essencial;
 - React;
 - TypeScript;
+- Vite;
 - React Router;
-- formulários;
 - TanStack Query;
+- React Hook Form;
+- Zod (reaproveitado do backend — mesma lib, dois lados da validação);
 - Tailwind CSS;
 - acessibilidade;
 - React Testing Library;
 - Playwright.
+
+Next.js **não** faz parte da stack obrigatória. Entra só como módulo curto
+e opcional depois que React + integração full-stack estiverem dominados
+(Fase 13.6) — objetivo é empregabilidade (vagas que pedem React+Next.js),
+não substituir Vite/NestJS como arquitetura principal do Forge. Não usar
+Redux como requisito obrigatório em nenhum ponto da trilha.
 
 ---
 
@@ -1663,9 +1723,15 @@ Exigir explicação de complexidade temporal e espacial.
 
 ---
 
-## Fase 13 — Frontend após a base backend
+## Fase 13 — Full-stack capability (Frontend + integração real com o backend)
 
-Somente liberar esta fase depois que eu conseguir construir, testar e publicar uma API NestJS completa.
+Somente liberar esta fase depois que eu conseguir construir, testar e
+publicar uma API NestJS completa. Esta fase é o marco **"full-stack
+capability"** entre Pleno (competência backend) e a Parte IV (senioridade):
+o objetivo não é virar frontend engineer, é conseguir **construir o
+produto completo** e entender o contrato real entre as duas pontas.
+Proporção geral do Forge continua ~80% backend / ~20% frontend (seção 3) —
+esta fase não vira um curso de React genérico.
 
 ### 13.1 HTML e CSS
 
@@ -1693,52 +1759,150 @@ Somente liberar esta fase depois que eu conseguir construir, testar e publicar u
 - módulos;
 - estados de loading, erro e vazio.
 
-### 13.3 React com TypeScript
+### 13.3 React com TypeScript e Vite
 
-- componentes;
-- JSX;
-- props;
-- state;
-- renderização;
-- eventos;
-- formulários;
-- hooks;
-- efeitos;
-- composição;
-- rotas;
-- autenticação;
-- autorização de interface sem confundir com segurança real do backend;
-- consumo de API;
-- TanStack Query;
-- cache de servidor;
-- paginação;
-- loading;
-- erro;
+Setup:
+
+- Vite (build tool padrão — não CRA, não Next.js nesta fase);
+- estrutura de projeto por feature;
+- variáveis de ambiente por ambiente (dev/staging/prod).
+
+Core:
+
+- componentes, JSX, props, state, renderização, eventos;
+- hooks, efeitos, composição;
+- React Router (rotas, rotas protegidas, params, navegação programática);
+- error boundaries;
+- lazy loading e code splitting por rota;
+- React Profiler e frontend performance (re-render desnecessário,
+  memoização quando justificada, não como reflexo).
+
+Formulários e validação:
+
+- React Hook Form;
+- Zod como schema de validação (mesma lib usada no backend com Zod —
+  reforça a ideia de contrato compartilhado, mesmo sem compartilhar código);
+- mensagens de erro por campo, estados de submit/disabled.
+
+Server state (TanStack Query):
+
+- cache de servidor, invalidation, stale time;
+- paginação (cursor, alinhada ao que a API expõe);
 - optimistic update quando fizer sentido;
-- organização por feature;
-- testes com React Testing Library;
-- testes E2E com Playwright.
+- polling.
 
-### 13.4 Tailwind CSS
+Autenticação e autorização visual:
 
-Aprender:
+- fluxo de login/logout, renovação de sessão, expiração;
+- 401 vs. 403 tratados de formas diferentes na UI;
+- autorização de interface (esconder/desabilitar ação) sem nunca confundir
+  isso com segurança real — a autorização de verdade é sempre no backend.
 
-- utility-first;
-- spacing;
-- typography;
-- colors;
-- flex;
-- grid;
-- responsive variants;
-- mobile-first;
-- state variants;
-- dark mode;
+Upload/download, streaming de status:
+
+- upload de arquivo com progresso;
+- download de arquivo gerado pelo backend;
+- estados de "importação iniciada / X% / concluído" via polling, evoluindo
+  depois para Server-Sent Events e, só com justificativa real, WebSockets.
+
+Segurança frontend:
+
+- XSS na renderização de dado não confiável;
+- não guardar token sensível em `localStorage` sem entender o risco;
+- CORS do ponto de vista do cliente;
+- não vazar segredo em variável de ambiente exposta ao bundle.
+
+Testes:
+
+- React Testing Library (unidade/componente, comportamento não implementação);
+- Playwright (E2E dos fluxos críticos: login, CRUD principal, importação).
+
+### 13.4 Tailwind CSS e design system básico
+
+- utility-first, spacing, typography, colors, flex, grid;
+- responsive variants, mobile-first, state variants, dark mode;
 - design tokens;
-- componentes reutilizáveis;
-- acessibilidade;
-- evitar classes gigantes sem organização;
-- quando extrair componente;
-- quando usar CSS comum.
+- componentes reutilizáveis (design system básico: button, input, table,
+  modal, empty/loading/error state) — quando extrair componente vs. quando
+  usar CSS comum;
+- acessibilidade (foco, contraste, aria quando necessário);
+- evitar classes gigantes sem organização.
+
+### 13.5 Integração real frontend ↔ backend (núcleo desta fase)
+
+Esta fase não ensina frontend isolado — ensina o fluxo completo:
+
+```text
+React (Vite)
+↓ HTTP / REST
+NestJS
+↓
+PostgreSQL / Redis / filas / workers / AWS
+```
+
+Praticar, contra a API NestJS já construída (não contra mock):
+
+**Autenticação ponta a ponta**
+
+```text
+React → POST /auth/login → NestJS → PostgreSQL/sessão
+→ cookie ou token → React autenticado
+```
+
+login, logout, 401, 403, refresh token, renovação de sessão, expiração,
+cookies `HttpOnly`, permissões refletidas na UI.
+
+**CRUD e server state**
+
+```text
+React (TanStack Query) → NestJS REST API → PostgreSQL
+```
+
+listagem, filtros, ordenação, cursor pagination, criação, atualização,
+exclusão, cache, invalidation, optimistic update quando fizer sentido.
+
+**Processamento assíncrono**
+
+```text
+React → upload → NestJS → fila → worker → PostgreSQL
+→ status/progresso → React
+```
+
+A UI mostra estados reais ("Importação iniciada" → "Importando: 35%" →
+"Concluído"), começando com polling e evoluindo para SSE; WebSockets só
+quando houver necessidade concreta (ex.: trava de assento em tempo real
+no TicketAtlas, Fase 14).
+
+### 13.6 Next.js Fundamentals — Optional Employability Module
+
+**Opcional.** Só depois de 13.1-13.5 dominados. Objetivo único: aumentar
+compatibilidade com vagas que pedem React + Next.js, sem desviar a
+especialização de backend nem virar meses extras de estudo.
+
+Ensinar somente:
+
+- conceitos do Next.js e quando ele resolve um problema que Vite não resolve;
+- App Router, layouts, pages/routes;
+- Server Components vs. Client Components;
+- SSR, SSG, rendering, data fetching, cache, revalidation;
+- environment variables;
+- integração com um backend externo (o mesmo NestJS já construído).
+
+Arquitetura continua:
+
+```text
+Next.js / React
+↓
+NestJS API
+↓
+PostgreSQL / Redis / filas
+```
+
+Next.js **não substitui** o NestJS. Não usar API Routes/Server Actions do
+Next.js como arquitetura de backend principal do Forge — isso quebraria a
+identidade backend-first do projeto. Pode existir um mini projeto opcional
+(reimplementar 1-2 telas do painel em Next.js), sem reescrever o produto
+inteiro.
 
 ### Projeto 11 — Painel administrativo
 
@@ -1759,7 +1923,22 @@ Criar frontend para o SaaS:
 - acessibilidade;
 - testes.
 
-Usar React + TypeScript + Tailwind.
+Usar React + TypeScript + Vite + Tailwind, integrado de ponta a ponta com
+a API NestJS (não contra mock) pelos três fluxos da seção 13.5.
+
+### Gate da fase
+
+Devo conseguir, sem consultar solução:
+
+- explicar por que autorização de interface não substitui autorização no
+  backend;
+- implementar um fluxo de autenticação completo (login → token/cookie →
+  rota protegida → 401/403 tratados);
+- consumir um endpoint paginado com TanStack Query com cache e invalidation
+  corretos;
+- acompanhar um processamento assíncrono real via polling ou SSE;
+- justificar quando usaria Next.js numa vaga real, sem depender dele para
+  o Forge.
 
 ---
 
@@ -1767,26 +1946,38 @@ Usar React + TypeScript + Tailwind.
 
 ### Tema sugerido
 
-**SaaS white-label de estoque e cotações para revendedores.**
+**SaaS multi-tenant de bilheteria com mapa de assentos em tempo real e
+revenda P2P.** (trocado em 2026-08-04; tema anterior era "SaaS white-label
+de estoque e cotações para revendedores" — ver nota em "Nome do projeto
+final")
+
+Cada casa/organizador (cinema, teatro, show) é um tenant isolado. Cliente
+abre o app e vê no mapa as casas/eventos mais próximos geograficamente
+(busca por raio/distância); escolhe uma, entra na sessão e escolhe assento
+num mapa interativo; ao clicar, o assento trava em tempo real (ninguém mais
+pode selecioná-lo) até o pagamento confirmar ou o timeout expirar. Ingresso
+comprado pode ser revendido dentro da própria plataforma (P2P), com
+transferência de posse atômica e prevenção de venda duplicada/fraude.
 
 ### Backend
 
-- organizações/tenants;
-- usuários;
+- organizações/tenants (casas/organizadores);
+- usuários (admin da casa, cliente final);
 - roles e permissions;
 - autenticação segura;
-- catálogo;
-- estoques por origem;
-- custos e margens;
-- cotações;
-- geração de PDF;
-- uploads;
-- importação assíncrona;
-- filas;
+- geolocalização: busca de casas/eventos por proximidade (raio/distância,
+  PostGIS ou equivalente);
+- catálogo de eventos/sessões e mapa de assentos por sala;
+- trava de assento em tempo real (lock com timeout);
+- checkout e emissão de ingresso;
+- geração de PDF/QR do ingresso;
+- revenda P2P (listagem, transferência de posse, anti-fraude);
+- importação assíncrona (ex.: carga de eventos em lote);
+- filas (processamento de pagamento, expiração de trava);
 - cache;
-- notificações;
+- notificações (confirmação, timeout, venda de revenda);
 - auditoria;
-- integrações;
+- integrações (provedor de pagamento);
 - webhooks;
 - Swagger;
 - testes;
@@ -1798,9 +1989,16 @@ Usar React + TypeScript + Tailwind.
 
 - React;
 - TypeScript;
+- Vite;
+- React Router;
+- TanStack Query;
+- React Hook Form + Zod;
 - Tailwind;
-- painel admin;
-- painel do revendedor;
+- painel admin (por tenant/organizador);
+- mapa geográfico de casas/eventos próximos;
+- mapa de assentos interativo em tempo real;
+- fluxo de checkout;
+- marketplace de revenda;
 - formulários;
 - tabelas;
 - filtros;
@@ -1808,21 +2006,24 @@ Usar React + TypeScript + Tailwind.
 - permissões de interface;
 - upload;
 - acompanhamento de processamento;
-- cotação white-label;
 - responsividade;
+- PWA (instalável, ícone/home screen, offline parcial, push) — sem React
+  Native; mobile nativo fica fora de escopo do capstone;
 - testes.
 
 ### Desafios obrigatórios
 
 - isolamento entre tenants;
 - usuário não pode acessar dados de outra organização;
-- margem mínima;
-- operação idempotente;
+- concorrência: dois usuários tentando o mesmo assento ao mesmo tempo;
+- operação idempotente (pagamento não pode duplicar cobrança);
+- transferência de posse atômica na revenda (ingresso não pode ser
+  revendido duas vezes);
 - importação grande sem bloquear API;
 - job duplicado;
 - retry;
 - arquivo inválido;
-- integração externa lenta;
+- integração externa lenta (provedor de pagamento);
 - token revogado;
 - rotação de refresh token;
 - query lenta;
@@ -2034,6 +2235,517 @@ Eu devo conseguir:
 - estimar;
 - comunicar risco;
 - orientar alguém em um problema simples.
+
+---
+
+# PARTE IV — Senior Backend Engineering Track
+
+> Só começa depois da Definição de Pronto da seção 10 (competências técnicas
+> de pleno). Não libera nenhuma fase desta parte antes disso.
+
+A diferença central desta parte:
+
+```text
+antes (pleno):  "consigo construir este sistema"
+depois (sênior): "consigo ser responsável por este sistema"
+```
+
+Senioridade não é "pleno que conhece mais frameworks". É a capacidade de:
+
+```text
+entender sistemas → projetar → implementar → medir → operar
+→ proteger → escalar → diagnosticar → recuperar → evoluir
+→ decidir → comunicar → liderar tecnicamente
+```
+
+Esta trilha **não** cria tecnologias novas por moda. Usa o stack já
+consolidado (TypeScript, Node.js, NestJS, PostgreSQL, Redis, BullMQ/SQS,
+Docker, AWS, GitHub Actions, OpenTelemetry) e o projeto já existente
+(**TicketAtlas**, Fase 14) como laboratório de produção. Ferramentas novas
+só entram quando resolvem um problema real da fase (ex.: k6 para load
+testing) — nunca para "aumentar o currículo".
+
+Regra obrigatória de escopo, válida para toda a Parte IV: para cada conceito
+candidato a entrar aqui, perguntar *"isso desenvolve uma competência
+necessária para responder por um sistema em produção?"*. Se não, não entra.
+Não adicionar dezenas de bancos, frameworks, clouds ou Kubernetes avançado
+sem necessidade real do projeto.
+
+Estilo de exercício muda de direção: menos "implemente X", mais
+"este sistema apresenta este sintoma — descubra a causa", "existem três
+soluções possíveis — escolha uma e defenda os trade-offs", "você é
+responsável por este incidente — qual sua sequência de ações". As regras
+da seção 27 (contra dependência da IA) valem com força redobrada aqui: a
+IA não entrega causa de incidente, arquitetura pronta ou código antes da
+tentativa; pede hipóteses, plano de investigação, interpretação de métricas
+e justificativa de decisões. A IA age como staff/senior mentor, não como
+geradora automática de solução.
+
+---
+
+## Fase 15 — Performance Engineering & Node.js Profiling
+
+### Testes de performance
+
+- load, stress, spike, soak/endurance, breakpoint testing;
+- benchmarking e baseline de performance;
+- regressão de performance.
+
+Ferramenta principal: **k6** (Artillery só com justificativa específica).
+
+### O que medir
+
+- RPS, throughput, concorrência;
+- latência p50/p90/p95/p99 (nunca só a média);
+- error rate, saturation;
+- uso de CPU, memória, conexões de banco, connection pools, event loop.
+
+Cenários realistas: PostgreSQL + Redis + filas + workers + API externa +
+múltiplos usuários concorrentes — não benchmark isolado de função pura.
+
+### Node.js profiling
+
+- CPU profiling, heap profiling, heap snapshots;
+- memory leaks, garbage collection;
+- event loop lag e event loop utilization;
+- flamegraphs;
+- operações bloqueantes, libuv thread pool, saturation;
+- worker threads, streams, backpressure;
+- connection pooling, HTTP keep-alive;
+- benchmark antes/depois de uma otimização.
+
+### Método
+
+A IA cria cenários de regressão de performance (métricas, logs, sintomas) e
+**não entrega a causa**. Investigação segue: hipótese → medição → isolamento
+→ correção → benchmark de confirmação.
+
+### Gate
+
+Devo produzir um `performance-baseline.md` para o TicketAtlas e explicar,
+sem consultar solução, por que latência média isolada não basta.
+
+---
+
+## Fase 16 — Capacity Planning & Reliability Engineering
+
+### Capacity planning
+
+Responder com dados, não com achismo:
+
+```text
+Quantas req/s esse sistema suporta hoje?
+Quantas instâncias precisamos?
+Onde está o primeiro gargalo?
+O que acontece se o tráfego aumentar 10x?
+```
+
+Cobre: concorrência máxima, limites do banco/Redis/workers, tamanho de
+pool de conexões, tamanho de fila, autoscaling, estimativa de infra.
+
+Entregável obrigatório de todo projeto avançado a partir daqui:
+`capacity-plan.md`.
+
+### Reliability patterns
+
+- timeout, retry, exponential backoff, jitter;
+- circuit breaker, bulkhead, fallback, fail-fast;
+- graceful degradation, graceful shutdown, load shedding;
+- rate limiting, health checks (readiness/liveness);
+- idempotência e deduplicação.
+
+Retry **não** é regra universal — exigir análise de quando retry piora uma
+falha (retry storm, cascading failure). Criar cenários de ambos.
+
+### Gate
+
+Explicar, com um incidente simulado, por que um retry mal configurado
+pode derrubar um serviço já degradado.
+
+---
+
+## Fase 17 — Chaos Engineering & Site Reliability Engineering (SRE)
+
+### Failure injection (local, seguro)
+
+Simular: PostgreSQL indisponível, Redis indisponível, worker morto, API
+externa lenta/500, timeout, DNS failure, latência artificial, perda de
+conexão, pool esgotado, CPU/memória sob pressão, processo morto no meio de
+uma operação, mensagem duplicada/fora de ordem/poison message, fila
+crescendo indefinidamente, disco cheio quando aplicável.
+
+Objetivo: observar o comportamento real do sistema sob falha, não só ler
+sobre o padrão.
+
+### SRE
+
+- reliability, availability, SLI, SLO, SLA, error budget, burn rate;
+- MTTD, MTTR, MTBF;
+- severidade de incidente, escalation, incident commander (nível conceitual);
+- runbooks, postmortems sem culpa, alert fatigue.
+
+Entregáveis obrigatórios em pelo menos um projeto avançado: `SLO.md`,
+`runbook.md`, `incident-report.md`, `postmortem.md` (templates em
+`docs/templates/`).
+
+### Gate
+
+Executo um experimento de failure injection no TicketAtlas, documento o
+comportamento observado e proponho (sem implementar ainda) uma mitigação.
+
+---
+
+## Fase 18 — Observabilidade avançada & Debugging de produção
+
+### Observabilidade
+
+- structured logging, correlation ID, trace ID;
+- metrics, distributed tracing, OpenTelemetry;
+- CloudWatch; Prometheus/Grafana quando útil;
+- RED Method, USE Method, Golden Signals;
+- dashboards, alerts, metric cardinality, tracing/log sampling;
+- segurança de logs: PII, secrets, tokens nunca logados.
+
+### `assessments/production-debugging/`
+
+Cenários simulados sem causa revelada, só sintomas: CPU alta, memory leak,
+event loop bloqueado, banco saturado, pool cheio, query regressiva, Redis
+lento, cache miss excessivo, worker travado, queue backlog, duplicação de
+eventos, deadlocks, timeout em cascata, retry storm, dependency outage,
+deploy ruim, migration problemática.
+
+Fornecido: logs, métricas, traces, deploy recente, mudanças, sintomas,
+contexto. Devo formular e testar hipóteses — a causa não é entregue.
+
+### Gate
+
+Diagnostico corretamente pelo menos 3 cenários de `production-debugging`
+descrevendo hipótese → evidência → causa → correção → validação.
+
+---
+
+## Fase 19 — PostgreSQL avançado, Concorrência & Sistemas Distribuídos
+
+### PostgreSQL avançado e database reliability
+
+- MVCC, lock contention, deadlocks;
+- optimistic vs. pessimistic locking;
+- isolation anomalies: lost update, phantom reads;
+- connection pool saturation e tuning;
+- slow query investigation, `EXPLAIN ANALYZE`;
+- index-only scans, covering indexes, partial indexes, index bloat;
+- vacuum, analyze, table bloat, partitioning;
+- replication, read replicas, replication lag;
+- backup, restore, point-in-time recovery, failover conceitual.
+
+### Concorrência avançada
+
+Experimentos de concorrência real, não sequencial: dois usuários comprando
+a última unidade; dois workers processando o mesmo pagamento; 1000
+requisições tentando modificar o mesmo recurso.
+
+Cobre: race conditions, atomicidade, optimistic/pessimistic concurrency,
+compare-and-swap conceitual, distributed locking, fencing tokens
+(conceitual), overselling, double spending, idempotency keys.
+
+Uma solução não é considerada correta só porque funciona em execução
+sequencial.
+
+### Sistemas distribuídos
+
+- strong vs. eventual consistency, CAP, PACELC;
+- network partitions, clock skew, ordering, duplicate delivery;
+- at-most-once, at-least-once, limitações de "exactly once";
+- replication, quorum conceitual, leader/follower, split brain conceitual;
+- distributed transactions, saga, outbox, inbox, conflict resolution.
+
+Aplicado ao TicketAtlas: trava de assento em tempo real, transferência de
+posse na revenda P2P, pagamento idempotente.
+
+### Gate
+
+Simulo overselling de assento no TicketAtlas, identifico a janela de race
+condition e implemento a correção com teste de concorrência real (não
+sequencial).
+
+---
+
+## Fase 20 — Mensageria avançada & Cache avançado
+
+### Mensageria (aprofundar BullMQ e SQS)
+
+- producer, consumer, consumer groups, retries, backoff, DLQ;
+- poison message, ordering, deduplication, idempotent consumer;
+- message/schema versioning, evolução de contrato, event replay;
+- outbox, inbox, event contracts.
+
+Kafka pode ser introduzido só para entender partitions, offsets, consumer
+groups, retention e replay — não vira o foco da trilha.
+
+### Cache avançado
+
+- cache-aside, write-through, write-behind, TTL, invalidation;
+- distributed vs. local cache, cache coherence;
+- cache stampede, cache penetration, cache avalanche, hot keys;
+- eviction policies, stale data, cache warming.
+
+Exercícios mostram cache causando bugs (dado stale servido após update),
+não só acelerando leitura.
+
+### Gate
+
+Altero um evento de domínio do TicketAtlas sem quebrar consumidores
+antigos (versionamento de schema) e explico a estratégia escolhida.
+
+---
+
+## Fase 21 — Security Engineering avançada & Supply Chain
+
+Preserva integralmente a Fase 7 (fundamento) e aprofunda:
+
+- threat modeling com STRIDE, abuse cases, security design review;
+- tenant escape, business logic abuse;
+- secret rotation, key rotation, KMS, IAM avançado, least privilege aplicado;
+- session fixation, token replay, refresh token theft, credential stuffing;
+- audit logs, security incident response.
+
+### Supply chain security
+
+- Dependabot, dependency scanning, SAST, DAST, container scanning, IaC
+  scanning, SBOM, SLSA (nível conceitual);
+- lockfiles, dependency pinning, GitHub Actions pinning;
+- typosquatting, package takeover/hijacking, dependências comprometidas.
+
+Análise crítica de ferramentas como `npm audit`: nem todo alerta é
+vulnerabilidade explorável no contexto real da aplicação.
+
+### Gate
+
+Produzo um `threat-model.md` (template em `docs/templates/`) para o módulo
+de revenda P2P do TicketAtlas cobrindo STRIDE e pelo menos um abuse case
+de tenant escape.
+
+---
+
+## Fase 22 — API Engineering avançada & Zero-Downtime Engineering
+
+### API avançada
+
+- distributed rate limiting, idempotency keys, cursor pagination;
+- API versioning e deprecation, backward compatibility;
+- request cancellation, timeout, safe retry, streaming, compression;
+- large payload handling;
+- webhook signatures, replay protection, retries, delivery logs;
+- contract testing, consumer-driven contracts.
+
+### Zero-downtime engineering
+
+- rolling deployments, blue/green, canary, feature flags, dark launches;
+- zero-downtime deployment e database migrations;
+- expand/contract migrations, mudanças backward-compatible de API/schema/evento;
+- rollback, roll-forward, recuperação de migration falha.
+
+Desafio típico: adicionar uma coluna obrigatória em tabela com milhões de
+registros sem interromper produção.
+
+### Gate
+
+Desenho e executo (em ambiente local) uma migration expand/contract no
+TicketAtlas sem downtime, documentando cada etapa.
+
+---
+
+## Fase 23 — Disaster Recovery, Cloud avançado & FinOps
+
+### Disaster recovery
+
+- backup strategy, backups automatizados, restore testing;
+- RTO, RPO, point-in-time recovery;
+- data corruption, service recovery, disaster runbook;
+- outage regional em nível de System Design.
+
+Regra: um backup nunca restaurado não é considerado validado — exercício
+real de restore em ambiente local/staging é obrigatório.
+
+### Cloud avançado (aprofunda a Fase 11)
+
+IAM, KMS, VPC/subnets/NAT/security groups, ALB, autoscaling, ECS/Fargate,
+RDS Multi-AZ e read replicas, ElastiCache, S3, SQS/SNS/EventBridge,
+CloudWatch, Route 53, CloudFront, WAF, Secrets Manager, budgets e cost
+alerts — só o necessário para projetar, publicar, proteger, operar e
+otimizar. Não vira estudo para certificação.
+
+### FinOps
+
+Custo por requisição, custo de banco/compute/storage/logs/traces, network
+egress, cache vs. banco, ECS vs. Lambda quando aplicável, RDS sizing,
+autoscaling, cost anomaly, budgets, build vs. buy, performance vs. custo.
+
+Cenário típico: "o custo mensal subiu de R$ 3.000 para R$ 10.000— descubra
+por quê e proponha redução sem destruir confiabilidade."
+
+### Gate
+
+Produzo `disaster-recovery-plan.md` e `cost-analysis.md` para o TicketAtlas,
+incluindo um teste de restore real e uma investigação de custo simulada.
+
+---
+
+## Fase 24 — System Design avançado, RFCs & Code Review sênior
+
+### System Design avançado
+
+Aumentar complexidade progressivamente: rate limiter, notification
+platform, webhook delivery system, file processing pipeline, job
+scheduler, marketplace, payment processing, search system, social feed,
+audit platform, multi-tenant SaaS, high-volume import system.
+
+Cada design exige: requisitos funcionais e não funcionais, escala
+estimada, APIs, dados, componentes, fluxo, bottlenecks, failure modes,
+trade-offs, custos, observabilidade, segurança, estratégia de evolução.
+
+### RFCs
+
+Além de ADRs (decisão pontual), introduzir RFCs (mudança de maior impacto).
+Template: `docs/templates/rfc-template.md` — contexto, problema, objetivos,
+não objetivos, requisitos, alternativas, proposta, trade-offs, impacto,
+segurança, observabilidade, rollout, rollback, custos, riscos, perguntas
+abertas.
+
+Cenários de decisão: monólito modular vs. microsserviços; PostgreSQL vs.
+DynamoDB; fila vs. processamento síncrono; Redis vs. banco; build vs. buy.
+
+### Code review de nível sênior
+
+Avaliações com problemas plantados de lógica, segurança, concorrência,
+performance, banco, observabilidade, contratos, resiliência, arquitetura,
+manutenibilidade, edge cases, failure modes, complexidade desnecessária.
+
+Classificar cada problema por severidade: `blocker`, `critical`, `major`,
+`minor`, `nit`.
+
+### Gate
+
+Escrevo um RFC completo propondo uma mudança arquitetural real no
+TicketAtlas e conduzo `SIMULAR_PR` classificando ao menos 8 problemas por
+severidade.
+
+---
+
+## Fase 25 — Liderança técnica
+
+Competências não puramente técnicas, praticadas com exercícios concretos:
+
+- decompor iniciativas, escrever technical proposals e RFCs;
+- estimar, identificar riscos, priorizar, negociar escopo;
+- comunicar dívida técnica e trade-offs para público não técnico;
+- revisar código e orientar outro desenvolvedor;
+- responder a incidentes e conduzir postmortems;
+- decidir com informação incompleta.
+
+Senioridade técnica exige influência, não só código.
+
+### Gate
+
+Conduzo `SIMULAR_TRABALHO` de ponta a ponta como responsável técnico:
+decomposição, riscos, comunicação a "produto", implementação e
+retrospectiva.
+
+---
+
+## Fase 26 — Production Engineering & Reliability Project (TicketAtlas sob pressão)
+
+Não cria outro sistema do zero. Pega o TicketAtlas (Fase 14) e o transforma
+em laboratório de produção, colocando-o sob carga progressiva:
+
+```text
+100 req/s → 500 req/s → 1.000 req/s → 5.000 req/s
+```
+
+Os números são ajustados à máquina/ambiente real — nunca uma meta
+arbitrária. O objetivo é medir capacidade e achar o primeiro gargalo, não
+bater um número.
+
+Introduzir sob pressão: PostgreSQL sob concorrência, Redis, workers,
+filas, API externa instável, latência, falhas, deploys, migrations,
+incidentes.
+
+### Entregáveis obrigatórios
+
+```text
+performance-baseline.md      load-test-report.md
+capacity-plan.md              SLO.md
+runbook.md                    incident-report.md
+postmortem.md                 threat-model.md
+performance-analysis.md       cost-analysis.md
+architecture-rfc.md           disaster-recovery-plan.md
+```
+
+Templates de todos em `docs/templates/`.
+
+### Gate
+
+Apresento o TicketAtlas como se estivesse em produção real: capacidade
+atual, primeiro gargalo, SLOs definidos, plano de resposta a incidente e
+plano de recuperação de desastre — tudo com evidência, não opinião.
+
+---
+
+## Fase 27 — Cenários obrigatórios de senioridade & Gates finais
+
+### Cenários obrigatórios
+
+A IA deve apresentar, sem revelar a causa, situações como:
+
+```text
+Performance:   o p99 subiu de 150ms para 3s.
+Banco:         PostgreSQL em 95% de CPU.
+Filas:         1.000.000 de jobs atrasados.
+Segurança:     um tenant observou dado de outro tenant.
+Deployment:    o deploy aumentou HTTP 500 em 300%.
+Dados:         migration precisa alterar tabela gigante sem downtime.
+Mensageria:    preciso alterar um evento sem quebrar consumidores antigos.
+Integrações:   API externa passou a responder em 20s.
+Concorrência:  dois pedidos venderam a última unidade em estoque.
+Custo:         a conta AWS triplicou.
+Incidente:     o serviço principal caiu às 02:00 — sou o responsável.
+```
+
+Para cada um: observar → formular hipóteses → investigar → medir →
+identificar causa → propor opções → escolher solução → implementar →
+validar → monitorar → documentar.
+
+### Gates de senioridade
+
+Uma competência sênior não é considerada concluída só por ter sido
+implementada. Cada gate avalia: implementação, investigação, design,
+performance, segurança, operação, incident response, documentação,
+decisões, trade-offs e comunicação — nunca só "os testes passaram".
+
+Uma avaliação sênior pode apresentar um sistema já quebrado e exigir a
+sequência completa acima, não só o código de correção.
+
+### Definição de pronto — Senior Backend Engineer (competências, não cargo)
+
+Concluir esta trilha **não garante** o cargo de sênior. Senioridade
+profissional depende também de experiência real, contexto de empresa,
+colaboração e responsabilidade contínua por sistemas reais. Esta definição
+verifica competência técnica e comportamental, não título.
+
+Devo conseguir:
+
+- liderar tecnicamente uma funcionalidade ou iniciativa;
+- projetar sistemas e diagnosticar produção;
+- operar sistemas e analisar performance;
+- definir SLOs e responder a incidentes;
+- melhorar confiabilidade e identificar riscos;
+- proteger sistemas (threat modeling, supply chain, tenant isolation);
+- executar migrations seguras sem downtime;
+- estimar capacidade e controlar custos;
+- tomar decisões arquiteturais e escrever RFCs;
+- revisar design e código de outra pessoa;
+- orientar outro desenvolvedor;
+- comunicar riscos e trade-offs para público técnico e não técnico.
 
 ---
 

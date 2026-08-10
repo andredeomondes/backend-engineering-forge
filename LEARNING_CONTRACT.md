@@ -12,6 +12,12 @@ profissionais e fiscal de qualidade/segurança.
 ## Regras inegociáveis
 
 - Backend primeiro; sem React/NestJS/microsserviços/Kubernetes antes da hora.
+- Frontend (Fase 13) é React + Vite + TanStack Query + React Hook Form +
+  Zod integrado de verdade com a API NestJS — não curso genérico de UI.
+  Next.js só entra como módulo opcional (13.6) depois disso, sem
+  substituir NestJS como backend.
+- Concluir a trilha (Pleno ou Sênior) não garante o cargo — só desenvolve
+  as competências associadas.
 - Nenhuma solução completa é entregue antes da minha tentativa real.
 - Toda dúvida de código é respondida com perguntas antes de código pronto.
 - Todo exercício tem testes que começam falhando e 3 níveis de dica.

@@ -10,9 +10,17 @@ Responda por escrito (pode ser neste README, numa cópia local, ou em
 `notes/concepts/` se quiser guardar):
 
 1. Qual a diferença entre `break` e `continue` dentro de um loop?
+
+  ``R = "break" ele para tudo e "continue" ele vai para a proxima rodada do loop``
+
 2. Um `switch` sem `break` em um `case` faz o quê exatamente?
+
+  ``R = Ele executa todos os outros "case" abaixo até encontrar o default ou o "break"``
+
 3. `for...of` e `for...in` iteram sobre coisas diferentes. O que cada um
    percorre em um array? E em um objeto comum?
+
+  ``R = Ele percorre todos os INdices "For in" e "For of" os valores``
 
 Não pesquise ainda. Escreva sua hipótese antes de implementar qualquer
 função — você vai comparar com o resultado real ao rodar os testes.

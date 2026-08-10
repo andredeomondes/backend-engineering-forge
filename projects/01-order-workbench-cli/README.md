@@ -29,3 +29,8 @@ serviço de backend.
 - pelo menos três cenários de falha cobertos;
 - retrospectiva registrada em `notes/project-retrospectives/`;
 - explicação oral do fluxo completo sem consultar o código.
+
+## Pós-entrega: repo próprio
+
+Quando o gate acima fechar, extrair esta pasta para um repositório GitHub
+isolado (portfólio), mantendo cópia aqui também. Decidido em 2026-08-04.

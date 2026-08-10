@@ -23,11 +23,36 @@ Ordem macro:
 JavaScript → TypeScript → Node.js → HTTP → PostgreSQL/SQL
 → API com framework leve → NestJS → autenticação/autorização/segurança
 → Redis, filas e integrações → arquitetura e qualidade
-→ Docker, CI/CD, AWS e observabilidade → React → Tailwind CSS
+→ Docker, CI/CD, AWS e observabilidade → React/Vite + integração real → Tailwind CSS
 → projeto full-stack
 ```
 
 Não começamos por microsserviços, nem por Kubernetes, nem pelo frontend.
+
+## Estrutura em partes
+
+```text
+PARTE I   — Backend Foundations              (Fases 0-3)
+PARTE II  — Professional Backend Engineering (Fases 4-8)
+PARTE III — Production Backend Engineering   (Fases 9-14, até Pleno + full-stack capability)
+PARTE IV  — Senior Backend Engineering        (Fases 15-27, após Pleno)
+```
+
+Progressão completa: Fundamentos → Backend Engineering → Backend Pleno →
+Full-stack capability (React + Vite + TanStack Query + React Hook Form +
+Zod, integrado de ponta a ponta com a API NestJS; Next.js só como módulo
+opcional de empregabilidade, Fase 13.6) → Production Engineering →
+Reliability Engineering → Distributed Systems → Senior Backend
+Engineering.
+
+A Parte IV trata senioridade como responsabilidade por sistemas em
+produção (performance, confiabilidade, segurança, sistemas distribuídos,
+operação, incidentes, arquitetura, liderança técnica) — não como "mais
+frameworks". Detalhe completo em `BACKEND_ENGINEERING_FORGE.md`. Concluir
+a trilha não garante o cargo de pleno ou sênior; desenvolve as
+competências técnicas e comportamentais associadas a eles — experiência
+real, responsabilidade por produção e contexto de empresa continuam
+necessários.
 
 ## Estado atual
 

@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Backend Engineering Forge — Árvore de Conhecimento</title>
+<style>
+  :root {
+    --bg: #f7f7f5;
+    --surface: #ffffff;
+    --text: #1f2328;
+    --muted: #6b7280;
+    --border: #e2e2e0;
+    --done: #16a34a;
+    --done-bg: #dcfce7;
+    --active: #d97706;
+    --active-bg: #fef3c7;
+    --available: #2563eb;
+    --available-bg: #dbeafe;
+    --locked: #9ca3af;
+    --locked-bg: #f3f4f6;
+    --line: #cbd5e1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1115;
+      --surface: #171a21;
+      --text: #e6e8eb;
+      --muted: #9aa1ac;
+      --border: #2a2e37;
+      --done-bg: #0f2b1a;
+      --active-bg: #2b2109;
+      --available-bg: #0f2038;
+      --locked-bg: #1b1e25;
+      --line: #333947;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1115; --surface: #171a21; --text: #e6e8eb; --muted: #9aa1ac;
+    --border: #2a2e37; --done-bg: #0f2b1a; --active-bg: #2b2109;
+    --available-bg: #0f2038; --locked-bg: #1b1e25; --line: #333947;
+  }
+  :root[data-theme="light"] {
+    --bg: #f7f7f5; --surface: #ffffff; --text: #1f2328; --muted: #6b7280;
+    --border: #e2e2e0; --done-bg: #dcfce7; --active-bg: #fef3c7;
+    --available-bg: #dbeafe; --locked-bg: #f3f4f6; --line: #cbd5e1;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+    padding: 2rem 1.25rem 4rem;
+  }
+  h1 { font-size: 1.4rem; margin: 0 0 0.25rem; }
+  .sub { color: var(--muted); font-size: 0.9rem; margin: 0 0 1.75rem; }
+
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 0.9rem;
+    margin-bottom: 2rem; font-size: 0.8rem; color: var(--muted);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .dot { width: 0.65rem; height: 0.65rem; border-radius: 50%; display: inline-block; }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .panel h2 { font-size: 1rem; margin: 0 0 0.75rem; }
+  .panel ul { margin: 0; padding-left: 1.1rem; font-size: 0.88rem; line-height: 1.6; }
+  .panel li.locked-note { color: var(--muted); }
+
+  /* spine */
+  .spine-wrap { overflow-x: auto; padding-bottom: 0.5rem; margin-bottom: 2rem; }
+  svg.spine { display: block; min-width: 1100px; }
+  .spine-node circle { stroke-width: 2.5; }
+  .spine-node text.label { font-size: 11px; fill: var(--text); }
+  .spine-node text.pct { font-size: 10px; fill: var(--muted); }
+  .spine-edge { stroke: var(--line); stroke-width: 2; }
+  .spine-edge.parallel { stroke-dasharray: 4 4; }
+
+  /* phase detail grid */
+  .phase-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .phase-block h3 {
+    margin: 0 0 0.2rem; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .phase-block .meta { color: var(--muted); font-size: 0.8rem; margin-bottom: 0.9rem; }
+
+  .unit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.5rem;
+  }
+  .unit {
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.65rem;
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+  .unit .num { font-weight: 600; margin-right: 0.3rem; }
+  .status-done { background: var(--done-bg); border-color: var(--done); }
+  .status-active { background: var(--active-bg); border-color: var(--active); }
+  .status-available { background: var(--available-bg); border-color: var(--available); }
+  .status-locked { background: var(--locked-bg); color: var(--muted); }
+
+  footer { color: var(--muted); font-size: 0.75rem; margin-top: 2rem; }
+</style>
+</head>
+<body>
+
+<h1>Backend Engineering Forge — Árvore de Conhecimento</h1>
+<p class="sub">Gerado a partir de PROGRESS.md / ROADMAP.md. Atualizar o array <code>DATA</code> no final do arquivo a cada unidade fechada.</p>
+
+<div class="legend">
+  <span><span class="dot" style="background:var(--done)"></span> concluído</span>
+  <span><span class="dot" style="background:var(--active)"></span> em andamento</span>
+  <span><span class="dot" style="background:var(--available)"></span> liberado / gerado, aguardando</span>
+  <span><span class="dot" style="background:var(--locked)"></span> bloqueado</span>
+</div>
+
+<div class="panel" id="capabilities-panel">
+  <h2>O que você já sabe fazer</h2>
+  <ul id="capabilities-list"></ul>
+</div>
+
+<div class="spine-wrap">
+  <svg class="spine" id="spine" height="150"></svg>
+</div>
+
+<div id="phase-details"></div>
+
+<footer>backend-engineering-forge · docs/knowledge-graph.html</footer>
+
+<script>
+// ---- DATA: edite aqui conforme o progresso avança ----
+const PHASES = [
+  { id: 0, name: "Ambiente & Web", status: "active", note: "terminal, git, npm, HTTP conceitual" },
+  { id: 1, name: "JavaScript profundo", status: "active", note: "unidades 1-2 concluídas, unidade 3 (funções) ativa",
+    units: genUnits(27, 2, 3, [
+      "valores, tipos, operadores", "controle de fluxo", "funções", "escopo léxico",
+      "closures", "arrays e objetos", "referências e mutabilidade", "funções de alta ordem",
+      "map/filter/reduce", "destructuring", "spread/rest", "tratamento de erros",
+      "classes e protótipos", "this", "iterables e generators", "regex", "módulos ES",
+      "callbacks", "promises", "async/await", "promise combinators", "erros assíncronos",
+      "event loop", "JSON", "imutabilidade", "legibilidade/coesão", "Big O básico",
+    ]) },
+  { id: 2, name: "TypeScript", status: "available", note: "8/8 unidades geradas, nenhuma liberada",
+    units: genUnits(8, 0, 1, [
+      "anotações/inferência/primitivos", "interfaces/unions/literais",
+      "narrowing/guards/discriminated unions", "funções e generics",
+      "tipos utilitários avançados", "classes abstratas e composição",
+      "módulos, unknown/never/any", "tsconfig strict e validação runtime",
+    ], "locked-until-1") },
+  { id: 3, name: "Node.js core", status: "locked", note: "bloqueada" },
+  { id: 4, name: "SQL / PostgreSQL", status: "locked", note: "bloqueada" },
+  { id: 5, name: "APIs com Express", status: "locked", note: "bloqueada" },
+  { id: 6, name: "NestJS", status: "locked", note: "bloqueada" },
+  { id: 7, name: "Auth & segurança", status: "locked", note: "bloqueada" },
+  { id: 8, name: "Redis, filas, integrações", status: "locked", note: "bloqueada" },
+  { id: 9, name: "Testes & qualidade", status: "locked", note: "bloqueada" },
+  { id: 10, name: "Arquitetura", status: "locked", note: "bloqueada" },
+  { id: 11, name: "Docker/CI-CD/AWS", status: "locked", note: "bloqueada" },
+  { id: 12, name: "DSA (paralelo)", status: "available", note: "sessão 01 gerada, não tentada", parallel: true,
+    units: [{ n: 1, label: "Big O + arrays", status: "available" }] },
+  { id: 13, name: "Frontend (React)", status: "locked", note: "bloqueada até NestJS completo" },
+  { id: 14, name: "TicketAtlas (capstone)", status: "locked", note: "bilheteria multi-tenant, mapa de assento real-time, revenda P2P, geo proximidade, PWA" },
+];
+
+function genUnits(total, doneCount, activeUnit, labels, tag) {
+  const arr = [];
+  for (let i = 1; i <= total; i++) {
+    let status = "locked";
+    if (tag === "locked-until-1") status = "available"; // gerado mas fase não iniciada
+    else if (i <= doneCount) status = "done";
+    else if (i === activeUnit) status = "active";
+    else status = "available"; // gerado, aguardando
+    arr.push({ n: i, label: labels[i - 1] || ("unidade " + i), status });
+  }
+  return arr;
+}
+
+const CAPABILITIES = [
+  "Valores, tipos, coerção e igualdade em JavaScript (unidade 1, JS — 16/16 completa)",
+  "Controle de fluxo: if/switch/loops, guard clauses, break/continue (unidade 2, JS — 16/16, 24/24 testes)",
+  "Debugging de bugs off-by-one e fallthrough de switch",
+  "Refactor de condicionais aninhados para guard clauses",
+  "Integração for...of + switch com acumuladores (contagem por status, receita líquida)",
+];
+document.getElementById("capabilities-list").innerHTML =
+  CAPABILITIES.map(c => `<li>${c}</li>`).join("") +
+  `<li class="locked-note">O resto ainda não foi tentado — a lista cresce a cada unidade fechada.</li>`;
+
+// ---- render spine ----
+const svg = document.getElementById("spine");
+const colW = 95, cy = 60, r = 20, startX = 55;
+const NS = "http://www.w3.org/2000/svg";
+function statusColor(s) {
+  return { done: "var(--done)", active: "var(--active)", available: "var(--available)", locked: "var(--locked)" }[s];
+}
+function statusFill(s) {
+  return { done: "var(--done-bg)", active: "var(--active-bg)", available: "var(--available-bg)", locked: "var(--locked-bg)" }[s];
+}
+
+svg.setAttribute("width", startX + PHASES.length * colW + 40);
+
+// edges (sequential spine, skip parallel phase 12 which draws separately)
+const spineOrder = PHASES.filter(p => !p.parallel);
+for (let i = 0; i < spineOrder.length - 1; i++) {
+  const x1 = startX + PHASES.indexOf(spineOrder[i]) * colW + r;
+  const x2 = startX + PHASES.indexOf(spineOrder[i + 1]) * colW - r;
+  const line = document.createElementNS(NS, "line");
+  line.setAttribute("x1", x1); line.setAttribute("y1", cy);
+  line.setAttribute("x2", x2); line.setAttribute("y2", cy);
+  line.setAttribute("class", "spine-edge");
+  svg.appendChild(line);
+}
+
+// parallel branch (Fase 12 hangs below Fase 1)
+const f1x = startX + PHASES.findIndex(p => p.id === 1) * colW;
+const f12x = startX + PHASES.findIndex(p => p.id === 12) * colW;
+const branch = document.createElementNS(NS, "path");
+branch.setAttribute("d", `M ${f1x} ${cy + r} C ${f1x} ${cy + 55}, ${f12x} ${cy + 55}, ${f12x} ${cy + r + 30}`);
+branch.setAttribute("class", "spine-edge parallel");
+branch.setAttribute("fill", "none");
+svg.appendChild(branch);
+
+PHASES.forEach((p, i) => {
+  const x = startX + i * colW;
+  const y = p.parallel ? cy + 30 : cy;
+  const g = document.createElementNS(NS, "g");
+  g.setAttribute("class", "spine-node");
+  g.innerHTML = `
+    <circle cx="${x}" cy="${y}" r="${r}" fill="${statusFill(p.status)}" stroke="${statusColor(p.status)}"></circle>
+    <text x="${x}" y="${y + 4}" text-anchor="middle" font-size="11" font-weight="600" fill="${statusColor(p.status)}">${p.id}</text>
+    <text class="label" x="${x}" y="${y + r + 14}" text-anchor="middle">${p.name}</text>
+  `;
+  const title = document.createElementNS(NS, "title");
+  title.textContent = `Fase ${p.id} — ${p.name}: ${p.note || ""}`;
+  g.appendChild(title);
+  svg.appendChild(g);
+});
+
+// ---- render phase detail cards (only phases with units) ----
+const container = document.getElementById("phase-details");
+PHASES.filter(p => p.units && p.units.length).forEach(p => {
+  const block = document.createElement("div");
+  block.className = "phase-block";
+  block.innerHTML = `
+    <h3><span class="dot" style="background:${statusColor(p.status)}"></span> Fase ${p.id} — ${p.name}</h3>
+    <div class="meta">${p.note || ""}</div>
+    <div class="unit-grid">
+      ${p.units.map(u => `<div class="unit status-${u.status}"><span class="num">${u.n}.</span>${u.label}</div>`).join("")}
+    </div>
+  `;
+  container.appendChild(block);
+});
+</script>
+</body>
+</html>
