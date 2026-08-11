@@ -11,10 +11,14 @@ Responda por escrito (pode ser neste README, numa cópia local, ou em
 
 1. Uma variável declarada com `var` dentro de um `if { }` continua
    acessível depois do `if`? E uma declarada com `let`?
+   `R =  var continua acessível, let não.`
 2. O que significa "hoisting"? Ele funciona igual para `var`, `let`,
    `const` e declarações de função?
+   `R = Hoisting é o comportamento pelo qual declarações são registradas no escopo antes da execução. var é inicializada com undefined, enquanto let e const ficam na Temporal Dead Zone até sua declaração ser executada. Function declarations ficam disponíveis completamente antes da linha onde aparecem, enquanto function expressions e arrow functions seguem as regras da variável usada para armazená-las.`
+
 3. O que é a "temporal dead zone" (TDZ)? Em que situação você recebe o erro
    `Cannot access 'x' before initialization`?
+   `R = A Temporal Dead Zone (TDZ) é o intervalo entre o momento em que um bloco/escopo começa e o momento em que uma variável declarada com let ou const é efetivamente inicializada.`
 
 Não pesquise ainda. Escreva sua hipótese antes de implementar qualquer
 função — você vai comparar com o resultado real ao rodar os testes.
@@ -61,7 +65,7 @@ por dias sem reiniciar.
    usando variáveis `let` declaradas dentro de blocos, sem deixar nenhuma
    variável auxiliar vazar para fora do escopo onde é necessária.
 3. **`describeShadowing(outerValue)`** — dentro de um bloco `{ }`, declare
-   `let outerValue = outerValue + 10` (isso é *shadowing*: uma nova
+   `let outerValue = outerValue + 10` (isso é _shadowing_: uma nova
    variável com o mesmo nome do parâmetro, válida só dentro do bloco).
    Retorne `{ outer: <valor original do parâmetro>, inner: <valor dentro do bloco> }`.
 4. **`trackLastEvenFunctionScoped(numbers)`** — usando **`var`** (de

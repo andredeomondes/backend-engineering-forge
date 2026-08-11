@@ -7,22 +7,55 @@
 
 // test: node --test --test-name-pattern="sumUsingBlockScope" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function sumUsingBlockScope(a, b) {
-  throw new Error("not implemented: sumUsingBlockScope");
+  let result;
+  {
+    let sum = a + b;
+    result = sum;
+  }
+  return result;
 }
 
 // test: node --test --test-name-pattern="maxOfThreeBlockScoped" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function maxOfThreeBlockScoped(a, b, c) {
-  throw new Error("not implemented: maxOfThreeBlockScoped");
-}
+  {
+    let maior = a;
 
+    if (b > maior) {
+      maior = b;
+    }
+
+    if (c > maior) {
+      maior = c;
+    }
+
+    return maior;
+  }
+}
 // test: node --test --test-name-pattern="describeShadowing" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function describeShadowing(outerValue) {
-  throw new Error("not implemented: describeShadowing");
+  const original = outerValue;
+  let inner;
+  {
+    let outerValue = original + 10;
+    inner = outerValue;
+  }
+  return {
+    outer: outerValue,
+    inner: inner,
+  };
 }
 
 // test: node --test --test-name-pattern="trackLastEvenFunctionScoped" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function trackLastEvenFunctionScoped(numbers) {
-  throw new Error("not implemented: trackLastEvenFunctionScoped");
+  var lastEven;
+
+  for (let i = 0; i < numbers.length; i++) {
+    if (numbers[i] % 2 === 0) {
+      lastEven = numbers[i];
+    }
+  }
+
+  return lastEven;
 }
 
 // test: node --test --test-name-pattern="pushIntoConstArray" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
