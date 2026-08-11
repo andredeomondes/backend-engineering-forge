@@ -181,3 +181,50 @@ Continuar unidade 3: `composeTwo` (composição de funções), depois
 `invokeNTimes`, `curriedAdd`, `formatPrice`, debugging
 (`averageOrZero`, `makeMultiplier`) e desafio integrador
 (`buildOrderProcessor`).
+
+## 2026-08-10 — dia 006 de estudo
+
+### Objetivo da sessão
+
+Unidade 3 — funções (fechamento).
+
+### O que fiz
+
+Concluídos os 6 exercícios restantes: `invokeNTimes` (loop + push,
+coleta `fn(i)` para i de 0 a n-1), `curriedAdd` (currying com arrows
+encadeadas `(a) => (b) => (c) => a+b+c`), `formatPrice` (bracket
+notation em objeto de símbolos + `??` como fallback pra moeda
+desconhecida). Debugging: `averageOrZero` (bug de divisão por zero em
+lista vazia, corrigido com guard `if (numbers.length === 0) return
+0`), `makeMultiplier` (bug de arrow sem `return` dentro de bloco
+`{}`, corrigido). Refatoração: `refactorOrderTotal` (convertido de
+`var` + `if(=== undefined)` repetido 3x para desestruturação com
+parâmetros default). Desafio integrador: `buildOrderProcessor`
+(closure que retorna função processadora, filtra `cancelled` via
+`if` dentro do loop, soma `amount`, aplica `taxRate`, retorna
+`{ totalWithTax, processedCount }`).
+
+### Dificuldades
+
+Currying — sintaxe de arrows aninhadas custou pra fixar (tentativa
+inicial usou recursão infinita chamando a própria função). Bracket
+vs dot notation em objetos (`symbols.currency` vs `symbols[currency]`)
+— confusão entre chave literal e valor de variável. `.filter()` como
+conceito novo, evitado no exercício final em favor de loop único com
+`if` (ferramenta já dominada). Erro de posicionamento de `return`
+dentro do loop no primeiro rascunho de `buildOrderProcessor`
+(retornava na primeira iteração).
+
+### Ajuda utilizada
+
+Guiado por perguntas/exemplos e esqueleto em passos, sem solução
+colada — usuário escreveu todo o código dos exercícios avaliados.
+
+### Entrega concreta
+
+Unidade 3 completa: 16/16 exercícios, suite verde (29/29 testes).
+
+### Próximo passo
+
+Iniciar unidade 4 (a definir). Considerar retomar DSA (sessão 01
+preparada desde 23/07, ainda não tentada) em paralelo.

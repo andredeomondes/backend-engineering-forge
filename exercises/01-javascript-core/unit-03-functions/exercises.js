@@ -69,22 +69,36 @@ export function firstArgumentType(...args) {
 
 // test: node --test --test-name-pattern="composeTwo" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export function composeTwo(f, g) {
-  throw new Error("not implemented: composeTwo");
+  function h(x) {
+    return f(g(x));
+  }
+  return h;
 }
 
 // test: node --test --test-name-pattern="invokeNTimes" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export function invokeNTimes(fn, n) {
-  throw new Error("not implemented: invokeNTimes");
+  const results = [];
+  for (let i = 0; i < n; i++) {
+    results.push(fn(i));
+  }
+
+  return results;
 }
 
 // test: node --test --test-name-pattern="curriedAdd" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export function curriedAdd(a) {
-  throw new Error("not implemented: curriedAdd");
+  return (b) => (c) => a + b + c;
 }
 
 // test: node --test --test-name-pattern="formatPrice" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export function formatPrice(amount, currency = "BRL") {
-  throw new Error("not implemented: formatPrice");
+  if (amount < 0) {
+    throw new RangeError("O valor não pode ser negativo!");
+  }
+
+  const symbols = { BRL: "R$", USD: "$", EUR: "€" };
+
+  return `${symbols[currency] ?? currency} ${amount.toFixed(2)}`;
 }
 
 // --- Debugging --------------------------------------------------------------
@@ -94,22 +108,21 @@ export function formatPrice(amount, currency = "BRL") {
 
 // test: node --test --test-name-pattern="averageOrZero" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export function averageOrZero(numbers = []) {
-  // Sintoma relatado: chamar averageOrZero() sem argumentos, ou com uma lista
-  // vazia, deveria retornar 0, mas está retornando NaN.
+  if (numbers.length === 0) {
+    return 0;
+  }
+
   let total = 0;
   for (const n of numbers) {
     total += n;
   }
+
   return total / numbers.length;
 }
 
 // test: node --test --test-name-pattern="makeMultiplier" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export function makeMultiplier(factor) {
-  // Sintoma relatado: a função retornada por makeMultiplier sempre devolve
-  // undefined, em vez do produto esperado.
-  const multiplier = (n) => {
-    n * factor;
-  };
+  const multiplier = (n) => n * factor;
   return multiplier;
 }
 
@@ -120,20 +133,8 @@ export function makeMultiplier(factor) {
 // observável.
 
 // test: node --test --test-name-pattern="refactorOrderTotal" exercises/01-javascript-core/unit-03-functions/exercises.test.js
-export function refactorOrderTotal(order) {
-  var quantity = order.quantity;
-  if (quantity === undefined) {
-    quantity = 1;
-  }
-  var price = order.price;
-  if (price === undefined) {
-    price = 0;
-  }
-  var discount = order.discount;
-  if (discount === undefined) {
-    discount = 0;
-  }
-  var total = price * quantity * (1 - discount);
+export function refactorOrderTotal({ price = 0, quantity = 1, discount = 0 }) {
+  let total = price * quantity * (1 - discount);
   if (total < 0) {
     total = 0;
   }
@@ -144,5 +145,18 @@ export function refactorOrderTotal(order) {
 
 // test: node --test --test-name-pattern="buildOrderProcessor" exercises/01-javascript-core/unit-03-functions/exercises.test.js
 export function buildOrderProcessor(taxRate = 0) {
-  throw new Error("not implemented: buildOrderProcessor");
+  return function processOrders(orders) {
+    let total = 0;
+    let processedCount = 0;
+
+    for (const order of orders) {
+      if (order.status !== "cancelled") {
+        total += order.amount;
+        processedCount++;
+      }
+    }
+
+    let totalWithTax = total * (1 + taxRate);
+    return { totalWithTax: totalWithTax, processedCount: processedCount };
+  };
 }
