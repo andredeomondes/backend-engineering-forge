@@ -270,3 +270,54 @@ com bug pendente.
 
 Fechar `nestedBlockCounter` (converter string pra número, adicionar
 `return`), seguir pros demais exercícios da unidade 4.
+
+## 2026-08-12 — sessão
+
+### Objetivo da sessão
+
+Fechar unidade 4 (lexical scope): 6 exercícios restantes.
+
+### O que fiz
+
+`nestedBlockCounter` já veio corrigido de sessão anterior (achado
+passando ao rodar suite). Resolvido: `varDeclaredValueBeforeAssignment`,
+`compareVarAndLetLeak`, `createIifeCounter`, `sumOrderTotals` (bug fix),
+`computeDiscountedPrice` (bug fix), `createSequentialIdGenerator`.
+
+### Dificuldades
+
+`compareVarAndLetLeak`: várias rodadas — `let scopedLet` fora do bloco
+(não testava vazamento de verdade), `return` com sintaxe de string
+literal em vez de objeto, lógica de `typeof x !== "undefined"`
+invertida (`==` em vez de `!==`) por duas vezes, typo `scopedLeat`,
+`return` com valores hardcoded (`true`/`false`) em vez das variáveis
+calculadas. `createIifeCounter`: nunca tinha visto IIFE — pediu
+explicação do mecanismo (`(function(){})()`) do zero; primeiro rascunho
+com chaves desbalanceadas, shorthand de objeto `{increment, getValue}`
+sem definir os métodos, faltou `export` e `return` na IIFE externa,
+depois `count = count += 1` redundante. `sumOrderTotals`/
+`computeDiscountedPrice`: fixes diretos, sem atrito — usuário já sacou
+a causa (bug de `var` redeclarado, TDZ de `let`) antes de escrever.
+`createSequentialIdGenerator`: confundiu retorno de objeto com retorno
+de função (`return { count+=1, ... }` não é sintaxe válida), variável
+inventada `contador` em vez de `count` (repetiu erro 2x mesmo após
+correção apontada), esqueceu `export` 2x, e no teste manual esqueceu
+parênteses de chamada (`console.log(nextId)` vs `nextId()`) —
+perguntou por que precisava do `const` pra chamar, resolvido explicando
+diferença entre referência de função e invocação.
+
+### Ajuda utilizada
+
+Guiado por perguntas em todos os 6 exercícios, sem solução colada —
+usuário pediu solução pronta 1x (`compareVarAndLetLeak`), recusado
+conforme regra "no direct answers"; oferecido esqueleto com `???` no
+lugar em vez de código pronto.
+
+### Entrega concreta
+
+Unidade 4 completa: 16/16 exercícios, suite verde (21/21 testes).
+Commit e push pendentes até usuário confirmar.
+
+### Próximo passo
+
+Unidade 5 (closures) — já entregue, aguardando início.

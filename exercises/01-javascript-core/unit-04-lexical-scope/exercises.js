@@ -103,22 +103,48 @@ export function nestedBlockCounter(operations) {
 
 // test: node --test --test-name-pattern="hoistedFunctionCall" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function hoistedFunctionCall() {
-  throw new Error("not implemented: hoistedFunctionCall");
+  return helper();
+  function helper() {
+    return "hoisted";
+  }
 }
 
 // test: node --test --test-name-pattern="varDeclaredValueBeforeAssignment" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function varDeclaredValueBeforeAssignment() {
-  throw new Error("not implemented: varDeclaredValueBeforeAssignment");
+  const result = typeof x;
+  var x = 10;
+  return result;
 }
 
 // test: node --test --test-name-pattern="compareVarAndLetLeak" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function compareVarAndLetLeak(shouldRun) {
-  throw new Error("not implemented: compareVarAndLetLeak");
-}
+  if (shouldRun) {
+    var leakyVar = "vazou";
+    let scopedLet = "não vazou";
+  } else {
+    return { varLeaked: false, letLeaked: false };
+  }
 
+  const varLeaked = typeof leakyVar !== "undefined";
+  const letLeaked = typeof scopedLet !== "undefined";
+  return {
+    varLeaked,
+    letLeaked,
+  };
+}
 // test: node --test --test-name-pattern="createIifeCounter" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function createIifeCounter() {
-  throw new Error("not implemented: createIifeCounter");
+  return (function () {
+    let count = 0;
+    return {
+      increment() {
+        count = count += 1;
+      },
+      getValue() {
+        return count;
+      },
+    };
+  })();
 }
 
 // --- Debugging --------------------------------------------------------------
@@ -131,11 +157,11 @@ export function sumOrderTotals(items) {
   // Sintoma relatado: o total final vem sempre igual ao valor do último
   // item da lista, como se os anteriores tivessem sido ignorados.
   var total = 0;
-  for (var i = 0; i < items.length; i++) {
+  for (let i = 0; i < items.length; i++) {
     if (items[i].hasFee) {
-      var total = items[i].price * 1.1;
+      total += items[i].price * 1.1;
     } else {
-      var total = items[i].price;
+      total += items[i].price;
     }
   }
   return total;
@@ -146,16 +172,15 @@ export function computeDiscountedPrice(price, isMember) {
   // Sintoma relatado: chamar a função com isMember = true lança
   // "Cannot access 'discount' before initialization" em vez de aplicar o
   // desconto normalmente.
-  let finalPrice;
+  let finalPrice = 0;
   if (isMember) {
-    finalPrice = price * (1 - discount);
     let discount = 0.1;
+    finalPrice = price * (1 - discount);
   } else {
     finalPrice = price;
   }
   return finalPrice;
 }
-
 // --- Refatoração -------------------------------------------------------------
 //
 // Esta função já funciona corretamente. A tarefa é refatorar para usar
@@ -164,12 +189,12 @@ export function computeDiscountedPrice(price, isMember) {
 
 // test: node --test --test-name-pattern="refactorScoreSummary" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function refactorScoreSummary(scores) {
-  var total = 0;
-  var max = -Infinity;
-  var min = Infinity;
-  for (var i = 0; i < scores.length; i++) {
-    var s = scores[i];
-    total = total + s;
+  let total = 0;
+  let max = -Infinity;
+  let min = Infinity;
+  for (let i = 0; i < scores.length; i++) {
+    let s = scores[i];
+    total += s;
     if (s > max) {
       max = s;
     }
@@ -177,7 +202,7 @@ export function refactorScoreSummary(scores) {
       min = s;
     }
   }
-  var avg = total / scores.length;
+  const avg = total / scores.length;
   return { total: total, max: max, min: min, average: avg };
 }
 
@@ -185,5 +210,11 @@ export function refactorScoreSummary(scores) {
 
 // test: node --test --test-name-pattern="createSequentialIdGenerator" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function createSequentialIdGenerator(prefix) {
-  throw new Error("not implemented: createSequentialIdGenerator");
+  let count = 0;
+
+  return function nextId() {
+    count += 1;
+
+    return `${prefix}-${count}`;
+  };
 }

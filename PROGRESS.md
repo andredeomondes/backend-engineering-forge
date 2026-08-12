@@ -21,8 +21,8 @@ Status: todas as 27 unidades geradas (2026-07-25, a pedido do usuário, fora do 
 
 - [x] Unidade 1 — valores, tipos, operadores, coerção, igualdade (16/16 exercícios, suite verde)
 - [x] Unidade 2 — controle de fluxo (16/16 exercícios, suite verde — 24/24 testes)
-- [ ] Unidade 3 — funções (entregue)
-- [ ] Unidade 4 — escopo léxico (entregue)
+- [x] Unidade 3 — funções (16/16 exercícios, suite verde — 29/29 testes)
+- [x] Unidade 4 — escopo léxico (16/16 exercícios, suite verde — 21/21 testes)
 - [ ] Unidade 5 — closures (entregue)
 - [ ] Unidade 6 — arrays e objetos (entregue)
 - [ ] Unidade 7 — referências, mutabilidade e cópias (entregue)
