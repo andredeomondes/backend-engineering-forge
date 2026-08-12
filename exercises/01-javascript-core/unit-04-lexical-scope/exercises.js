@@ -60,22 +60,43 @@ export function trackLastEvenFunctionScoped(numbers) {
 
 // test: node --test --test-name-pattern="pushIntoConstArray" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function pushIntoConstArray(items) {
-  throw new Error("not implemented: pushIntoConstArray");
+  const arr = [];
+
+  for (let i = 0; i < items.length; i++) {
+    arr.push(items[i]);
+  }
+
+  return arr;
 }
 
 // test: node --test --test-name-pattern="reassignLetInLoop" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function reassignLetInLoop(start, times) {
-  throw new Error("not implemented: reassignLetInLoop");
+  let counter = start;
+  let i = 0;
+  while (i < times) {
+    counter += 1;
+    i += 1;
+  }
+  return counter;
 }
 
 // test: node --test --test-name-pattern="attemptConstReassignment" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function attemptConstReassignment() {
-  throw new Error("not implemented: attemptConstReassignment");
+  const valor = 1;
+  try {
+    valor = 2;
+  } catch (erro) {
+    return erro instanceof TypeError;
+  }
+  return false;
 }
-
 // test: node --test --test-name-pattern="nestedBlockCounter" exercises/01-javascript-core/unit-04-lexical-scope/exercises.test.js
 export function nestedBlockCounter(operations) {
-  throw new Error("not implemented: nestedBlockCounter");
+  let count = 0;
+  for (let i = 0; i < operations.length; i++) {
+    count += Number(operations[i]);
+  }
+  return count;
 }
 
 // --- Intermediários --------------------------------------------------------

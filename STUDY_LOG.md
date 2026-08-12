@@ -228,3 +228,45 @@ Unidade 3 completa: 16/16 exercícios, suite verde (29/29 testes).
 
 Iniciar unidade 4 (a definir). Considerar retomar DSA (sessão 01
 preparada desde 23/07, ainda não tentada) em paralelo.
+
+## 2026-08-12
+
+### Objetivo da sessão
+
+Unidade 4 (lexical scope), continuando exercícios básicos.
+
+### O que fiz
+
+Trabalhado em `pushIntoConstArray`, `reassignLetInLoop`,
+`attemptConstReassignment`, `nestedBlockCounter` (em progresso, não
+fechado).
+
+### Dificuldades
+
+`reassignLetInLoop`: `return` posicionado dentro do `while` (saía na
+1ª iteração); depois condição de loop usando `counter < times` em vez
+de contador de iterações separado (`i`) — só funcionava por acidente
+com `start=0`. `attemptConstReassignment`: `catch (TypeError)`
+tratado como filtro de tipo — na verdade é só nome de variável;
+corrigido para `catch (erro)` + `erro instanceof TypeError`.
+`nestedBlockCounter`: ainda com bug (soma string em vez de número
+via `count += operations[i]`, sem número real "+1"/"-1" parseado; e
+falta `return`) — não fechado, retomar próxima sessão.
+
+### Ajuda utilizada
+
+Guiado por perguntas, sem solução colada — exceção: usuário pediu
+resposta direta 1x em `reassignLetInLoop` (regra "no direct answers"
+segurou, expliquei em passos/palavras em vez de código).
+
+### Entrega concreta
+
+Unidade 4 em progresso: 3 exercícios corrigidos e prontos
+(`pushIntoConstArray` correto desde início; `reassignLetInLoop` e
+`attemptConstReassignment` corrigidos), `nestedBlockCounter` ainda
+com bug pendente.
+
+### Próximo passo
+
+Fechar `nestedBlockCounter` (converter string pra número, adicionar
+`return`), seguir pros demais exercícios da unidade 4.
