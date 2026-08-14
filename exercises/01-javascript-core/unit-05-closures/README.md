@@ -11,13 +11,17 @@ Responda por escrito (pode ser neste README, numa cópia local, ou em
 `notes/concepts/` se quiser guardar):
 
 1. Em uma frase, o que é uma closure?
+   `R = é uma função que tem acesso a função pai`
 2. Se uma função interna lê uma variável da função externa, e a função
    externa já retornou, essa variável ainda existe em algum lugar? Onde?
+   `R = na memória heap`
 3. Por que criar funções dentro de um `for (var i = ...)` é uma armadilha
    clássica de closures? O que muda se você usar `let` no lugar de `var`?
-
-Não pesquise ainda. Escreva sua hipótese antes de implementar qualquer
-função — você vai comparar com o resultado real ao rodar os testes.
+   `R = let tem escopo de bloco e é criada uma variável em cada iteração,
+    já o var tem escopo de função e ao invés de criar, ele reatribui 
+    o valor várias vezes`
+   Não pesquise ainda. Escreva sua hipótese antes de implementar qualquer
+   função — você vai comparar com o resultado real ao rodar os testes.
 
 ## Por que isso importa para backend
 

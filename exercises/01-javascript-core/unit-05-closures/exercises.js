@@ -7,42 +7,106 @@
 
 // test: node --test --test-name-pattern="makeCounter" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function makeCounter(start = 0) {
-  throw new Error("not implemented: makeCounter");
+  let count = start;
+  return function increment() {
+    count++;
+    return count;
+  };
 }
 
 // test: node --test --test-name-pattern="makeGreeter" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function makeGreeter(greeting) {
-  throw new Error("not implemented: makeGreeter");
+  return (name) => `Prezado(a), ${name}!`;
 }
 
 // test: node --test --test-name-pattern="createBankAccount" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function createBankAccount(initialBalance = 0) {
-  throw new Error("not implemented: createBankAccount");
+  return {
+    deposit(amount) {
+      if (amount <= 0) {
+        throw new RangeError(`valor inválido`);
+      }
+
+      return (initialBalance += amount);
+    },
+    withdraw(amount) {
+      if (amount <= 0) {
+        throw new RangeError(`valor inválido`);
+      }
+      if (initialBalance < amount) {
+        throw new Error(`saldo insuficiente`);
+      }
+      return (initialBalance -= amount);
+    },
+    getBalance() {
+      return initialBalance;
+    },
+  };
 }
 
 // test: node --test --test-name-pattern="onceFn" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function onceFn(fn) {
-  throw new Error("not implemented: onceFn");
+  let count = 0;
+  let result;
+  return function wrapped() {
+    if (count == 0) {
+      result = fn();
+    }
+    count++;
+    return result;
+  };
 }
 
 // test: node --test --test-name-pattern="createToggle" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function createToggle(initial = false) {
-  throw new Error("not implemented: createToggle");
+  return function () {
+    initial = !initial;
+    return initial;
+  };
 }
 
 // test: node --test --test-name-pattern="createAccumulator" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function createAccumulator(initial = 0) {
-  throw new Error("not implemented: createAccumulator");
+  return function add(n) {
+    return (initial += n);
+  };
 }
 
 // test: node --test --test-name-pattern="createStack" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function createStack() {
-  throw new Error("not implemented: createStack");
+  let stack = [];
+
+  return {
+    push(item) {
+      return stack.push(item);
+    },
+    pop() {
+      return stack.pop();
+    },
+    peek() {
+      return stack[stack.length - 1];
+    },
+    size() {
+      return stack.length;
+    },
+  };
 }
 
 // test: node --test --test-name-pattern="rememberLastCall" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function rememberLastCall(fn) {
-  throw new Error("not implemented: rememberLastCall");
+  let lastCall = null;
+
+  function wrapped(...args) {
+    const result = fn(...args);
+    lastCall = { args, result };
+    return result;
+  }
+
+  wrapped.getLastCall = function () {
+    return lastCall || null;
+  };
+
+  return wrapped;
 }
 
 // --- Intermediários --------------------------------------------------------
