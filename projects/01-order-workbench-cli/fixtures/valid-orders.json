@@ -1,0 +1,18 @@
+[
+  {
+    "id": "order-1001",
+    "status": "paid",
+    "items": [
+      { "sku": "BOOK-01", "quantity": 2, "unitPriceInCents": 4590 },
+      { "sku": "PEN-02", "quantity": 3, "unitPriceInCents": 250 }
+    ]
+  },
+  {
+    "id": "order-1002",
+    "status": "pending",
+    "items": [
+      { "sku": "MUG-01", "quantity": 1, "unitPriceInCents": 2990 }
+    ]
+  }
+]
+

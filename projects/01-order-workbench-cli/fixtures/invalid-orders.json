@@ -1,0 +1,15 @@
+[
+  {
+    "id": "",
+    "status": "unknown",
+    "items": []
+  },
+  {
+    "id": "order-1003",
+    "status": "paid",
+    "items": [
+      { "sku": "BOOK-01", "quantity": 0, "unitPriceInCents": -100 }
+    ]
+  }
+]
+

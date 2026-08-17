@@ -48,7 +48,7 @@ Engineering.
 A Parte IV trata senioridade como responsabilidade por sistemas em
 produção (performance, confiabilidade, segurança, sistemas distribuídos,
 operação, incidentes, arquitetura, liderança técnica) — não como "mais
-frameworks". Detalhe completo em `BACKEND_ENGINEERING_FORGE.md`. Concluir
+frameworks". Índice completo em `BACKEND_ENGINEERING_FORGE.md`. Concluir
 a trilha não garante o cargo de pleno ou sênior; desenvolve as
 competências técnicas e comportamentais associadas a eles — experiência
 real, responsabilidade por produção e contexto de empresa continuam
@@ -56,9 +56,18 @@ necessários.
 
 ## Estado atual
 
-- **Fase:** 0 — Ambiente profissional e fundamentos da Web (em andamento)
-- **Unidade ativa:** Fase 1 / Unidade 3 — funções (unidades 1-2 concluídas)
-- Veja `PROGRESS.md` para o detalhe.
+O estado muda durante cada sessão e possui uma única fonte oficial:
+[`PROGRESS.md`](PROGRESS.md). O README não replica a unidade ativa para evitar
+informações desatualizadas.
+
+## Trilha poliglota opcional
+
+Depois do gate da Fase 9, será possível selecionar uma única especialização em
+Java/Spring, C#/.NET ou Go. TypeScript, Node.js e NestJS continuam sendo a
+formação principal, com divisão aproximada de 70%/30% depois da escolha.
+
+As três opções estão bloqueadas e nenhuma foi selecionada. Veja
+[`docs/tracks/POLYGLOT_BACKEND_TRACK.md`](docs/tracks/POLYGLOT_BACKEND_TRACK.md).
 
 ## Como rodar os testes
 
@@ -99,6 +108,8 @@ npm run forge -- export csv
 
 ## Documentos de acompanhamento
 
+- `docs/README.md` — índice da documentação por assunto.
+- `docs/REPOSITORY_MAP.md` — mapa curto para pessoas e agentes de IA.
 - `ROADMAP.md` — fases completas da formação.
 - `PROGRESS.md` — o que já foi liberado e concluído.
 - `STUDY_LOG.md` — diário de sessões de estudo.
@@ -109,7 +120,7 @@ npm run forge -- export csv
 ## Comandos de mentoria
 
 Ver `LEARNING_CONTRACT.md` para a lista completa
-(`INICIAR`, `PROXIMA_UNIDADE`, `REVISAR`, `DICA_1/2/3`, `MOSTRAR_SOLUCAO`,
+(`INICIAR`, `PROXIMA_UNIDADE`, `SELECIONAR_TRILHA`, `REVISAR`, `DICA_1/2/3`, `MOSTRAR_SOLUCAO`,
 `SIMULAR_BUG`, `SIMULAR_PR`, `AVALIAR_FASE`, `GERAR_PROJETO`, entre outros).
 
 A especificação completa da formação está em `BACKEND_ENGINEERING_FORGE.md`.

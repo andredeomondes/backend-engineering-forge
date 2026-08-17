@@ -1,14 +1,15 @@
 # Roadmap
 
-Fonte da verdade completa: `BACKEND_ENGINEERING_FORGE.md`. Este arquivo é o
-resumo vivo de fases, liberado progressivamente — não gerado todo de uma vez.
+Índice completo: `BACKEND_ENGINEERING_FORGE.md`. Currículo modular em
+`docs/curriculum/`. Este arquivo resume fases e bloqueios; o estado detalhado
+fica em `PROGRESS.md`.
 
 ## PARTE I — Backend Foundations
 
 | Fase | Tema                                        | Status                              |
 | ---- | ------------------------------------------- | ------------------------------------ |
 | 0    | Ambiente profissional e fundamentos da Web  | 🟡 em andamento                     |
-| 1    | JavaScript profundo para backend            | 🟡 unidades 1-2 concluídas, unidade 3 ativa |
+| 1    | JavaScript profundo para backend            | 🟡 unidades 1-4 concluídas, unidade 5 ativa |
 | 2    | TypeScript profissional                     | 🟡 8/8 unidades geradas, nenhuma liberada para estudo |
 | 3    | Node.js por baixo dos frameworks            | ⚪ bloqueada                         |
 
@@ -16,7 +17,7 @@ resumo vivo de fases, liberado progressivamente — não gerado todo de uma vez.
 
 | Fase | Tema                                        | Status                              |
 | ---- | ------------------------------------------- | ------------------------------------ |
-| 4    | SQL e PostgreSQL de verdade                 | ⚪ bloqueada                         |
+| 4    | SQL e PostgreSQL de verdade                 | ⚪ bloqueada · 8/8 unidades preparadas |
 | 5    | Engenharia de APIs com Express              | ⚪ bloqueada                         |
 | 6    | NestJS profissional                         | ⚪ bloqueada                         |
 | 7    | Autenticação, autorização e segurança       | ⚪ bloqueada                         |
@@ -27,6 +28,25 @@ resumo vivo de fases, liberado progressivamente — não gerado todo de uma vez.
 | Fase | Tema                                        | Status                              |
 | ---- | ------------------------------------------- | ------------------------------------ |
 | 9    | Testes, qualidade e manutenção              | ⚪ bloqueada                         |
+
+## TRILHA PARALELA OPCIONAL — Polyglot Backend Engineering
+
+Não substitui nem renumera as Fases 10–27. A escolha só é permitida depois do
+gate da Fase 9 e ocupa aproximadamente 30% do tempo de estudo.
+
+| Opção | Módulos | Estado |
+|---|---|---|
+| Java + Spring | `JAVA-01`–`JAVA-09` | BLOQUEADA — escolha permitida somente após o gate da Fase 9 |
+| C# + .NET | `DOTNET-01`–`DOTNET-09` | BLOQUEADA — escolha permitida somente após o gate da Fase 9 |
+| Go | `GO-01`–`GO-09` | BLOQUEADA — escolha permitida somente após o gate da Fase 9 |
+
+Nenhuma opção está selecionada. Detalhes em
+`docs/tracks/POLYGLOT_BACKEND_TRACK.md`.
+
+## Continuação da PARTE III
+
+| Fase | Tema                                        | Status                              |
+| ---- | ------------------------------------------- | ------------------------------------ |
 | 10   | Arquitetura e design de software            | ⚪ bloqueada                         |
 | 11   | Docker, CI/CD, AWS e observabilidade        | ⚪ bloqueada                         |
 | 12   | Estruturas de dados e algoritmos (paralelo) | ⚪ inicia junto à Fase 1             |
@@ -35,9 +55,8 @@ resumo vivo de fases, liberado progressivamente — não gerado todo de uma vez.
 
 ## PARTE IV — Senior Backend Engineering Track (após Pleno)
 
-Detalhe completo em `BACKEND_ENGINEERING_FORGE.md`, bloco "PARTE IV —
-Senior Backend Engineering Track". Não libera antes da Definição de Pronto
-de Pleno (seção 10 do documento principal).
+Detalhe completo em `docs/curriculum/senior-backend.md`. Não libera antes da
+Definição de Pronto de Pleno em `docs/curriculum/production-backend.md`.
 
 | Fase | Tema                                                       | Status       |
 | ---- | ------------------------------------------------------------ | ------------ |
@@ -58,6 +77,6 @@ de Pleno (seção 10 do documento principal).
 Legenda: 🟢 concluída · 🟡 em andamento · ⚪ bloqueada/não iniciada.
 
 Uma fase só avança com `PROXIMA_UNIDADE` após o gate da unidade anterior
-ser cumprido (ver critérios em `BACKEND_ENGINEERING_FORGE.md`, seção 4.6).
+ser cumprido (ver critérios em `docs/curriculum/overview.md`, seção 4.6).
 Concluir a Parte IV desenvolve competências associadas a sênior — não
 garante o cargo (ver Definição de Pronto — Senior Backend Engineer).

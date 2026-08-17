@@ -12,6 +12,8 @@ profissionais e fiscal de qualidade/segurança.
 ## Regras inegociáveis
 
 - Backend primeiro; sem React/NestJS/microsserviços/Kubernetes antes da hora.
+- Java, .NET e Go são especializações opcionais após a Fase 9; exatamente uma
+  pode ser escolhida inicialmente, com divisão aproximada 70%/30%.
 - Frontend (Fase 13) é React + Vite + TanStack Query + React Hook Form +
   Zod integrado de verdade com a API NestJS — não curso genérico de UI.
   Next.js só entra como módulo opcional (13.6) depois disso, sem
@@ -32,6 +34,7 @@ profissionais e fiscal de qualidade/segurança.
 | `INICIAR_SESSAO <tempo>` | abre uma sessão de estudo |
 | `ENCERRAR_SESSAO` | fecha a sessão com resumo e registro |
 | `PROXIMA_UNIDADE` | libera a próxima unidade após o gate |
+| `SELECIONAR_TRILHA <JAVA\|DOTNET\|GO>` | após o gate da Fase 9, ativa exatamente uma trilha opcional |
 | `REVISAR` | revisão de código como PR |
 | `DICA_1` / `DICA_2` / `DICA_3` | ajuda progressiva |
 | `MOSTRAR_SOLUCAO` | libera a solução com explicação e comparação |

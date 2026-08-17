@@ -7,6 +7,8 @@ import {
   JAVASCRIPT_UNITS_PATH,
   NODE_UNITS_PATH,
   PROJECTS_PATH,
+  ROADMAP_PATH,
+  SQL_UNITS_PATH,
   TYPESCRIPT_UNITS_PATH,
 } from "./paths.js";
 
@@ -14,6 +16,7 @@ const TRACK_CONFIG = {
   javascript: { prefix: "js", phase: 1, extension: "js" },
   typescript: { prefix: "ts", phase: 2, extension: "ts" },
   node: { prefix: "node", phase: 3, extension: "ts" },
+  sql: { prefix: "sql", phase: 4, extension: "sql" },
   dsa: { prefix: "dsa", phase: 12, extension: "js" },
 };
 
@@ -44,6 +47,11 @@ function parseHints(markdown) {
     .filter((hint) => hint.level);
 }
 
+function extractSqlExercises(sql) {
+  return [...sql.matchAll(/^-- TODO(?:\s+\d+|\s+Migration\s+\d+|\s+Seed|\s+Paginação|:)?\s*:?\s*(.*)$/gmi)]
+    .map((match, index) => ({ index: index + 1, name: match[1].trim() || `Exercício ${index + 1}` }));
+}
+
 function readUnit(root, directoryName, track) {
   const directory = path.join(root, directoryName);
   const readmePath = path.join(directory, "README.md");
@@ -56,6 +64,8 @@ function readUnit(root, directoryName, track) {
   const { prefix, phase, extension } = TRACK_CONFIG[track];
   const hintsPath = path.join(directory, "hints.md");
   const hintsRaw = existsSync(hintsPath) ? readFileSync(hintsPath, "utf8") : "";
+  const exercisePath = path.join(directory, track === "sql" ? "exercises.sql" : `exercises.${extension}`);
+  const exerciseRaw = existsSync(exercisePath) ? readFileSync(exercisePath, "utf8") : "";
 
   return {
     id: parsed.data.id || `${prefix}-${String(number).padStart(2, "0")}`,
@@ -68,10 +78,10 @@ function readUnit(root, directoryName, track) {
     prerequisites: parsed.data.prerequisites || [],
     directory,
     readmePath,
-    testPath: path.join(directory, `exercises.test.${extension}`),
-    exercisePath: path.join(directory, `exercises.${extension}`),
+    testPath: path.join(directory, track === "sql" ? "checks.sql" : `exercises.test.${extension}`),
+    exercisePath,
     markdown: parsed.content,
-    exercises: extractExercises(parsed.content),
+    exercises: track === "sql" ? extractSqlExercises(exerciseRaw) : extractExercises(parsed.content),
     hints: parseHints(hintsRaw),
   };
 }
@@ -90,6 +100,7 @@ export function listUnits() {
     ...scanRoot(JAVASCRIPT_UNITS_PATH, "javascript"),
     ...scanRoot(TYPESCRIPT_UNITS_PATH, "typescript"),
     ...scanRoot(NODE_UNITS_PATH, "node"),
+    ...scanRoot(SQL_UNITS_PATH, "sql"),
     ...scanRoot(DSA_UNITS_PATH, "dsa"),
   ];
 }
@@ -113,4 +124,27 @@ export function listProjects() {
         markdown: parsed.content,
       };
     });
+}
+
+export function listPhases() {
+  const markdown = readFileSync(ROADMAP_PATH, "utf8");
+  return [...markdown.matchAll(/^\|\s*(\d{1,2})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|$/gm)].map(
+    (match) => {
+      const label = match[3].trim();
+      return {
+        number: Number(match[1]),
+        title: match[2].trim(),
+        label,
+        status: label.includes("🟢") ? "completed" : label.includes("🟡") ? "active" : "locked",
+      };
+    },
+  );
+}
+
+export function listPolyglotTracks() {
+  return [
+    { id: "java", title: "Java + Spring", modules: "JAVA-01–JAVA-09", status: "locked" },
+    { id: "dotnet", title: "C# + .NET", modules: "DOTNET-01–DOTNET-09", status: "locked" },
+    { id: "go", title: "Go para backend", modules: "GO-01–GO-09", status: "locked" },
+  ];
 }

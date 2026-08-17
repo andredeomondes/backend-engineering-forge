@@ -9,15 +9,20 @@
   },
   "scripts": {
     "test": "npm run test:unit",
-    "test:system": "node --test tools/forge-cli/lib/state.test.js tools/forge-cli/lib/commands/log.test.js tools/forge-core/*.test.js",
+    "test:system": "node --test tools/forge-cli/lib/state.test.js tools/forge-cli/lib/commands/log.test.js tools/forge-core/*.test.js tools/forge-sql/*.test.js",
     "test:unit": "node tools/forge-core/run-unit-tests.js",
     "test:dsa": "node tools/forge-core/run-unit-tests.js dsa-01",
+    "test:project-01": "node --test projects/01-order-workbench-cli/tests/order-workbench.test.js",
     "test:all": "node --test",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit -p tools/forge-web/tsconfig.json",
     "format": "prettier --write .",
     "forge": "node tools/forge-cli/forge.js",
     "forge:web": "node tools/forge-web/server.js",
+    "project:01": "node projects/01-order-workbench-cli/src/cli.js",
+    "sql:up": "docker compose -f exercises/04-sql-postgresql/compose.yaml up -d --wait",
+    "sql:down": "docker compose -f exercises/04-sql-postgresql/compose.yaml down -v",
+    "sql:test": "node tools/forge-sql/run-unit.js",
     "build:web": "vite build --config tools/forge-web/vite.config.js"
   },
   "devDependencies": {

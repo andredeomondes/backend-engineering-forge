@@ -19,7 +19,7 @@ import {
   setSetting,
 } from "./database.js";
 import { daysBetween, localDateString } from "./dates.js";
-import { getUnit, listProjects, listUnits } from "./curriculum.js";
+import { getUnit, listPhases, listPolyglotTracks, listProjects, listUnits } from "./curriculum.js";
 import { runUnitTests } from "./test-runner.js";
 
 function computeStreak(dates, today = localDateString()) {
@@ -68,12 +68,21 @@ export function getDashboard() {
     : null;
 
   const unitSummaries = units.map((unit) => unitSummary(unit, progress.get(unit.id)));
-  for (const track of ["javascript", "dsa"]) {
+  const trackRequirements = {
+    javascript: null,
+    dsa: null,
+    typescript: "js-27",
+    node: "ts-08",
+    sql: "node-07",
+  };
+  for (const track of Object.keys(trackRequirements)) {
     const trackUnits = unitSummaries.filter((unit) => unit.track === track);
     trackUnits.forEach((unit, index) => {
       const previous = trackUnits[index - 1];
+      const requirement = trackRequirements[track];
+      const trackReleased = !requirement || progress.get(requirement)?.status === "completed";
       const unlocked =
-        index === 0 ||
+        (index === 0 && trackReleased) ||
         unit.id === currentUnitId ||
         unit.status === "completed" ||
         previous?.status === "completed";
@@ -101,6 +110,8 @@ export function getDashboard() {
     recentSessions: listStudySessions(5),
     units: unitSummaries,
     projects: projectSummaries,
+    phases: listPhases(),
+    polyglotTracks: listPolyglotTracks(),
   };
 }
 

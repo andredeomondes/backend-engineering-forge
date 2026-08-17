@@ -131,7 +131,7 @@ textarea { resize: vertical; line-height: 1.5; }
 
 .page-header { min-height: 92px; display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
 .page-header strong { color: var(--green); font-size: 13px; }
-.track-section, .projects-section, .review-section { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.track-section, .roadmap-section, .projects-section, .polyglot-section, .review-section { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
 .track-heading { display: flex; align-items: center; gap: 12px; padding: 17px 20px; border-bottom: 1px solid var(--line); }
 .track-heading > svg { color: var(--green); }
 .track-heading div { display: flex; flex-direction: column; gap: 3px; }
@@ -152,6 +152,24 @@ textarea { resize: vertical; line-height: 1.5; }
 .project-list article:first-child { border-top: 0; }
 .project-list h4 { margin: 7px 0 0; font-size: 14px; }
 .project-list > article > span { color: var(--muted); font-size: 12px; }
+.phase-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; padding: 20px; }
+.phase-group { display: grid; align-content: start; gap: 0; }
+.phase-group > strong { margin-bottom: 8px; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.phase-row { min-height: 48px; display: grid; grid-template-columns: 30px minmax(0, 1fr); align-items: center; gap: 10px; padding: 7px 0; border-top: 1px solid #edf0ef; }
+.phase-row > span { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid #cfd7d5; border-radius: 4px; color: var(--muted); font-size: 10px; font-weight: 700; }
+.phase-row > div { min-width: 0; display: grid; gap: 2px; }
+.phase-row strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
+.phase-row small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: 10px; }
+.phase-row.active > span { background: var(--blue-soft); border-color: transparent; color: var(--blue); }
+.phase-row.completed > span { background: var(--green); border-color: var(--green); color: #fff; }
+.polyglot-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.polyglot-list article { min-height: 74px; display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 14px 20px; border-left: 1px solid #edf0ef; }
+.polyglot-list article:first-child { border-left: 0; }
+.polyglot-list article > svg { color: var(--muted); }
+.polyglot-list article > div { min-width: 0; display: grid; gap: 4px; }
+.polyglot-list strong { font-size: 13px; }
+.polyglot-list article > div span, .track-note { color: var(--muted); font-size: 11px; }
+.track-note { margin: 0; padding: 12px 20px; border-top: 1px solid var(--line); }
 
 .review-list { display: grid; }
 .review-list article { min-height: 72px; display: grid; grid-template-columns: 120px minmax(0, 1fr) 150px 105px; gap: 14px; align-items: center; padding: 12px 20px; border-top: 1px solid #edf0ef; }
@@ -184,6 +202,9 @@ textarea { resize: vertical; line-height: 1.5; }
   .dashboard-grid, .unit-layout { grid-template-columns: 1fr; }
   .unit-tools { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .gate-panel { grid-column: 1 / -1; }
+  .polyglot-list { grid-template-columns: 1fr; }
+  .polyglot-list article { border-left: 0; border-top: 1px solid #edf0ef; }
+  .polyglot-list article:first-child { border-top: 0; }
 }
 
 @media (max-width: 720px) {
@@ -205,6 +226,7 @@ textarea { resize: vertical; line-height: 1.5; }
   .lesson-header { padding: 21px 18px; }
   .markdown-body { padding: 17px 18px 28px; }
   .page-header { min-height: 75px; }
+  .phase-groups { grid-template-columns: 1fr; padding: 15px; }
   .review-list article { grid-template-columns: 1fr 1fr; padding: 15px; }
   .review-list .secondary-button { width: 100%; }
   .mobile-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; height: 62px; display: grid; grid-template-columns: repeat(4, 1fr); background: #fff; border-top: 1px solid var(--line); }

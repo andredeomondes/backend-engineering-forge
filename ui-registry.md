@@ -73,3 +73,24 @@ File: `tools/forge-web/src/styles.css`
 
 **Pattern notes:** Badges communicate state only. They are not buttons and do
 not receive hover styling.
+
+### Roadmap and Track Lists
+
+File: `tools/forge-web/src/components/ProgressView.tsx`
+Last updated: 2026-08-16
+
+| Property | Pattern |
+| --- | --- |
+| Background | `var(--surface)` |
+| Border | `1px solid var(--line)`, row separators `#edf0ef` |
+| Border radius | `6px` section, `4px` number/status marker |
+| Text — primary | `var(--ink)`, `12–13px` |
+| Text — secondary | `var(--muted)`, `10–11px` |
+| Spacing | `20px` section padding, `10–12px` row gaps |
+| Hover state | none for informational rows |
+| Shadow | none |
+| Accent usage | green completed, blue active/informational, muted locked |
+
+**Pattern notes:** Roadmap and specialization rows are informational, not
+interactive cards. Reuse the panel header and status badge patterns. Dense
+phase lists use two columns on desktop and one column on narrow screens.

@@ -31,6 +31,21 @@ Nenhuma habilidade é permanente — revisitar periodicamente.
 
 ---
 
+## Trilha paralela opcional — Polyglot Backend Engineering
+
+Bloqueada até o gate da Fase 9. Nenhuma opção foi selecionada.
+
+| Opção | Módulos | Estado | Última revisão |
+|---|---|---|---|
+| Java + Spring | `JAVA-01`–`JAVA-09` | BLOQUEADA | — |
+| C# + .NET | `DOTNET-01`–`DOTNET-09` | BLOQUEADA | — |
+| Go | `GO-01`–`GO-09` | BLOQUEADA | — |
+
+Quando `SELECIONAR_TRILHA` for validado, somente a opção escolhida muda para
+`EM ESTUDO`; as demais ficam `NÃO SELECIONADA`.
+
+---
+
 ## Fase 13 — Full-stack capability
 
 Bloqueada até API NestJS completa. Linhas detalhadas só quando a fase for
@@ -48,8 +63,8 @@ liberada.
 
 ## PARTE IV — Senior Backend Engineering Track (Fases 15-27)
 
-Bloqueada até a Definição de Pronto de Pleno (seção 10 de
-`BACKEND_ENGINEERING_FORGE.md`). Linhas detalhadas por habilidade só são
+Bloqueada até a Definição de Pronto de Pleno em
+`docs/curriculum/production-backend.md`. Linhas detalhadas por habilidade só são
 adicionadas quando cada fase for de fato liberada — listar aqui apenas os
 grandes eixos para não gerar uma matriz vazia e desatualizada.
 

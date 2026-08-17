@@ -1,6 +1,6 @@
 export type UnitSummary = {
   id: string;
-  track: "javascript" | "dsa";
+  track: "javascript" | "typescript" | "node" | "sql" | "dsa";
   phase: number;
   number: number;
   title: string;
@@ -44,6 +44,18 @@ export type DashboardData = {
     unlockAfter: string | null;
     status: string;
     markdown: string;
+  }>;
+  phases: Array<{
+    number: number;
+    title: string;
+    label: string;
+    status: "completed" | "active" | "locked";
+  }>;
+  polyglotTracks: Array<{
+    id: "java" | "dotnet" | "go";
+    title: string;
+    modules: string;
+    status: "locked";
   }>;
 };
 
