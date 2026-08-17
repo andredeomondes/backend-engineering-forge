@@ -7,43 +7,84 @@
 
 // test: node --test --test-name-pattern="buildRangeArray" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function buildRangeArray(start, end) {
-  throw new Error("not implemented: buildRangeArray");
+  const array = [];
+  for (let i = start; i <= end; i++) {
+    array.push(i);
+  }
+  return array;
 }
 
 // test: node --test --test-name-pattern="pushAndSlice" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function pushAndSlice(items, newItem, maxLength) {
-  throw new Error("not implemented: pushAndSlice");
+  const result = [];
+  for (let i = 0; i < items.length; i++) {
+    result.push(items[i]);
+  }
+
+  result.push(newItem);
+
+  if (result.length > maxLength) {
+    result.shift();
+  }
+  return result;
 }
 
 // test: node --test --test-name-pattern="joinNames" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function joinNames(people) {
-  throw new Error("not implemented: joinNames");
+  if (people.length < 0) {
+    return "";
+  }
+  let result = "";
+  for (let i = 0; i < people.length; i++) {
+    result += people[i].name;
+    if (people.length !== i + 1) {
+      result += ", ";
+    }
+  }
+  return result;
 }
 
 // test: node --test --test-name-pattern="findProductById" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function findProductById(products, id) {
-  throw new Error("not implemented: findProductById");
+  let result = undefined;
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].id == id) {
+      result = products[i];
+    }
+  }
+
+  return result;
 }
 
 // test: node --test --test-name-pattern="countByKey" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function countByKey(items, key) {
-  throw new Error("not implemented: countByKey");
+  const result = {};
+
+  for (const item of items) {
+    const value = item[key];
+    if (result[value] !== undefined) {
+      result[value]++;
+    } else {
+      result[value] = 1;
+    }
+  }
+  return result;
 }
 
 // test: node --test --test-name-pattern="buildUserObject" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function buildUserObject(id, name, email) {
-  throw new Error("not implemented: buildUserObject");
+  return { id, name, email };
 }
 
 // test: node --test --test-name-pattern="listObjectKeysSorted" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function listObjectKeysSorted(obj) {
-  throw new Error("not implemented: listObjectKeysSorted");
+  let result = Object.keys(obj);
+  result.sort((a, b) => a.localeCompare(b));
+  return result;
 }
 
 // test: node --test --test-name-pattern="mergeObjectsShallow" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
-export function mergeObjectsShallow(base, overrides) {
-  throw new Error("not implemented: mergeObjectsShallow");
-}
+export function mergeObjectsShallow(base, overrides) {}
 
 // --- Intermediários --------------------------------------------------------
 
@@ -77,7 +118,7 @@ export function sumPricesBuggy(products) {
   // Sintoma relatado: o total somado vem consistentemente maior do que a
   // soma real dos preços dos produtos.
   let total = 0;
-  for (let i = 0; i <= products.length; i++) {
+  for (let i = 0; i < products.length; i++) {
     total += products[i].price;
   }
   return total;
@@ -88,8 +129,10 @@ export function addTagBuggy(article, tag) {
   // Sintoma relatado: depois de "adicionar uma tag" a um artigo, os
   // artigos antigos (criados antes dessa chamada) também aparecem com a
   // nova tag, mesmo sem nunca terem sido tocados diretamente.
-  article.tags.push(tag);
-  return article;
+  return {
+    ...article,
+    tags: article.tags.concat(tag),
+  };
 }
 
 // --- Refatoração -------------------------------------------------------------
@@ -100,12 +143,7 @@ export function addTagBuggy(article, tag) {
 
 // test: node --test --test-name-pattern="refactorActiveUserNames" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function refactorActiveUserNames(users) {
-  var names = [];
-  for (var i = 0; i < users.length; i++) {
-    if (users[i].active === true) {
-      names.push(users[i].name);
-    }
-  }
+  let names = users.filter((user) => user.active).map((user) => user.name);
   return names;
 }
 

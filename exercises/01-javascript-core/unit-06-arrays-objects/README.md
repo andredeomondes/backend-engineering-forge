@@ -12,13 +12,17 @@ Responda por escrito (pode ser neste README, numa cópia local, ou em
 `notes/concepts/` se quiser guardar):
 
 1. Qual a diferença entre `.push()` e `.concat()` (ou spread `[...arr, x]`)
+   `R = .push() adiciona aquele elemento ao array e . concat faz o merge de dois arrays`
    ao adicionar um item a um array? Uma delas modifica o array original?
+   `R = .push()`
 2. `Object.keys(obj)`, `Object.values(obj)` e `Object.entries(obj)`
    retornam coisas diferentes. O que cada um devolve para
    `{ a: 1, b: 2 }`?
+   `R= Keys - A, Values - 1, Entries A-1 chave valor`
 3. Se dois objetos diferentes guardam uma referência para o **mesmo**
    array (ex.: `const b = { tags: a.tags }`), o que acontece com `b.tags`
    se você fizer `a.tags.push("x")`?
+   `R = os dois serão modificados`
 
 Não pesquise ainda. Escreva sua hipótese antes de implementar qualquer
 função — você vai comparar com o resultado real ao rodar os testes.
@@ -114,7 +118,7 @@ em qualquer backend real.
     (que nunca foram tocados diretamente) também aparecem com a nova tag.
     Isso acontece quando dois objetos compartilham a **mesma referência**
     de array em `tags`. A função atual usa `.push()`, que modifica o
-    array original *in place*. Reescreva para retornar um novo objeto com
+    array original _in place_. Reescreva para retornar um novo objeto com
     um novo array `tags` (sem alterar o array original), evitando que
     outros objetos que apontam para o mesmo array sejam afetados.
 
