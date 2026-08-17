@@ -17,13 +17,16 @@ Status: em andamento.
 
 ## Fase 1 — JavaScript profundo para backend
 
-Status: todas as 27 unidades geradas (2026-07-25, a pedido do usuário, fora do fluxo normal `PROXIMA_UNIDADE`). Só unidade 1 está de fato concluída/tentada; 2-27 estão entregues (README+exercises+testes+hints) e aguardando o usuário resolver, unidade por unidade, no ritmo combinado de 2-3/semana.
+Status: todas as 27 unidades geradas (2026-07-25, a pedido do usuário, fora
+do fluxo normal `PROXIMA_UNIDADE`). Unidades 1–4 concluídas; Unidade 5 ativa;
+6–27 entregues e aguardando tentativa progressiva. Ritmo recomendado atual:
+aproximadamente uma unidade por semana, ajustado pelo gate.
 
 - [x] Unidade 1 — valores, tipos, operadores, coerção, igualdade (16/16 exercícios, suite verde)
 - [x] Unidade 2 — controle de fluxo (16/16 exercícios, suite verde — 24/24 testes)
 - [x] Unidade 3 — funções (16/16 exercícios, suite verde — 29/29 testes)
 - [x] Unidade 4 — escopo léxico (16/16 exercícios, suite verde — 21/21 testes)
-- [ ] Unidade 5 — closures (entregue)
+- [x] Unidade 5 — closures (16/16 exercícios, suite verde — 24/24 testes)
 - [ ] Unidade 6 — arrays e objetos (entregue)
 - [ ] Unidade 7 — referências, mutabilidade e cópias (entregue)
 - [ ] Unidade 8 — funções de alta ordem (entregue)
@@ -57,9 +60,38 @@ exercícios para TypeScript quando a Fase 2 for liberada.
 
 - [ ] Sessão 01 — Big O básico + arrays (entregue em `exercises/12-dsa-algorithms/session-01-big-o-arrays`, aguardando tentativa)
 
+## Fase 4 — SQL e PostgreSQL de verdade
+
+Status: `BLOQUEADA — libera após o gate da Fase 3`. As oito unidades, o
+ambiente PostgreSQL e o Projeto 4 estão preparados, mas não liberados para
+estudo.
+
+- [ ] `sql-01` — modelo relacional e constraints (preparada)
+- [ ] `sql-02` — CRUD, filtros e ordenação (preparada)
+- [ ] `sql-03` — joins, agregações, CTEs e views (preparada)
+- [ ] `sql-04` — transações, ACID e isolamento (preparada)
+- [ ] `sql-05` — concorrência, locks e deadlocks (preparada)
+- [ ] `sql-06` — índices, `EXPLAIN` e performance (preparada)
+- [ ] `sql-07` — migrations, seed e paginação (preparada)
+- [ ] `sql-08` — segurança, N+1 e operação básica (preparada)
+
+## Trilha paralela opcional — Polyglot Backend Engineering
+
+Gate de liberação: Fase 9 concluída.
+
+- Java + Spring: `BLOQUEADA — escolha permitida somente após o gate da Fase 9`
+- C# + .NET: `BLOQUEADA — escolha permitida somente após o gate da Fase 9`
+- Go: `BLOQUEADA — escolha permitida somente após o gate da Fase 9`
+- Trilha selecionada: `NENHUMA`
+- Alocação futura: 70% Forge principal / 30% trilha escolhida
+
+O comando `SELECIONAR_TRILHA <JAVA|DOTNET|GO>` deve atualizar esta seção e a
+matriz de habilidades somente depois do gate.
+
 ## Projetos progressivos
 
-- [ ] Project 01 — Order Workbench CLI (libera após `js-06`)
+- [ ] Project 01 — Order Workbench CLI (material preparado; libera após `js-06`)
+- [ ] Project 04 — Marketplace Database Lab (material preparado; libera após `sql-08`)
 
 ---
 

@@ -321,3 +321,51 @@ Commit e push pendentes até usuário confirmar.
 ### Próximo passo
 
 Unidade 5 (closures) — já entregue, aguardando início.
+
+## 2026-08-17 — dia 011 de estudo
+
+### Objetivo da sessão
+
+Fechar unidade 5 (closures): 7 exercícios restantes (9-16, exceto
+refatoração que já estava pronta).
+
+### O que fiz
+
+Resolvido passo a passo, guiado por perguntas: `createLoopClosuresFixed`,
+`memoize`, `createEventEmitter` (on/off/emit), `limitCalls`,
+`createRateLimiter`. `createLoopClosuresBuggy`, `createSharedCounterPair`
+e `refactorCreateValidator` já vieram corrigidos/prontos de sessão
+anterior (confirmados passando ao rodar suíte).
+
+### Dificuldades
+
+`createLoopClosuresFixed`: dúvida sobre converter function expression pra
+arrow function (`() => i` sem `return`/chaves). `memoize`: nunca tinha
+usado `Map` — explicado `.has/.get/.set` do zero; primeiro rascunho não
+declarava o `cache`, depois tentou `cache.set(fn(arg))` com 1 argumento só
+(confundiu retorno de `.set()`, que é o Map, com o valor guardado) —
+corrigido separando em `result`/`set`/`return`. Muitas perguntas
+conceituais sobre memoização vs Redis (TTL, eviction, persistência) e
+sobre bancos relacionais vs chave-valor — respondidas sem entrar no
+código. `createEventEmitter`: confusão inicial sobre `on`/`off`/`emit`
+serem métodos de objeto (shorthand) — relacionado ao que já tinha visto
+em `createBankAccount`; `off` copiado do corpo de `on` por engano (não
+removia, adicionava de nulo); `emit` com `listeners.has(handler)` em vez
+de `listeners.has(event)`, e sem chamar as funções (só fazia `.get`).
+`limitCalls`: primeira tentativa usava `for` dentro do `wrapped` (rodava
+`fn` `maxCalls` vezes numa chamada só, em vez de contar entre chamadas) —
+corrigido reaproveitando o padrão de `onceFn` já resolvido. `createRateLimiter`:
+typo `attemp` (faltou `t`) e faltou vírgula entre métodos do objeto,
+corrigidos rápido.
+
+### Ajuda utilizada
+
+Guiado por perguntas em todos os exercícios ativos, sem solução colada.
+
+### Entrega concreta
+
+Unidade 5 completa: 16/16 exercícios, suite verde (24/24 testes).
+
+### Próximo passo
+
+Unidade 6 (arrays e objetos) — já entregue, aguardando início.

@@ -113,22 +113,65 @@ export function rememberLastCall(fn) {
 
 // test: node --test --test-name-pattern="createLoopClosuresFixed" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function createLoopClosuresFixed(n) {
-  throw new Error("not implemented: createLoopClosuresFixed");
+  let fns = [];
+  for (let i = 0; i < n; i++) {
+    fns.push(() => i);
+  }
+  return fns;
 }
 
 // test: node --test --test-name-pattern="memoize" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function memoize(fn) {
-  throw new Error("not implemented: memoize");
+  const cache = new Map();
+
+  return function wrapper(arg) {
+    if (cache.has(arg)) {
+      return cache.get(arg);
+    }
+
+    const result = fn(arg);
+    cache.set(arg, result);
+
+    return result;
+  };
 }
 
 // test: node --test --test-name-pattern="createEventEmitter" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function createEventEmitter() {
-  throw new Error("not implemented: createEventEmitter");
+  const listeners = new Map();
+
+  return {
+    on(event, handler) {
+      if (!listeners.has(event)) {
+        listeners.set(event, []);
+      }
+      listeners.get(event).push(handler);
+    },
+    off(event, handler) {
+      listeners.set(
+        event,
+        listeners.get(event).filter((item) => item !== handler),
+      );
+    },
+    emit(event, payload) {
+      if (listeners.has(event)) {
+        listeners.get(event).forEach((fn) => fn(payload));
+      }
+    },
+  };
 }
 
 // test: node --test --test-name-pattern="limitCalls" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function limitCalls(fn, maxCalls) {
-  throw new Error("not implemented: limitCalls");
+  let count = 0;
+  let result;
+  return function wrapped(...args) {
+    if (count < maxCalls) {
+      count++;
+      return fn(...args);
+    }
+  };
+  return undefined;
 }
 
 // --- Debugging --------------------------------------------------------------
@@ -142,7 +185,7 @@ export function createLoopClosuresBuggy(n) {
   // retornasse i quando chamada (fns[0]() === 0, fns[1]() === 1, etc.),
   // mas todas as funções retornam o mesmo valor, igual a n.
   const fns = [];
-  for (var i = 0; i < n; i++) {
+  for (let i = 0; i < n; i++) {
     fns.push(function () {
       return i;
     });
@@ -156,13 +199,12 @@ export function createSharedCounterPair() {
   // sobre o MESMO contador (compartilhado pela mesma closure), mas
   // decrement() sempre parece operar sobre um contador independente que
   // nunca é afetado por increment().
+  let count = 0;
   function increment() {
-    let count = 0;
     count += 1;
     return count;
   }
   function decrement() {
-    let count = 0;
     count -= 1;
     return count;
   }
@@ -178,16 +220,10 @@ export function createSharedCounterPair() {
 // test: node --test --test-name-pattern="refactorCreateValidator" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function refactorCreateValidator(min, max) {
   return function (value) {
-    if (typeof value !== "number") {
-      return false;
+    if (typeof value == "number" && value >= min && value <= max) {
+      return true;
     }
-    if (value < min) {
-      return false;
-    }
-    if (value > max) {
-      return false;
-    }
-    return true;
+    return false;
   };
 }
 
@@ -195,5 +231,17 @@ export function refactorCreateValidator(min, max) {
 
 // test: node --test --test-name-pattern="createRateLimiter" exercises/01-javascript-core/unit-05-closures/exercises.test.js
 export function createRateLimiter(maxCalls) {
-  throw new Error("not implemented: createRateLimiter");
+  let count = 0;
+  return {
+    attempt() {
+      if (count < maxCalls) {
+        count++;
+        return true;
+      }
+      return false;
+    },
+    reset() {
+      count = 0;
+    },
+  };
 }
