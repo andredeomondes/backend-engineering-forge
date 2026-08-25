@@ -84,30 +84,62 @@ export function listObjectKeysSorted(obj) {
 }
 
 // test: node --test --test-name-pattern="mergeObjectsShallow" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
-export function mergeObjectsShallow(base, overrides) {}
+export function mergeObjectsShallow(base, overrides) {
+  return { ...base, ...overrides };
+}
 
 // --- Intermediários --------------------------------------------------------
 
 // test: node --test --test-name-pattern="groupByStatus" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function groupByStatus(orders) {
-  throw new Error("not implemented: groupByStatus");
+  const result = {};
+  for (const order of orders) {
+    if (!result[order.status]) {
+      result[order.status] = [];
+    }
+    result[order.status].push(order);
+  }
+
+  return result;
 }
 
 // test: node --test --test-name-pattern="invertObject" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function invertObject(obj) {
-  throw new Error("not implemented: invertObject");
+  const result = {};
+
+  for (const [key, value] of Object.entries(obj)) {
+    result[value] = key;
+  }
+
+  return result;
 }
 
 // test: node --test --test-name-pattern="removeDuplicatesByKey" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function removeDuplicatesByKey(items, key) {
-  throw new Error("not implemented: removeDuplicatesByKey");
+  const seen = new Set();
+
+  return items.filter((item) => {
+    const value = item[key];
+
+    if (seen.has(value)) {
+      return false;
+    }
+
+    seen.add(value);
+    return true;
+  });
 }
 
 // test: node --test --test-name-pattern="buildFrequencyTable" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function buildFrequencyTable(words) {
-  throw new Error("not implemented: buildFrequencyTable");
-}
+  const frequencies = {};
 
+  for (const word of words) {
+    frequencies[word] = (frequencies[word] ?? 0) + 1;
+  }
+
+  return frequencies;
+}
 // --- Debugging --------------------------------------------------------------
 //
 // As duas funções abaixo JÁ ESTÃO IMPLEMENTADAS, mas contêm um bug real.
@@ -151,5 +183,22 @@ export function refactorActiveUserNames(users) {
 
 // test: node --test --test-name-pattern="buildInventoryReport" exercises/01-javascript-core/unit-06-arrays-objects/exercises.test.js
 export function buildInventoryReport(products) {
-  throw new Error("not implemented: buildInventoryReport");
+  let total = 0;
+  const byCategory = {};
+
+  for (const product of products) {
+    total += product.price * product.quantity;
+
+    if (byCategory[product.category] !== undefined) {
+      byCategory[product.category]++;
+    } else {
+      byCategory[product.category] = 1;
+    }
+  }
+
+  return {
+    totalProducts: products.length,
+    totalValue: total,
+    byCategory: byCategory,
+  };
 }
