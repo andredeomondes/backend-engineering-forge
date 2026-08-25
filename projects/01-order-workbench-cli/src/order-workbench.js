@@ -40,7 +40,11 @@ export function validateOrder(_order) {
 }
 
 export function calculateOrderTotal(_order) {
-  throw new Error("not implemented: calculateOrderTotal");
+  let total = 0;
+  for (const item of _order.items) {
+    total += item.quantity * item.unitPriceInCents;
+  }
+  return total;
 }
 
 export function createProcessingCounter() {
