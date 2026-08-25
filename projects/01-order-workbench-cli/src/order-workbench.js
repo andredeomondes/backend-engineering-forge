@@ -1,7 +1,42 @@
+/*
+
+```json
+{
+  "id": "order-1001",
+  "status": "paid",
+  "items": [
+    { "sku": "BOOK-01", "quantity": 2, "unitPriceInCents": 4590 }
+  ]
+}
+```
+*/
+
 const ALLOWED_STATUSES = new Set(["pending", "paid", "cancelled"]);
 
 export function validateOrder(_order) {
-  throw new Error("not implemented: validateOrder");
+  const errors = [];
+
+  if (!_order.id) {
+    errors.push("id é obrigatório");
+  }
+
+  if (!isAllowedStatus(_order.status)) {
+    errors.push("status fora de escopo");
+  }
+
+  if (_order.items.length === 0) {
+    errors.push("item é obrigatório");
+  }
+
+  for (const item of _order.items) {
+    if (item.quantity <= 0) {
+      errors.push("item precisa ter quantidade maior que 0");
+    }
+    if (item.unitPriceInCents < 0) {
+      errors.push("item precisa ter o preço a partir de 0");
+    }
+  }
+  return { valid: errors.length === 0, errors };
 }
 
 export function calculateOrderTotal(_order) {
@@ -23,4 +58,3 @@ export function processOrders(_orders) {
 export function isAllowedStatus(status) {
   return ALLOWED_STATUSES.has(status);
 }
-
