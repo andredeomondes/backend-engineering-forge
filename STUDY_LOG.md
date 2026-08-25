@@ -369,3 +369,55 @@ Unidade 5 completa: 16/16 exercícios, suite verde (24/24 testes).
 ### Próximo passo
 
 Unidade 6 (arrays e objetos) — já entregue, aguardando início.
+
+## 2026-08-25 — dia 013 de estudo
+
+### Objetivo da sessão
+
+Terminar o Project 01 (Order Workbench CLI): implementar `summarizeOrders`
+e `processOrders`, fechar o gate.
+
+### O que fiz
+
+Resolvido passo a passo, guiado por perguntas: `summarizeOrders`
+(acumulador indexado por status, reaproveitando `calculateOrderTotal`) e
+`processOrders` (separação de válidos/inválidos preservando índice
+original, via `for` clássico). Suite do Project 01 fechou 12/12. Retro
+registrada em `notes/project-retrospectives/01-order-workbench-cli.md`.
+Explicação oral do fluxo completo (`cli.js` → `processOrders` →
+`summarizeOrders`) feita e corrigida ao vivo — fecha o gate do projeto.
+
+### Dificuldades
+
+`summarizeOrders`: tentou `result.has(...)` (método de `Map`) num objeto
+plain, que não tem esse método — corrigido pra `=== undefined`; depois
+somou `totalInCents++` (fixo, +1) em vez de `+= calculateOrderTotal(order)`;
+depois tentou somar direto no grupo (`result[status] += x`) em vez de no
+campo (`result[status].totalInCents += x`). `processOrders`: acessou
+`_orders.order` em vez de `_orders[i]`; tratou o retorno de `validateOrder`
+(objeto `{valid, errors}`) como booleano; esqueceu o `else` (push em
+`invalidOrders` rodando sempre); empurrou o pedido cru em vez do objeto
+`{index, order, errors}` esperado pelo teste. Na explicação oral, inverteu
+a ordem de `processOrders`/`summarizeOrders` e inventou que
+`createProcessingCounter` seria usado no fluxo do CLI (na real não é usada
+em lugar nenhum fora dos testes) — corrigido ao apontar que ela nem é
+importada em `cli.js`.
+
+### Ajuda utilizada
+
+Guiado por perguntas em todos os pontos, sem solução colada. Retrospectiva
+foi rascunhada com base no que aconteceu na sessão (usuário pediu
+diretamente) e revisada/ajustada por ele.
+
+### Entrega concreta
+
+Project 01 (Order Workbench CLI) completo: suíte 12/12 verde, retro
+registrada, explicação oral validada. Commits `7e1e2e1` (summarizeOrders +
+processOrders) e `fc555fd` (retrospectiva), push feito.
+
+### Próximo passo
+
+Unidade 7 (referências, mutabilidade e cópias) — já entregue, aguardando
+início. Split do Project 01 pra repo próprio no GitHub segue pendente,
+sem pressa. Próximo projeto prático de verdade (Project 04, Marketplace
+Database Lab) só depois da Fase 4 de SQL.
