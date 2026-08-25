@@ -56,11 +56,35 @@ export function createProcessingCounter() {
 }
 
 export function summarizeOrders(_orders) {
-  throw new Error("not implemented: summarizeOrders");
+  const result = {};
+  for (const order of _orders) {
+    if (result[order.status] === undefined) {
+      result[order.status] = { orders: 0, totalInCents: 0 };
+    }
+    result[order.status].orders++;
+    result[order.status].totalInCents += calculateOrderTotal(order);
+  }
+  return result;
 }
 
 export function processOrders(_orders) {
-  throw new Error("not implemented: processOrders");
+  const validOrders = [];
+  const invalidOrders = [];
+
+  for (let i = 0; i < _orders.length; i++) {
+    const order = _orders[i];
+    const result = validateOrder(order);
+    if (result.valid) {
+      validOrders.push(order);
+    } else {
+      invalidOrders.push({ index: i, order, errors: result.errors });
+    }
+  }
+  return {
+    validOrders,
+    invalidOrders,
+    processedCount: _orders.length,
+  };
 }
 
 export function isAllowedStatus(status) {
