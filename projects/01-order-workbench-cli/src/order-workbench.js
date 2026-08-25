@@ -48,7 +48,11 @@ export function calculateOrderTotal(_order) {
 }
 
 export function createProcessingCounter() {
-  throw new Error("not implemented: createProcessingCounter");
+  let count = 0;
+  return function () {
+    count++;
+    return count;
+  };
 }
 
 export function summarizeOrders(_orders) {
