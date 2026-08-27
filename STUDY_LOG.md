@@ -421,3 +421,54 @@ Unidade 7 (referências, mutabilidade e cópias) — já entregue, aguardando
 início. Split do Project 01 pra repo próprio no GitHub segue pendente,
 sem pressa. Próximo projeto prático de verdade (Project 04, Marketplace
 Database Lab) só depois da Fase 4 de SQL.
+
+## 2026-08-27
+
+### Objetivo da sessão
+
+Unidade 7 — referências, mutabilidade e cópias.
+
+### O que fiz
+
+Respondidas as 3 perguntas de hipótese do README antes de codar. Implementados
+8/8 exercícios fundamentais (`isPrimitiveValue`, `sameReference`,
+`shallowCopyArray`, `shallowCopyObject`, `mutateInPlacePush`,
+`appendImmutable`, `updateNestedPropertyMutating`,
+`updateNestedPropertyImmutable`) e 2/4 intermediários
+(`shallowCopyKeepsNestedReference`, `deepCloneJSON`). 10/16 exercícios da
+unidade, todos os testes rodados individualmente e verdes.
+
+### Dificuldades
+
+- Confundiu posição do `typeof` numa expressão (`typeof arr.includes(x)` vs
+  `arr.includes(typeof x)`).
+- Esqueceu `typeof null === "object"` (pegadinha clássica) até ser lembrado.
+- Usou `.push()` esperando que retornasse o array (retorna o novo `length`).
+- Trocou `mutateInPlacePush` e `appendImmutable` uma pela outra na primeira
+  tentativa de cada.
+- Usou `obj.key` (propriedade literal `"key"`) em vez de `obj[key]`
+  (notação de colchetes pra nome de propriedade dinâmico/variável) —
+  dúvida real sobre quando usar ponto vs colchetes, esclarecida com
+  exemplos.
+- Confundiu diferença `==`/`===` (achava que era "valor vs referência";
+  na real só importa coerção de tipo em primitivos — em objetos os dois
+  comparam referência igual).
+
+### Ajuda utilizada
+
+Guiado por perguntas e exemplos concretos em todos os pontos (pediu
+"explica com exemplo, sou ruim de entender assim" mais de uma vez — grupo
+de exemplo antes de teoria funcionou bem). Nenhuma solução colada
+diretamente.
+
+### Entrega concreta
+
+10/16 testes verdes na unidade 7. Ainda não commitado.
+
+### Próximo passo
+
+Continuar unidade 7: `deepCloneManual` (recursão, sem JSON/structuredClone),
+`hasSideEffect`, os 2 exercícios de debugging (`fixMutatingSortBug`,
+`fixSharedDefaultArrayBug`), a refatoração (`refactorDeepUpdateChain`) e o
+desafio integrador (`applyPatchImmutable`). `deepCloneManual` é o próximo
+mais difícil — usuário pediu pra deixar pra próxima sessão.

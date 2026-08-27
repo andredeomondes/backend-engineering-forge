@@ -7,54 +7,70 @@
 
 // test: node --test --test-name-pattern="isPrimitiveValue" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function isPrimitiveValue(value) {
-  throw new Error("not implemented: isPrimitiveValue");
+  const tiposValidos = ["string", "number", "boolean", "undefined"];
+  if (tiposValidos.includes(typeof value)) {
+    return true;
+  }
+  if (value === null) {
+    return true;
+  }
+  return false;
 }
 
 // test: node --test --test-name-pattern="sameReference" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function sameReference(a, b) {
-  throw new Error("not implemented: sameReference");
+  return a === b;
 }
 
 // test: node --test --test-name-pattern="shallowCopyArray" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function shallowCopyArray(arr) {
-  throw new Error("not implemented: shallowCopyArray");
+  return [...arr];
 }
 
 // test: node --test --test-name-pattern="shallowCopyObject" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function shallowCopyObject(obj) {
-  throw new Error("not implemented: shallowCopyObject");
+  return { ...obj };
 }
 
 // test: node --test --test-name-pattern="mutateInPlacePush" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function mutateInPlacePush(arr, item) {
-  throw new Error("not implemented: mutateInPlacePush");
+  arr.push(item);
+  return arr;
 }
 
 // test: node --test --test-name-pattern="appendImmutable" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function appendImmutable(arr, item) {
-  throw new Error("not implemented: appendImmutable");
+  const newArray = [...arr];
+  newArray.push(item);
+  return newArray;
 }
 
 // test: node --test --test-name-pattern="updateNestedPropertyMutating" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function updateNestedPropertyMutating(obj, key, value) {
-  throw new Error("not implemented: updateNestedPropertyMutating");
+  obj[key] = value;
+  return obj;
 }
 
 // test: node --test --test-name-pattern="updateNestedPropertyImmutable" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function updateNestedPropertyImmutable(obj, key, value) {
-  throw new Error("not implemented: updateNestedPropertyImmutable");
+  const newObj = { ...obj };
+  newObj[key] = value;
+  return newObj;
 }
 
 // --- Intermediários --------------------------------------------------------
 
 // test: node --test --test-name-pattern="shallowCopyKeepsNestedReference" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function shallowCopyKeepsNestedReference(obj) {
-  throw new Error("not implemented: shallowCopyKeepsNestedReference");
+  const copy = { ...obj };
+  let sameNestedRef = false;
+  if (copy.nested === obj.nested) sameNestedRef = true;
+  return { copy, sameNestedRef };
 }
 
 // test: node --test --test-name-pattern="deepCloneJSON" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function deepCloneJSON(obj) {
-  throw new Error("not implemented: deepCloneJSON");
+  return JSON.parse(JSON.stringify(obj));
 }
 
 // test: node --test --test-name-pattern="deepCloneManual" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
