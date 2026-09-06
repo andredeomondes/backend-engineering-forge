@@ -75,12 +75,36 @@ export function deepCloneJSON(obj) {
 
 // test: node --test --test-name-pattern="deepCloneManual" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function deepCloneManual(value) {
-  throw new Error("not implemented: deepCloneManual");
+  const primitive = ["string", "number", "boolean", "undefined"];
+  if (primitive.includes(typeof value)) {
+    return value;
+  }
+  if (value === null) {
+    return null;
+  }
+  if (Array.isArray(value)) {
+    const result = [];
+    for (const item of value) {
+      result.push(deepCloneManual(item));
+    }
+
+    return result;
+  }
+  const result2 = {};
+  for (const [key, val] of Object.entries(value)) {
+    result2[key] = deepCloneManual(val);
+  }
+  return result2;
 }
 
 // test: node --test --test-name-pattern="hasSideEffect" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function hasSideEffect(fn, arg) {
-  throw new Error("not implemented: hasSideEffect");
+  const beforeSnapshot = JSON.stringify(arg);
+  fn(arg);
+
+  const afterSnapshot = JSON.stringify(arg);
+
+  return beforeSnapshot !== afterSnapshot;
 }
 
 // --- Debugging --------------------------------------------------------------
@@ -95,8 +119,9 @@ export function fixMutatingSortBug(items) {
   // sistema, que só tinha passado a mesma referência de array) aparece
   // reordenada, mesmo que ninguém tenha pedido para reordenar nada além do
   // resultado.
-  items.sort((a, b) => a.price - b.price);
-  return items.slice(0, 3);
+  const result = [...items];
+  result.sort((a, b) => a.price - b.price);
+  return result.slice(0, 3);
 }
 
 // test: node --test --test-name-pattern="fixSharedDefaultArrayBug" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
@@ -106,8 +131,11 @@ export function fixSharedDefaultArrayBug(name, tags = DEFAULT_TAGS) {
   // Sintoma relatado: usuários criados sem passar `tags` explicitamente
   // começam a "herdar" tags adicionadas em chamadas anteriores, mesmo que
   // cada chamada pareça independente uma da outra.
-  tags.push("sem-categoria");
-  return { name, tags };
+  const result = [...tags];
+
+  result.push("sem-categoria");
+
+  return { name, tags: result };
 }
 
 // --- Refatoração -------------------------------------------------------------
@@ -117,13 +145,22 @@ export function fixSharedDefaultArrayBug(name, tags = DEFAULT_TAGS) {
 
 // test: node --test --test-name-pattern="refactorDeepUpdateChain" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function refactorDeepUpdateChain(state, newCity) {
-  state.user.address.city = newCity;
-  return state;
+  const newAddress = { ...state.user.address };
+  newAddress.city = newCity;
+
+  const newUser = { ...state.user, address: newAddress };
+  const newState = { ...state, user: newUser };
+
+  return newState;
 }
 
 // --- Desafio integrador -------------------------------------------------------
 
 // test: node --test --test-name-pattern="applyPatchImmutable" exercises/01-javascript-core/unit-07-references-mutability-copies/exercises.test.js
 export function applyPatchImmutable(state, patch) {
-  throw new Error("not implemented: applyPatchImmutable");
+  const newProfile = { ...state.profile, ...patch.profile };
+
+  const result = { ...state, ...patch, profile: newProfile };
+
+  return result;
 }
