@@ -7,22 +7,22 @@
 
 // test: node --test --test-name-pattern="applyOperation" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function applyOperation(a, b, operation) {
-  throw new Error("not implemented: applyOperation");
+  return operation(a, b);
 }
 
 // test: node --test --test-name-pattern="makeAdder" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function makeAdder(x) {
-  throw new Error("not implemented: makeAdder");
+  return (y) => x + y;
 }
 
 // test: node --test --test-name-pattern="makeMultiplier" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function makeMultiplier(factor) {
-  throw new Error("not implemented: makeMultiplier");
+  return (n) => n * factor;
 }
 
 // test: node --test --test-name-pattern="invertPredicate" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function invertPredicate(predicate) {
-  throw new Error("not implemented: invertPredicate");
+  return (...args) => !predicate(...args);
 }
 
 // test: node --test --test-name-pattern="repeatCall" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
