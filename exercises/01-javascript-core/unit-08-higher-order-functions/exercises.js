@@ -27,44 +27,90 @@ export function invertPredicate(predicate) {
 
 // test: node --test --test-name-pattern="repeatCall" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function repeatCall(n, fn) {
-  throw new Error("not implemented: repeatCall");
+  const result = [];
+  for (let i = 0; i < n; i++) {
+    const f = fn(i);
+    result.push(f);
+  }
+
+  return result;
 }
 
 // test: node --test --test-name-pattern="pipeTwo" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function pipeTwo(f, g) {
-  throw new Error("not implemented: pipeTwo");
+  return (x) => g(f(x));
 }
 
 // test: node --test --test-name-pattern="composeTwo" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function composeTwo(f, g) {
-  throw new Error("not implemented: composeTwo");
+  return (x) => f(g(x));
 }
 
 // test: node --test --test-name-pattern="once" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function once(fn) {
-  throw new Error("not implemented: once");
+  let called = false;
+  let result;
+  return function () {
+    if (called == false) {
+      result = fn();
+    }
+    called = true;
+    return result;
+  };
 }
 
 // --- Intermediários --------------------------------------------------------
 
 // test: node --test --test-name-pattern="makeCounter" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
-export function makeCounter(start) {
-  throw new Error("not implemented: makeCounter");
+export function makeCounter(start = 0) {
+  let counter = start;
+  function increment() {
+    counter++;
+    return counter;
+  }
+
+  function decrement() {
+    counter--;
+    return counter;
+  }
+
+  function value() {
+    return counter;
+  }
+
+  return {
+    increment: increment,
+    decrement: decrement,
+    value: value,
+  };
 }
 
 // test: node --test --test-name-pattern="curry3" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function curry3(fn) {
-  throw new Error("not implemented: curry3");
+  return (a) => (b) => (c) => fn(a, b, c);
 }
 
 // test: node --test --test-name-pattern="memoize" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function memoize(fn) {
-  throw new Error("not implemented: memoize");
+  const cache = new Map();
+  return function (arg) {
+    if (cache.has(arg)) {
+      return cache.get(arg);
+    }
+    const result = fn(arg);
+    cache.set(arg, result);
+    return result;
+  };
 }
 
 // test: node --test --test-name-pattern="pipeAll" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function pipeAll(...fns) {
-  throw new Error("not implemented: pipeAll");
+  return function (x) {
+    for (const item of fns) {
+      x = item(x);
+    }
+    return x;
+  };
 }
 
 // --- Debugging --------------------------------------------------------------

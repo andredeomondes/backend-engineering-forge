@@ -472,3 +472,55 @@ Continuar unidade 7: `deepCloneManual` (recursão, sem JSON/structuredClone),
 `fixSharedDefaultArrayBug`), a refatoração (`refactorDeepUpdateChain`) e o
 desafio integrador (`applyPatchImmutable`). `deepCloneManual` é o próximo
 mais difícil — usuário pediu pra deixar pra próxima sessão.
+
+## 2026-09-06
+
+### Objetivo da sessão
+
+Unidade 8 — funções de alta ordem. Meta do dia: 8 exercícios.
+
+### O que fiz
+
+Implementado `repeatCall`, `pipeTwo`, `composeTwo`, `once`, `makeCounter`,
+`curry3`, `memoize`, `pipeAll` — 8 exercícios, meta do dia batida. Unidade
+8 fica em 12/16 exercícios (15/19 testes verdes), somando aos 4
+fundamentais já feitos em sessão anterior.
+
+### Dificuldades
+
+- Confundiu "guardar a referência da função" com "guardar o resultado de
+  chamar a função" duas vezes: em `makeCounter` (`increment: increment()`
+  em vez de `increment: increment`) e em `memoize` (achava que `result`
+  era a própria função `fn`, não o valor calculado por ela).
+- `once` e `memoize` — esqueceu que a função externa deve **retornar uma
+  função**, não executar a lógica na hora; precisou comparar com o padrão
+  já visto em `makeAdder`.
+- `curry3` — travou bastante no encadeamento `(a) => (b) => (c) => ...`;
+  destravou comparando com a versão equivalente usando `function`
+  aninhada em vez de arrow functions.
+- `pipeAll` — mesma dificuldade de sempre com `return` dentro de loop
+  (sai na primeira iteração); só destravou com um diagrama ASCII de trace
+  mostrando o valor de `x` a cada volta.
+- Pediu introdução a `Map` (`.has`/`.get`/`.set`) na hora, ainda não visto
+  formalmente — mini-explicação rápida antes de aplicar no exercício.
+- Pediu exemplos de entrada/saída concretos repetidamente antes de tentar
+  qualquer exercício novo (curry3, memoize, pipeAll) — padrão já conhecido,
+  mantido.
+
+### Ajuda utilizada
+
+Guiado por perguntas, comparação com exercícios já resolvidos na mesma
+sessão (`makeAdder`, `once`) e diagramas de trace passo a passo. Nenhuma
+solução colada diretamente.
+
+### Entrega concreta
+
+15/19 testes verdes na unidade 8 (12/16 exercícios). Commitado e enviado
+ao repositório remoto.
+
+### Próximo passo
+
+Fechar unidade 8: os 2 exercícios de debugging (`fixOnceBug`,
+`fixCounterClosureBug` — já implementados com bug intencional, precisa
+diagnosticar e corrigir) e o desafio integrador
+(`buildValidationPipeline`).
