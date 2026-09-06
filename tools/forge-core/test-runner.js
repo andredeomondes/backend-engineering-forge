@@ -4,20 +4,27 @@ import path from "node:path";
 import { getUnit } from "./curriculum.js";
 import { WORKSPACE_ROOT } from "./paths.js";
 
-export async function runUnitTests(unitId) {
+export async function runUnitTests(unitId, testNamePattern) {
   const unit = getUnit(unitId);
   if (!unit) throw new Error(`Unidade desconhecida: ${unitId}`);
 
   const resolvedTestPath = path.resolve(unit.testPath);
   const validTestPath =
-    resolvedTestPath.endsWith("exercises.test.js") || resolvedTestPath.endsWith("exercises.test.ts");
+    resolvedTestPath.endsWith("exercises.test.js") ||
+    resolvedTestPath.endsWith("exercises.test.ts");
   if (!resolvedTestPath.startsWith(WORKSPACE_ROOT) || !validTestPath) {
     throw new Error("Caminho de testes recusado.");
   }
 
+  const args = ["--test", "--test-reporter=spec"];
+  if (typeof testNamePattern === "string" && testNamePattern.trim()) {
+    args.push(`--test-name-pattern=${testNamePattern.trim()}`);
+  }
+  args.push(resolvedTestPath);
+
   const startedAt = Date.now();
   const output = await new Promise((resolve, reject) => {
-    const child = spawn(process.execPath, ["--test", "--test-reporter=spec", resolvedTestPath], {
+    const child = spawn(process.execPath, args, {
       cwd: WORKSPACE_ROOT,
       shell: false,
       windowsHide: true,

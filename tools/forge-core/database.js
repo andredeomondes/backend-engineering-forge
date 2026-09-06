@@ -86,7 +86,9 @@ function unitIdFromLegacyFocus(focus) {
 }
 
 function importLegacyState(db) {
-  const imported = db.prepare("SELECT value FROM settings WHERE key = ?").get("legacy_imported");
+  const imported = db
+    .prepare("SELECT value FROM settings WHERE key = ?")
+    .get("legacy_imported");
   if (imported) return;
 
   let state = { currentFocus: null, entries: [] };
@@ -109,7 +111,12 @@ function importLegacyState(db) {
   `);
   for (const entry of Array.isArray(state.entries) ? state.entries : []) {
     if (entry.date && entry.minutes && entry.summary) {
-      insertSession.run(entry.date, entry.minutes, entry.summary, unitIdFromLegacyFocus(state.currentFocus));
+      insertSession.run(
+        entry.date,
+        entry.minutes,
+        entry.summary,
+        unitIdFromLegacyFocus(state.currentFocus),
+      );
     }
   }
   insertSetting.run("legacy_imported", new Date().toISOString());
@@ -131,11 +138,20 @@ export function getSetting(key, fallback = null) {
 
 export function setSetting(key, value) {
   getDatabase()
-    .prepare("INSERT OR REPLACE INTO settings (key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)")
+    .prepare(
+      "INSERT OR REPLACE INTO settings (key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)",
+    )
     .run(key, String(value));
 }
 
-export function createStudySession({ date, minutes, summary, difficulty = "", nextStep = "", unitId }) {
+export function createStudySession({
+  date,
+  minutes,
+  summary,
+  difficulty = "",
+  nextStep = "",
+  unitId,
+}) {
   const parsedMinutes = Number(minutes);
   if (!Number.isInteger(parsedMinutes) || parsedMinutes < 1 || parsedMinutes > 600) {
     throw new Error("Informe uma duração entre 1 e 600 minutos.");
@@ -143,11 +159,13 @@ export function createStudySession({ date, minutes, summary, difficulty = "", ne
   if (!summary?.trim()) throw new Error("O resumo da sessão não pode ficar vazio.");
 
   const result = getDatabase()
-    .prepare(`
+    .prepare(
+      `
       INSERT INTO study_sessions
         (study_date, minutes, summary, difficulty, next_step, unit_id)
       VALUES (?, ?, ?, ?, ?, ?)
-    `)
+    `,
+    )
     .run(
       date || localDateString(),
       parsedMinutes,
@@ -161,24 +179,35 @@ export function createStudySession({ date, minutes, summary, difficulty = "", ne
 
 export function listStudySessions(limit = 8) {
   return getDatabase()
-    .prepare(`
+    .prepare(
+      `
       SELECT id, study_date AS date, minutes, summary, difficulty,
              next_step AS nextStep, unit_id AS unitId, created_at AS createdAt
       FROM study_sessions
       ORDER BY study_date DESC, id DESC
       LIMIT ?
-    `)
+    `,
+    )
     .all(limit);
 }
 
 export function listAllStudySessions() {
   return getDatabase()
-    .prepare(`
+    .prepare(
+      `
       SELECT id, study_date AS date, minutes, summary, difficulty,
              next_step AS nextStep, unit_id AS unitId, created_at AS createdAt
       FROM study_sessions ORDER BY study_date, id
-    `)
+    `,
+    )
     .all();
+}
+
+export function deleteStudySession(id) {
+  const result = getDatabase()
+    .prepare("DELETE FROM study_sessions WHERE id = ?")
+    .run(Number(id));
+  if (result.changes === 0) throw new Error("Sessão não encontrada.");
 }
 
 export function ensureUnitProgress(unitId) {
@@ -190,63 +219,84 @@ export function ensureUnitProgress(unitId) {
 export function getUnitProgress(unitId) {
   ensureUnitProgress(unitId);
   return getDatabase()
-    .prepare(`
+    .prepare(
+      `
       SELECT unit_id AS unitId, status, attempts, tests_passed AS testsPassed,
              tests_failed AS testsFailed, last_test_success AS lastTestSuccess,
              last_test_at AS lastTestAt, reflection, confidence,
              help_level AS helpLevel, completed_at AS completedAt
       FROM unit_progress WHERE unit_id = ?
-    `)
+    `,
+    )
     .get(unitId);
 }
 
 export function listUnitProgress() {
   return getDatabase()
-    .prepare(`
+    .prepare(
+      `
       SELECT unit_id AS unitId, status, attempts, tests_passed AS testsPassed,
              tests_failed AS testsFailed, last_test_success AS lastTestSuccess,
              last_test_at AS lastTestAt, reflection, confidence,
              help_level AS helpLevel, completed_at AS completedAt
       FROM unit_progress ORDER BY unit_id
-    `)
+    `,
+    )
     .all();
 }
 
 export function recordTestRun(unitId, result) {
   const db = getDatabase();
   ensureUnitProgress(unitId);
-  db.prepare(`
+  db.prepare(
+    `
     INSERT INTO test_runs (unit_id, passed, failed, success, duration_ms, output)
     VALUES (?, ?, ?, ?, ?, ?)
-  `).run(unitId, result.passed, result.failed, result.success ? 1 : 0, result.durationMs, result.output);
-  db.prepare(`
+  `,
+  ).run(
+    unitId,
+    result.passed,
+    result.failed,
+    result.success ? 1 : 0,
+    result.durationMs,
+    result.output,
+  );
+  db.prepare(
+    `
     UPDATE unit_progress
        SET attempts = attempts + 1,
            tests_passed = ?, tests_failed = ?, last_test_success = ?,
            last_test_at = CURRENT_TIMESTAMP
      WHERE unit_id = ?
-  `).run(result.passed, result.failed, result.success ? 1 : 0, unitId);
+  `,
+  ).run(result.passed, result.failed, result.success ? 1 : 0, unitId);
 }
 
 export function revealHint(unitId, level) {
   ensureUnitProgress(unitId);
   const db = getDatabase();
-  db.prepare("INSERT OR IGNORE INTO hint_reveals (unit_id, level) VALUES (?, ?)").run(unitId, level);
-  db.prepare("UPDATE unit_progress SET help_level = MAX(help_level, ?) WHERE unit_id = ?").run(
-    level,
+  db.prepare("INSERT OR IGNORE INTO hint_reveals (unit_id, level) VALUES (?, ?)").run(
     unitId,
+    level,
   );
+  db.prepare(
+    "UPDATE unit_progress SET help_level = MAX(help_level, ?) WHERE unit_id = ?",
+  ).run(level, unitId);
 }
 
 export function listRevealedHints(unitId) {
   return getDatabase()
-    .prepare("SELECT level, revealed_at AS revealedAt FROM hint_reveals WHERE unit_id = ? ORDER BY level")
+    .prepare(
+      "SELECT level, revealed_at AS revealedAt FROM hint_reveals WHERE unit_id = ? ORDER BY level",
+    )
     .all(unitId);
 }
 
 export function listAllHintReveals() {
   return getDatabase()
-    .prepare("SELECT unit_id AS unitId, level, revealed_at AS revealedAt FROM hint_reveals ORDER BY unit_id, level")
+    .prepare(
+      "SELECT unit_id AS unitId, level, revealed_at AS revealedAt FROM hint_reveals ORDER BY unit_id, level",
+    )
     .all();
 }
 
@@ -259,11 +309,13 @@ export function saveReflection(unitId, reflection, confidence) {
 
 export function markUnitCompleted(unitId, completedDate = localDateString()) {
   const db = getDatabase();
-  db.prepare(`
+  db.prepare(
+    `
     UPDATE unit_progress
        SET status = 'completed', completed_at = COALESCE(completed_at, CURRENT_TIMESTAMP)
      WHERE unit_id = ?
-  `).run(unitId);
+  `,
+  ).run(unitId);
   const insertReview = db.prepare(`
     INSERT OR IGNORE INTO reviews (unit_id, cycle_days, scheduled_for)
     VALUES (?, ?, ?)
@@ -277,23 +329,27 @@ export function markUnitCompleted(unitId, completedDate = localDateString()) {
 
 export function listDueReviews(date = localDateString()) {
   return getDatabase()
-    .prepare(`
+    .prepare(
+      `
       SELECT id, unit_id AS unitId, cycle_days AS cycleDays,
              scheduled_for AS scheduledFor, completed_at AS completedAt, confidence
       FROM reviews
       WHERE completed_at IS NULL AND scheduled_for <= ?
       ORDER BY scheduled_for, id
-    `)
+    `,
+    )
     .all(date);
 }
 
 export function listReviews() {
   return getDatabase()
-    .prepare(`
+    .prepare(
+      `
       SELECT id, unit_id AS unitId, cycle_days AS cycleDays,
              scheduled_for AS scheduledFor, completed_at AS completedAt, confidence
       FROM reviews ORDER BY scheduled_for, id
-    `)
+    `,
+    )
     .all();
 }
 
@@ -303,23 +359,36 @@ export function completeReview(reviewId, confidence) {
     throw new Error("A confiança da revisão deve ficar entre 1 e 5.");
   }
   getDatabase()
-    .prepare("UPDATE reviews SET completed_at = CURRENT_TIMESTAMP, confidence = ? WHERE id = ?")
+    .prepare(
+      "UPDATE reviews SET completed_at = CURRENT_TIMESTAMP, confidence = ? WHERE id = ?",
+    )
     .run(value, reviewId);
 }
 
 export function getStudyStats() {
   const db = getDatabase();
   const totals = db
-    .prepare("SELECT COALESCE(SUM(minutes), 0) AS minutes, COUNT(DISTINCT study_date) AS days FROM study_sessions")
+    .prepare(
+      "SELECT COALESCE(SUM(minutes), 0) AS minutes, COUNT(DISTINCT study_date) AS days FROM study_sessions",
+    )
     .get();
   const dates = db
-    .prepare("SELECT DISTINCT study_date AS date FROM study_sessions ORDER BY study_date DESC")
+    .prepare(
+      "SELECT DISTINCT study_date AS date FROM study_sessions ORDER BY study_date DESC",
+    )
     .all()
     .map((row) => row.date);
   const review = db
-    .prepare("SELECT AVG(confidence) AS average FROM reviews WHERE completed_at IS NOT NULL")
+    .prepare(
+      "SELECT AVG(confidence) AS average FROM reviews WHERE completed_at IS NOT NULL",
+    )
     .get();
-  return { minutes: totals.minutes, days: totals.days, dates, reviewAverage: review.average };
+  return {
+    minutes: totals.minutes,
+    days: totals.days,
+    dates,
+    reviewAverage: review.average,
+  };
 }
 
 export function restoreData(data) {

@@ -21,24 +21,15 @@ export const api = {
       method: "POST",
       body: JSON.stringify(input),
     }),
+  deleteSession: (id: number) =>
+    request<{ id: number }>(`/api/study-sessions/${id}`, { method: "DELETE" }),
   revealHint: (unitId: string, level: number) =>
     request<import("./types").UnitDetail>(`/api/units/${unitId}/hints/${level}`, {
       method: "POST",
     }),
-  test: (unitId: string) =>
+  test: (unitId: string, exerciseName?: string) =>
     request<{ result: import("./types").TestResult; unit: import("./types").UnitDetail }>(
       `/api/units/${unitId}/tests`,
-      { method: "POST" },
+      { method: "POST", body: JSON.stringify({ exerciseName }) },
     ),
-  reflect: (unitId: string, reflection: string, confidence: number) =>
-    request<import("./types").UnitDetail>(`/api/units/${unitId}/reflection`, {
-      method: "POST",
-      body: JSON.stringify({ reflection, confidence }),
-    }),
-  reviews: () => request<import("./types").Review[]>("/api/reviews"),
-  completeReview: (reviewId: number, confidence: number) =>
-    request<import("./types").Review[]>(`/api/reviews/${reviewId}/complete`, {
-      method: "POST",
-      body: JSON.stringify({ confidence }),
-    }),
 };

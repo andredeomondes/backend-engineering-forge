@@ -1,6 +1,7 @@
 import {
   completeReview,
   createStudySession,
+  deleteStudySession,
   getSetting,
   getStudyStats,
   getUnitProgress,
@@ -15,11 +16,16 @@ import {
   recordTestRun,
   restoreData,
   revealHint,
-  saveReflection,
   setSetting,
 } from "./database.js";
 import { daysBetween, localDateString } from "./dates.js";
-import { getUnit, listPhases, listPolyglotTracks, listProjects, listUnits } from "./curriculum.js";
+import {
+  getUnit,
+  listPhases,
+  listPolyglotTracks,
+  listProjects,
+  listUnits,
+} from "./curriculum.js";
 import { runUnitTests } from "./test-runner.js";
 
 function computeStreak(dates, today = localDateString()) {
@@ -80,7 +86,8 @@ export function getDashboard() {
     trackUnits.forEach((unit, index) => {
       const previous = trackUnits[index - 1];
       const requirement = trackRequirements[track];
-      const trackReleased = !requirement || progress.get(requirement)?.status === "completed";
+      const trackReleased =
+        !requirement || progress.get(requirement)?.status === "completed";
       const unlocked =
         (index === 0 && trackReleased) ||
         unit.id === currentUnitId ||
@@ -91,7 +98,8 @@ export function getDashboard() {
   }
   const projectSummaries = listProjects().map((project) => ({
     ...project,
-    status: progress.get(project.unlockAfter)?.status === "completed" ? "available" : "locked",
+    status:
+      progress.get(project.unlockAfter)?.status === "completed" ? "available" : "locked",
   }));
 
   return {
@@ -128,8 +136,6 @@ export function getUnitDetail(unitId) {
     hints: unit.hints.map((hint) => ({ ...hint, revealed: revealed.has(hint.level) })),
     gate: {
       tests: Boolean(progress.lastTestSuccess),
-      reflection: progress.reflection.length >= 30,
-      confidence: (progress.confidence || 0) >= 3,
       completed: progress.status === "completed",
     },
   };
@@ -138,7 +144,8 @@ export function getUnitDetail(unitId) {
 export function setCurrentUnit(unitId) {
   if (!getUnit(unitId)) throw new Error("Unidade não encontrada.");
   const summary = getDashboard().units.find((unit) => unit.id === unitId);
-  if (summary?.status === "locked") throw new Error("Conclua o gate anterior para liberar esta unidade.");
+  if (summary?.status === "locked")
+    throw new Error("Conclua o gate anterior para liberar esta unidade.");
   setSetting("current_unit", unitId);
   return getUnitDetail(unitId);
 }
@@ -146,6 +153,11 @@ export function setCurrentUnit(unitId) {
 export function addStudySession(input) {
   const id = createStudySession(input);
   return listAllStudySessions().find((session) => session.id === id);
+}
+
+export function removeStudySession(id) {
+  deleteStudySession(id);
+  return { id: Number(id) };
 }
 
 export function revealUnitHint(unitId, level) {
@@ -158,33 +170,27 @@ export function revealUnitHint(unitId, level) {
 
 function evaluateGate(unitId) {
   const progress = getUnitProgress(unitId);
-  if (
-    progress.status !== "completed" &&
-    progress.lastTestSuccess &&
-    progress.reflection.length >= 30 &&
-    progress.confidence >= 3
-  ) {
+  if (progress.status !== "completed" && progress.lastTestSuccess) {
     markUnitCompleted(unitId);
   }
   return getUnitDetail(unitId);
 }
 
-export async function testUnit(unitId) {
-  const result = await runUnitTests(unitId);
-  recordTestRun(unitId, result);
-  return { result, unit: evaluateGate(unitId) };
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-export function reflectOnUnit(unitId, reflection, confidence) {
-  if (!reflection?.trim() || reflection.trim().length < 30) {
-    throw new Error("Escreva uma reflexão com pelo menos 30 caracteres.");
+export async function testUnit(unitId, exerciseName) {
+  let pattern;
+  if (exerciseName) {
+    const unit = getUnit(unitId);
+    const known = unit?.exercises.some((exercise) => exercise.name === exerciseName);
+    if (!known) throw new Error("Exercício desconhecido.");
+    pattern = escapeRegExp(exerciseName);
   }
-  const value = Number(confidence);
-  if (!Number.isInteger(value) || value < 1 || value > 5) {
-    throw new Error("A confiança deve ficar entre 1 e 5.");
-  }
-  saveReflection(unitId, reflection, value);
-  return evaluateGate(unitId);
+  const result = await runUnitTests(unitId, pattern);
+  recordTestRun(unitId, result);
+  return { result, unit: evaluateGate(unitId) };
 }
 
 export function getReviews() {
@@ -223,7 +229,14 @@ export function importData(data) {
 export function exportSessionsCsv() {
   const escape = (value) => `"${String(value ?? "").replaceAll('"', '""')}"`;
   const rows = listAllStudySessions().map((session) =>
-    [session.date, session.minutes, session.unitId, session.summary, session.difficulty, session.nextStep]
+    [
+      session.date,
+      session.minutes,
+      session.unitId,
+      session.summary,
+      session.difficulty,
+      session.nextStep,
+    ]
       .map(escape)
       .join(","),
   );

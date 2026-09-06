@@ -11,7 +11,7 @@ import {
   getDashboard,
   getReviews,
   getUnitDetail,
-  reflectOnUnit,
+  removeStudySession,
   revealUnitHint,
   setCurrentUnit,
   testUnit,
@@ -40,22 +40,38 @@ function api(handler) {
   };
 }
 
-app.get("/api/dashboard", api(() => getDashboard()));
-app.get("/api/units/:unitId", api((request) => getUnitDetail(request.params.unitId)));
-app.post("/api/focus", api((request) => setCurrentUnit(request.body.unitId)));
-app.post("/api/study-sessions", api((request) => addStudySession(request.body)));
+app.get(
+  "/api/dashboard",
+  api(() => getDashboard()),
+);
+app.get(
+  "/api/units/:unitId",
+  api((request) => getUnitDetail(request.params.unitId)),
+);
+app.post(
+  "/api/focus",
+  api((request) => setCurrentUnit(request.body.unitId)),
+);
+app.post(
+  "/api/study-sessions",
+  api((request) => addStudySession(request.body)),
+);
+app.delete(
+  "/api/study-sessions/:id",
+  api((request) => removeStudySession(request.params.id)),
+);
 app.post(
   "/api/units/:unitId/hints/:level",
   api((request) => revealUnitHint(request.params.unitId, request.params.level)),
 );
-app.post("/api/units/:unitId/tests", api((request) => testUnit(request.params.unitId)));
 app.post(
-  "/api/units/:unitId/reflection",
-  api((request) =>
-    reflectOnUnit(request.params.unitId, request.body.reflection, request.body.confidence),
-  ),
+  "/api/units/:unitId/tests",
+  api((request) => testUnit(request.params.unitId, request.body?.exerciseName)),
 );
-app.get("/api/reviews", api(() => getReviews()));
+app.get(
+  "/api/reviews",
+  api(() => getReviews()),
+);
 app.post(
   "/api/reviews/:reviewId/complete",
   api((request) => finishReview(request.params.reviewId, request.body.confidence)),
@@ -71,16 +87,20 @@ app.get("/api/export/csv", (_request, response) => {
 
 app.use("/api", (error, _request, response, _next) => {
   console.error(error);
-  response.status(400).json({ error: error.message || "Não foi possível concluir a operação." });
+  response
+    .status(400)
+    .json({ error: error.message || "Não foi possível concluir a operação." });
 });
 
 if (isProduction) {
-  if (!existsSync(distRoot)) throw new Error("Execute npm run build:web antes do modo de produção.");
+  if (!existsSync(distRoot))
+    throw new Error("Execute npm run build:web antes do modo de produção.");
   app.use(express.static(distRoot));
   app.use((_request, response) => response.sendFile(path.join(distRoot, "index.html")));
 } else {
   const { createServer } = await import("vite");
   const vite = await createServer({
+    configFile: path.join(currentDirectory, "vite.config.js"),
     root: clientRoot,
     appType: "spa",
     server: { middlewareMode: true },

@@ -34,7 +34,6 @@ export type DashboardData = {
     totalUnits: number;
     retention: number | null;
     autonomy: number | null;
-    dueReviews: number;
   };
   recentSessions: Session[];
   units: UnitSummary[];
@@ -73,18 +72,7 @@ export type UnitDetail = UnitSummary & {
     helpLevel: number;
   };
   hints: Array<{ level: number; title: string; content: string; revealed: boolean }>;
-  gate: { tests: boolean; reflection: boolean; confidence: boolean; completed: boolean };
-};
-
-export type Review = {
-  id: number;
-  unitId: string;
-  unitTitle: string;
-  cycleDays: number;
-  scheduledFor: string;
-  completedAt: string | null;
-  confidence: number | null;
-  due: boolean;
+  gate: { tests: boolean; completed: boolean };
 };
 
 export type TestResult = {

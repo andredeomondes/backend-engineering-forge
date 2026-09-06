@@ -1,16 +1,9 @@
-import {
-  ArrowRight,
-  BookOpen,
-  CalendarClock,
-  Download,
-  Flame,
-  Gauge,
-  Timer,
-} from "lucide-react";
+import { ArrowRight, BookOpen, Download, Gauge, Timer, Trash2 } from "lucide-react";
 import { FormEvent, ReactNode, useState } from "react";
 
 import { api } from "../api";
 import type { DashboardData } from "../types";
+import { ConfirmDialog } from "./ConfirmDialog";
 
 type Props = {
   data: DashboardData;
@@ -21,6 +14,7 @@ type Props = {
 export function Dashboard({ data, onContinue, onRefresh }: Props) {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
 
   async function submitSession(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -45,7 +39,21 @@ export function Dashboard({ data, onContinue, onRefresh }: Props) {
     }
   }
 
-  const progressPercent = Math.round((data.stats.completedUnits / data.stats.totalUnits) * 100);
+  async function confirmDeleteSession() {
+    const id = pendingDeleteId;
+    if (id === null) return;
+    setPendingDeleteId(null);
+    try {
+      await api.deleteSession(id);
+      await onRefresh();
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Não foi possível excluir.");
+    }
+  }
+
+  const progressPercent = Math.round(
+    (data.stats.completedUnits / data.stats.totalUnits) * 100,
+  );
 
   return (
     <div className="page-stack">
@@ -54,10 +62,14 @@ export function Dashboard({ data, onContinue, onRefresh }: Props) {
           <span className="eyebrow">Foco atual</span>
           <h2>{data.currentUnit.title}</h2>
           <p>
-            {data.currentUnit.exerciseCount} exercícios · {data.currentUnit.attempts} execuções
+            {data.currentUnit.exerciseCount} exercícios · {data.currentUnit.attempts}{" "}
+            execuções
           </p>
         </div>
-        <div className="current-progress" aria-label={`${progressPercent}% da trilha concluída`}>
+        <div
+          className="current-progress"
+          aria-label={`${progressPercent}% da trilha concluída`}
+        >
           <span>{String(progressPercent).padStart(2, "0")}%</span>
           <div className="progress-track">
             <div style={{ width: `${progressPercent}%` }} />
@@ -70,17 +82,15 @@ export function Dashboard({ data, onContinue, onRefresh }: Props) {
       </section>
 
       <section className="metrics-grid" aria-label="Resumo do progresso">
-        <Metric icon={<Timer />} label="Tempo registrado" value={`${data.stats.hours}h`} />
-        <Metric icon={<Flame />} label="Sequência" value={`${data.stats.streak} dias`} />
+        <Metric
+          icon={<Timer />}
+          label="Tempo registrado"
+          value={`${data.stats.hours}h`}
+        />
         <Metric
           icon={<Gauge />}
           label="Autonomia"
           value={data.stats.autonomy === null ? "—" : `${data.stats.autonomy}%`}
-        />
-        <Metric
-          icon={<CalendarClock />}
-          label="Revisões pendentes"
-          value={String(data.stats.dueReviews)}
         />
       </section>
 
@@ -96,7 +106,14 @@ export function Dashboard({ data, onContinue, onRefresh }: Props) {
           <form className="session-form" onSubmit={submitSession}>
             <label>
               Minutos
-              <input name="minutes" type="number" min="1" max="600" defaultValue="60" required />
+              <input
+                name="minutes"
+                type="number"
+                min="1"
+                max="600"
+                defaultValue="60"
+                required
+              />
             </label>
             <label className="wide-field">
               Resumo
@@ -114,7 +131,11 @@ export function Dashboard({ data, onContinue, onRefresh }: Props) {
               {saving ? "Registrando..." : "Registrar"}
             </button>
           </form>
-          {message && <p className="form-message" role="status">{message}</p>}
+          {message && (
+            <p className="form-message" role="status">
+              {message}
+            </p>
+          )}
         </section>
 
         <section className="panel recent-panel">
@@ -132,8 +153,17 @@ export function Dashboard({ data, onContinue, onRefresh }: Props) {
                   <time>{formatDate(session.date)}</time>
                   <div>
                     <strong>{session.summary}</strong>
-                    <span>{session.minutes} min · {session.unitId.toUpperCase()}</span>
+                    <span>
+                      {session.minutes} min · {session.unitId.toUpperCase()}
+                    </span>
                   </div>
+                  <button
+                    className="icon-button"
+                    onClick={() => setPendingDeleteId(session.id)}
+                    aria-label="Excluir sessão"
+                  >
+                    <Trash2 size={16} />
+                  </button>
                 </article>
               ))}
             </div>
@@ -157,11 +187,28 @@ export function Dashboard({ data, onContinue, onRefresh }: Props) {
           </a>
         </div>
       </section>
+
+      <ConfirmDialog
+        open={pendingDeleteId !== null}
+        title="Excluir esta sessão do diário?"
+        description="Essa ação não pode ser desfeita."
+        confirmLabel="Excluir"
+        onConfirm={confirmDeleteSession}
+        onCancel={() => setPendingDeleteId(null)}
+      />
     </div>
   );
 }
 
-function Metric({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
+function Metric({
+  icon,
+  label,
+  value,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string;
+}) {
   return (
     <article className="metric">
       <span className="metric-icon">{icon}</span>
