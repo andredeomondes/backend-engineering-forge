@@ -128,6 +128,7 @@ export function fixOnceBug(fn) {
   return function (...args) {
     if (!called) {
       result = fn(...args);
+      called = true;
     }
     return result;
   };
@@ -140,7 +141,7 @@ export function fixCounterClosureBug() {
   // como se `count` fosse reiniciado toda vez.
   let count = 0;
   function increment() {
-    let count = count + 1;
+    count++;
     return count;
   }
   return increment;
@@ -154,17 +155,22 @@ export function fixCounterClosureBug() {
 
 // test: node --test --test-name-pattern="refactorMessyPipeline" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function refactorMessyPipeline(value) {
-  let step1 = value + 1;
-  let step2 = step1 * 2;
-  let step3 = step2 + 1;
-  let step4 = step3 * 2;
-  let step5 = step4 + 1;
-  return step5;
+  const addOne = (n) => ++n;
+  const double = (n) => n * 2;
+  return pipeAll(addOne, double, addOne, double, addOne)(value);
 }
 
 // --- Desafio integrador -------------------------------------------------------
 
 // test: node --test --test-name-pattern="buildValidationPipeline" exercises/01-javascript-core/unit-08-higher-order-functions/exercises.test.js
 export function buildValidationPipeline(rules) {
-  throw new Error("not implemented: buildValidationPipeline");
+  return function (value) {
+    const messages = [];
+    for (const rule of rules) {
+      if (!rule.test(value)) {
+        messages.push(rule.message);
+      }
+    }
+    return messages;
+  };
 }

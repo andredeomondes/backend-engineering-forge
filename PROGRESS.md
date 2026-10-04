@@ -18,8 +18,8 @@ Status: em andamento.
 ## Fase 1 — JavaScript profundo para backend
 
 Status: todas as 27 unidades geradas (2026-07-25, a pedido do usuário, fora
-do fluxo normal `PROXIMA_UNIDADE`). Unidades 1–6 concluídas; Unidade 7 ativa;
-8–27 entregues e aguardando tentativa progressiva. Ritmo recomendado atual:
+do fluxo normal `PROXIMA_UNIDADE`). Unidades 1–8 concluídas; Unidade 9 ativa;
+10–27 entregues e aguardando tentativa progressiva. Ritmo recomendado atual:
 aproximadamente uma unidade por semana, ajustado pelo gate.
 
 - [x] Unidade 1 — valores, tipos, operadores, coerção, igualdade (16/16 exercícios, suite verde)
@@ -28,9 +28,9 @@ aproximadamente uma unidade por semana, ajustado pelo gate.
 - [x] Unidade 4 — escopo léxico (16/16 exercícios, suite verde — 21/21 testes)
 - [x] Unidade 5 — closures (16/16 exercícios, suite verde — 24/24 testes)
 - [x] Unidade 6 — arrays e objetos (16/16 exercícios, suite verde — 24/24 testes)
-- [ ] Unidade 7 — referências, mutabilidade e cópias (entregue)
-- [ ] Unidade 8 — funções de alta ordem (entregue)
-- [ ] Unidade 9 — map/filter/find/some/every/reduce (entregue)
+- [x] Unidade 7 — referências, mutabilidade e cópias (gate concluído)
+- [x] Unidade 8 — funções de alta ordem (gate concluído)
+- [ ] Unidade 9 — map/filter/find/some/every/reduce (ativa)
 - [ ] Unidade 10 — destructuring (entregue)
 - [ ] Unidade 11 — spread e rest (entregue)
 - [ ] Unidade 12 — tratamento de erros (entregue)
