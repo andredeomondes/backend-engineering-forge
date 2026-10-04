@@ -1,8 +1,31 @@
-import { Maximize2, Minimize2, Pause, Play, RotateCcw, Timer, X } from "lucide-react";
+import {
+  Maximize2,
+  Minimize2,
+  Music,
+  Pause,
+  Play,
+  RotateCcw,
+  Timer,
+  Volume2,
+  VolumeX,
+  X,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { api } from "../api";
-import { sfx } from "../lib/sound";
+import {
+  type AmbientMode,
+  getAmbientMode,
+  getSoundMuted,
+  getSoundVolume,
+  isAmbientOn,
+  setAmbientMode,
+  setSoundMuted,
+  setSoundVolume,
+  sfx,
+  stopAmbient,
+  toggleAmbient,
+} from "../lib/sound";
 import { Button } from "./ui/8bit/button";
 
 const FOCUS_SECONDS = 25 * 60;
@@ -38,6 +61,16 @@ function formatTime(totalSeconds: number) {
   return `${minutes}:${seconds}`;
 }
 
+function notify(title: string, body: string) {
+  if (typeof window === "undefined" || document.hasFocus() || !("Notification" in window))
+    return;
+  if (Notification.permission === "granted") {
+    new Notification(title, { body, icon: "/favicon.svg" });
+  } else if (Notification.permission !== "denied") {
+    Notification.requestPermission().catch(() => {});
+  }
+}
+
 type Props = {
   unitId: string;
   onLogged?: () => void;
@@ -48,6 +81,10 @@ export function PomodoroWidget({ unitId, onLogged }: Props) {
   const [fullscreen, setFullscreen] = useState(false);
   const [flash, setFlash] = useState(false);
   const [state, setState] = useState<State>(loadState);
+  const [muted, setMuted] = useState(getSoundMuted);
+  const [ambientOn, setAmbientOn] = useState(isAmbientOn);
+  const [ambientMode, setAmbientModeState] = useState<AmbientMode>(getAmbientMode);
+  const [volume, setVolume] = useState(getSoundVolume);
   const originalTitle = useRef(document.title);
   const loggedCycles = useRef(state.cycles);
 
@@ -55,6 +92,8 @@ export function PomodoroWidget({ unitId, onLogged }: Props) {
     const { running, ...persisted } = state;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted));
   }, [state]);
+
+  useEffect(() => () => stopAmbient(), []);
 
   useEffect(() => {
     if (state.cycles <= loggedCycles.current) return;
@@ -79,9 +118,14 @@ export function PomodoroWidget({ unitId, onLogged }: Props) {
       setState((current) => {
         if (current.secondsLeft <= 1) {
           const nextMode: Mode = current.mode === "focus" ? "break" : "focus";
-          sfx.complete();
+          if (current.mode === "focus") sfx.focusComplete();
+          else sfx.breakComplete();
           setFlash(true);
           setTimeout(() => setFlash(false), 500);
+          notify(
+            current.mode === "focus" ? "Foco concluído!" : "Pausa concluída!",
+            current.mode === "focus" ? "Hora da pausa." : "Hora de focar.",
+          );
           return {
             mode: nextMode,
             secondsLeft: nextMode === "focus" ? FOCUS_SECONDS : BREAK_SECONDS,
@@ -110,6 +154,21 @@ export function PomodoroWidget({ unitId, onLogged }: Props) {
     return () => window.removeEventListener("keydown", onKey);
   }, [fullscreen]);
 
+  useEffect(() => {
+    function onKey(event: KeyboardEvent) {
+      const target = event.target as HTMLElement | null;
+      if (target && ["INPUT", "TEXTAREA"].includes(target.tagName)) return;
+      if (event.code === "Space" && (open || fullscreen)) {
+        event.preventDefault();
+        toggleRunning();
+      } else if (event.key.toLowerCase() === "r" && (open || fullscreen)) {
+        reset();
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
+
   function toggleRunning() {
     sfx[state.running ? "pause" : "start"]();
     setState((current) => ({ ...current, running: !current.running }));
@@ -135,6 +194,30 @@ export function PomodoroWidget({ unitId, onLogged }: Props) {
     setFullscreen((value) => !value);
   }
 
+  function toggleMute() {
+    setMuted((value) => {
+      const next = !value;
+      setSoundMuted(next);
+      if (!next) sfx.toggle();
+      return next;
+    });
+  }
+
+  function toggleAmbientSound() {
+    toggleAmbient();
+    setAmbientOn(isAmbientOn());
+  }
+
+  function changeAmbientMode(mode: AmbientMode) {
+    setAmbientModeState(mode);
+    setAmbientMode(mode);
+  }
+
+  function changeVolume(next: number) {
+    setVolume(next);
+    setSoundVolume(next);
+  }
+
   const sessionsLabel = `${state.cycles} sessõe${state.cycles === 1 ? "" : "s"} concluída${state.cycles === 1 ? "" : "s"}`;
 
   const controls = (
@@ -157,6 +240,55 @@ export function PomodoroWidget({ unitId, onLogged }: Props) {
       >
         {fullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
       </Button>
+      <Button
+        size="icon"
+        variant="secondary"
+        onClick={toggleMute}
+        aria-label={muted ? "Ativar som" : "Silenciar"}
+      >
+        {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+      </Button>
+      <Button
+        size="icon"
+        variant="secondary"
+        onClick={toggleAmbientSound}
+        aria-label={ambientOn ? "Desligar som ambiente" : "Ligar som ambiente"}
+        aria-pressed={ambientOn}
+        className={ambientOn ? "pomodoro-ambient-on" : undefined}
+      >
+        <Music size={16} />
+      </Button>
+    </div>
+  );
+
+  const ambientControls = (
+    <div className="pomodoro-ambient-controls">
+      <div className="pomodoro-ambient-modes">
+        <button
+          type="button"
+          className={`pomodoro-mode-btn ${ambientMode === "noise" ? "active" : ""}`}
+          onClick={() => changeAmbientMode("noise")}
+        >
+          Ruído
+        </button>
+        <button
+          type="button"
+          className={`pomodoro-mode-btn ${ambientMode === "lofi" ? "active" : ""}`}
+          onClick={() => changeAmbientMode("lofi")}
+        >
+          Lo-fi
+        </button>
+      </div>
+      <input
+        type="range"
+        min={0}
+        max={1}
+        step={0.05}
+        value={volume}
+        onChange={(event) => changeVolume(Number(event.target.value))}
+        aria-label="Volume"
+        className="pomodoro-volume"
+      />
     </div>
   );
 
@@ -176,6 +308,7 @@ export function PomodoroWidget({ unitId, onLogged }: Props) {
         </strong>
         <span className="pomodoro-cycles">{sessionsLabel}</span>
         {controls}
+        {ambientControls}
       </div>
     );
   }
@@ -197,6 +330,7 @@ export function PomodoroWidget({ unitId, onLogged }: Props) {
           </strong>
           <span className="pomodoro-cycles">{sessionsLabel}</span>
           {controls}
+          {ambientControls}
         </div>
       )}
 
