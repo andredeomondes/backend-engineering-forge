@@ -76,6 +76,8 @@ export function PhasePanel({
   const [confirming, setConfirming] = useState(false);
   const done = node.items.filter((item) => item.done);
   const pending = node.items.filter((item) => !item.done);
+  // Unidades concluídas nunca reabrem e agendam revisões: o diálogo precisa avisar.
+  const pendingUnits = pending.filter((item) => item.kind === "unit").length;
   const units = node.items.filter((item) => item.kind === "unit" && item.unitId);
   const firstUnitId = (units.find((item) => !item.done) ?? units[0])?.unitId;
   const code = nodeCode(node);
@@ -184,7 +186,11 @@ export function PhasePanel({
       <ConfirmDialog
         open={confirming}
         title="Marcar tudo?"
-        description={`Todos os ${node.items.length} itens de "${node.title}" serão marcados como concluídos.`}
+        description={
+          pendingUnits > 0
+            ? `As ${pendingUnits} unidade(s) pendentes de "${node.title}" serão concluídas e cada uma agenda revisões de 2, 7 e 30 dias. Isso não pode ser desfeito.`
+            : `Todos os ${node.items.length} itens de "${node.title}" serão marcados como concluídos.`
+        }
         confirmLabel="Marcar tudo"
         onCancel={() => setConfirming(false)}
         onConfirm={() => {

@@ -74,7 +74,8 @@ async function runTests(args) {
   console.log(
     `\n${result.success ? "Verde" : "Ainda há trabalho"}: ${result.passed} passando, ${result.failed} falhando.`,
   );
-  if (unit.gate.completed) console.log("Gate concluído. Revisões de 2, 7 e 30 dias agendadas.");
+  if (unit.gate.completed)
+    console.log("Gate concluído. Revisões de 2, 7 e 30 dias agendadas.");
   process.exitCode = result.success ? 0 : 1;
 }
 
@@ -89,8 +90,15 @@ function runHint(args) {
 function runProgress() {
   const dashboard = getDashboard();
   for (const unit of dashboard.units) {
-    const marker = unit.status === "completed" ? "✓" : unit.id === dashboard.currentUnit.id ? "→" : "·";
-    console.log(`${marker} ${unit.id.toUpperCase()}  ${unit.title}  (${unit.testsPassed} testes passando)`);
+    const marker =
+      unit.status === "completed"
+        ? "✓"
+        : unit.id === dashboard.currentUnit.id
+          ? "→"
+          : "·";
+    console.log(
+      `${marker} ${unit.id.toUpperCase()}  ${unit.title}  (${unit.testsPassed} testes passando)`,
+    );
   }
 }
 
@@ -101,20 +109,21 @@ function runReviews() {
     return;
   }
   for (const review of pending) {
-    console.log(`${review.due ? "!" : "·"} ${review.scheduledFor}  ${review.unitId.toUpperCase()}  ciclo ${review.cycleDays}d`);
+    console.log(
+      `${review.due ? "!" : "·"} ${review.scheduledFor}  ${review.unitId.toUpperCase()}  ciclo ${review.cycleDays}d`,
+    );
   }
 }
 
 function runNext() {
   const currentId = getSetting("current_unit", "js-01");
   const current = getUnitDetail(currentId);
-  if (!current.gate.completed) throw new Error("O gate da unidade atual ainda não foi concluído.");
   const units = listUnits().filter((unit) => unit.track === current.track);
   const index = units.findIndex((unit) => unit.id === currentId);
   const next = units[index + 1];
   if (!next) throw new Error("Você chegou ao fim desta trilha.");
   setCurrentUnit(next.id);
-  console.log(`Próxima unidade liberada: ${next.title}`);
+  console.log(`Próxima unidade: ${next.title}`);
 }
 
 async function runExport(args) {
@@ -122,7 +131,8 @@ async function runExport(args) {
   const exportDirectory = path.join(FORGE_DATA_DIR, "exports");
   await mkdir(exportDirectory, { recursive: true });
   const filename = format === "csv" ? "study-sessions.csv" : "forge-backup.json";
-  const content = format === "csv" ? exportSessionsCsv() : `${JSON.stringify(exportData(), null, 2)}\n`;
+  const content =
+    format === "csv" ? exportSessionsCsv() : `${JSON.stringify(exportData(), null, 2)}\n`;
   const destination = path.join(exportDirectory, filename);
   await writeFile(destination, content, "utf8");
   console.log(`Exportado: ${destination}`);
@@ -152,7 +162,7 @@ function printHelp() {
       "  hint <1|2|3>       revela uma dica progressiva",
       "  progress           mostra todas as unidades",
       "  review             lista revisões agendadas",
-      "  next               avança após concluir o gate",
+      "  next               abre a próxima unidade (o gate é recomendado, não obrigatório)",
       "  export [json|csv]  exporta seus dados",
       "  import <json> --replace  restaura um backup",
       "",
@@ -164,16 +174,36 @@ function printHelp() {
 async function main() {
   const [, , command, ...args] = process.argv;
   switch (command) {
-    case "status": printStatus(); break;
-    case "log": await runLog(); break;
-    case "focus": runFocus(args); break;
-    case "test": await runTests(args); break;
-    case "hint": runHint(args); break;
-    case "progress": runProgress(); break;
-    case "review": runReviews(); break;
-    case "next": runNext(); break;
-    case "export": await runExport(args); break;
-    case "import": await runImport(args); break;
+    case "status":
+      printStatus();
+      break;
+    case "log":
+      await runLog();
+      break;
+    case "focus":
+      runFocus(args);
+      break;
+    case "test":
+      await runTests(args);
+      break;
+    case "hint":
+      runHint(args);
+      break;
+    case "progress":
+      runProgress();
+      break;
+    case "review":
+      runReviews();
+      break;
+    case "next":
+      runNext();
+      break;
+    case "export":
+      await runExport(args);
+      break;
+    case "import":
+      await runImport(args);
+      break;
     default:
       printHelp();
       if (command && command !== "help") process.exitCode = 1;

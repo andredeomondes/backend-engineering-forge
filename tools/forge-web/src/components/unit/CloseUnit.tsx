@@ -41,6 +41,8 @@ export function CloseUnit({
   const savedReflection = (unit.progress.reflection || "").trim().length;
   const savedConfidence = unit.progress.confidence ?? 0;
   const pendingMissions = unit.missions.filter((m) => !isMissionDone(m.status)).length;
+  // Marcar todas conclui a unidade (irreversível, agenda revisões) se ainda não estava.
+  const completesUnit = !unit.gate.completed && unit.missions.length > 0;
   const dirty =
     reflection !== (unit.progress.reflection || "") ||
     confidence !== unit.progress.confidence;
@@ -199,7 +201,12 @@ export function CloseUnit({
       <ConfirmDialog
         open={confirming}
         title="Marcar todas as missões?"
-        description={`As ${pendingMissions} missão(ões) pendentes de ${unit.id.toUpperCase()} ficam marcadas como feitas (sem teste verde).`}
+        description={
+          `As ${pendingMissions} missão(ões) pendentes de ${unit.id.toUpperCase()} ficam marcadas como feitas (sem teste verde).` +
+          (completesUnit
+            ? " Isso conclui a unidade e agenda revisões de 2, 7 e 30 dias. A conclusão não pode ser desfeita."
+            : "")
+        }
         confirmLabel="Marcar todas"
         onCancel={() => setConfirming(false)}
         onConfirm={() => {
