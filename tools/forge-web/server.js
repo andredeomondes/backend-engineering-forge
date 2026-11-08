@@ -11,6 +11,9 @@ import {
   getDashboard,
   getReviews,
   getUnitDetail,
+  markAllMissions,
+  markMission,
+  saveUnitReflection,
   removeStudySession,
   revealUnitHint,
   setCurrentUnit,
@@ -67,6 +70,30 @@ app.post(
 app.post(
   "/api/units/:unitId/tests",
   api((request) => testUnit(request.params.unitId, request.body?.exerciseName)),
+);
+app.post(
+  "/api/units/:unitId/missions/:exerciseId",
+  api((request) =>
+    markMission(
+      request.params.unitId,
+      request.params.exerciseId,
+      Boolean(request.body?.done),
+    ),
+  ),
+);
+app.post(
+  "/api/units/:unitId/missions",
+  api((request) => markAllMissions(request.params.unitId)),
+);
+app.post(
+  "/api/units/:unitId/reflection",
+  api((request) =>
+    saveUnitReflection(
+      request.params.unitId,
+      request.body?.reflection,
+      request.body?.confidence,
+    ),
+  ),
 );
 app.get(
   "/api/reviews",

@@ -176,24 +176,25 @@ export function listPhases() {
       number: Number(match[1]),
       title: match[2].trim(),
       label,
-      status: label.includes("🟢")
-        ? "completed"
-        : label.includes("🟡")
-          ? "active"
-          : "locked",
+      status: "available",
     };
   });
 }
 
 export function listPolyglotTracks() {
   return [
-    { id: "java", title: "Java + Spring", modules: "JAVA-01–JAVA-09", status: "locked" },
+    {
+      id: "java",
+      title: "Java + Spring",
+      modules: "JAVA-01–JAVA-09",
+      status: "available",
+    },
     {
       id: "dotnet",
       title: "C# + .NET",
       modules: "DOTNET-01–DOTNET-09",
-      status: "locked",
+      status: "available",
     },
-    { id: "go", title: "Go para backend", modules: "GO-01–GO-09", status: "locked" },
+    { id: "go", title: "Go para backend", modules: "GO-01–GO-09", status: "available" },
   ];
 }

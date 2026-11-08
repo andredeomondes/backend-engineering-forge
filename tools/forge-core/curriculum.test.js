@@ -51,16 +51,16 @@ test("roadmap expõe as fases sem renumerar a trilha principal", () => {
     phases.map((phase) => phase.number),
     Array.from({ length: 28 }, (_, index) => index),
   );
-  assert.equal(phases.find((phase) => phase.number === 1)?.status, "active");
+  assert.equal(phases.find((phase) => phase.number === 1)?.status, "available");
 });
 
-test("trilhas poliglotas começam bloqueadas e sem seleção", () => {
+test("trilhas poliglotas ficam disponíveis", () => {
   const tracks = listPolyglotTracks();
   assert.deepEqual(
     tracks.map((track) => track.id),
     ["java", "dotnet", "go"],
   );
-  assert.ok(tracks.every((track) => track.status === "locked"));
+  assert.ok(tracks.every((track) => track.status === "available"));
 });
 
 test("missões têm id sem assinatura e grupo do README", () => {
