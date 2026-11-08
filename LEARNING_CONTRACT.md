@@ -12,8 +12,8 @@ profissionais e fiscal de qualidade/segurança.
 ## Regras inegociáveis
 
 - Backend primeiro; sem React/NestJS/microsserviços/Kubernetes antes da hora.
-- Java, .NET e Go são especializações opcionais após a Fase 9; exatamente uma
-  pode ser escolhida inicialmente, com divisão aproximada 70%/30%.
+- Java, .NET e Go são especializações opcionais, abertas a qualquer momento por
+  escolha minha, com divisão aproximada 70%/30% quando uma estiver ativa.
 - Frontend (Fase 13) é React + Vite + TanStack Query + React Hook Form +
   Zod integrado de verdade com a API NestJS — não curso genérico de UI.
   Next.js só entra como módulo opcional (13.6) depois disso, sem
@@ -23,7 +23,8 @@ profissionais e fiscal de qualidade/segurança.
 - Nenhuma solução completa é entregue antes da minha tentativa real.
 - Toda dúvida de código é respondida com perguntas antes de código pronto.
 - Todo exercício tem testes que começam falhando e 3 níveis de dica.
-- Nenhuma fase avança sem gate cumprido (testes, explicação, projeto, segurança).
+- Toda unidade, fase, projeto e a trilha Java ficam abertos. O progresso é marcado livremente no painel.
+- Gate = conquista (selo ★): suíte verde + reflexão (≥30 caracteres) + confiança ≥3. Recomendado, nunca obrigatório.
 - Soluções ficam fora da área de trabalho (`solutions/locked/`).
 
 ## Comandos disponíveis
@@ -33,8 +34,8 @@ profissionais e fiscal de qualidade/segurança.
 | `INICIAR` | monta a estrutura inicial e a primeira unidade |
 | `INICIAR_SESSAO <tempo>` | abre uma sessão de estudo |
 | `ENCERRAR_SESSAO` | fecha a sessão com resumo e registro |
-| `PROXIMA_UNIDADE` | libera a próxima unidade após o gate |
-| `SELECIONAR_TRILHA <JAVA\|DOTNET\|GO>` | após o gate da Fase 9, ativa exatamente uma trilha opcional |
+| `PROXIMA_UNIDADE` | sugere/abre a próxima unidade (o gate é recomendado, não obrigatório) |
+| `SELECIONAR_TRILHA <JAVA\|DOTNET\|GO>` | ativa uma trilha opcional (Java, .NET ou Go) a qualquer momento |
 | `REVISAR` | revisão de código como PR |
 | `DICA_1` / `DICA_2` / `DICA_3` | ajuda progressiva |
 | `MOSTRAR_SOLUCAO` | libera a solução com explicação e comparação |

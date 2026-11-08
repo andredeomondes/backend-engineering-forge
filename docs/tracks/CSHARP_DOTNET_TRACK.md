@@ -1,6 +1,6 @@
 # C# com .NET
 
-Estado: `BLOQUEADA — escolha permitida somente após o gate da Fase 9`.
+Estado: `disponível`.
 
 Padrão da trilha: versão LTS suportada do .NET no momento da liberação,
 ASP.NET Core, PostgreSQL e Testcontainers. Versões e clientes externos são
