@@ -540,6 +540,8 @@ export function setTopicCheck(itemId, done) {
 
 export function listTopicChecks() {
   return getDatabase()
-    .prepare("SELECT item_id AS itemId, checked_at AS checkedAt FROM topic_checks ORDER BY item_id")
+    .prepare(
+      "SELECT item_id AS itemId, checked_at AS checkedAt FROM topic_checks ORDER BY item_id",
+    )
     .all();
 }

@@ -20,7 +20,10 @@ test("missão registra resultado e marcação manual separadamente", () => {
 
 test("tópico marca e desmarca", () => {
   db.setTopicCheck("f05-idempotencia", true);
-  assert.deepEqual(db.listTopicChecks().map((r) => r.itemId), ["f05-idempotencia"]);
+  assert.deepEqual(
+    db.listTopicChecks().map((r) => r.itemId),
+    ["f05-idempotencia"],
+  );
   db.setTopicCheck("f05-idempotencia", false);
   assert.equal(db.listTopicChecks().length, 0);
 });
