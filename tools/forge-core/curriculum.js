@@ -72,7 +72,7 @@ export function mergeMissions(exercises, missions, filePath) {
   }));
 }
 
-function readMissions(directory) {
+export function readMissions(directory) {
   const missionsPath = path.join(directory, "missions.json");
   if (!existsSync(missionsPath)) return { missions: null, missionsPath };
   try {

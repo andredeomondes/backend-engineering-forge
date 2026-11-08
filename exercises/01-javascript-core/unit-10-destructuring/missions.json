@@ -16,7 +16,7 @@
       "input": "swapPair([\"a\", \"b\"])",
       "output": "[\"b\", \"a\"]"
     },
-    "rules": ["Use o truque de troca [a, b] = [b, a]."],
+    "rules": ["Use destructuring para trocar os dois valores de posição."],
     "pitfalls": []
   },
   "getNameAndAge": {
@@ -58,7 +58,7 @@
       "input": "skipMiddleElement([\"a\", \"b\", \"c\"])",
       "output": "[\"a\", \"c\"]"
     },
-    "rules": ["Pule o elemento do meio com um buraco: [a, , c]."],
+    "rules": ["Use destructuring de array, pulando o elemento do meio."],
     "pitfalls": []
   },
   "renameKeys": {
@@ -68,9 +68,7 @@
       "input": "renameKeys({ id: 42, name: \"produto\" })",
       "output": "{ identifier: 42, label: \"produto\" }"
     },
-    "rules": [
-      "Renomeie as variáveis durante a desestruturação: { id: identifier, name: label }."
-    ],
+    "rules": ["Renomeie as variáveis durante a desestruturação."],
     "pitfalls": []
   },
   "describeProduct": {
@@ -90,20 +88,18 @@
       "input": "swapMatrixRows([\n  [1, 2],\n  [3, 4],\n  [5, 6],\n])",
       "output": "[\n  [5, 6],\n  [3, 4],\n  [1, 2],\n]"
     },
-    "rules": [
-      "Use destructuring de atribuição sobre os elementos do array ([a, b] = [b, a])."
-    ],
+    "rules": ["Use destructuring de atribuição para trocar os elementos de posição."],
     "pitfalls": ["Não modifique o array original."]
   },
   "describeMinMax": {
-    "objective": "Devolver a string \"min=<min>, max=<max>\" a partir da tupla devolvida por getMinMax.",
+    "objective": "Devolver a string \"min=<min>, max=<max>\" a partir da tupla devolvida pela função getMinMax, recebida como primeiro argumento.",
     "uses": "destructuring de array",
     "example": {
       "input": "describeMinMax(getMinMax, [5, 1, 9, 3])",
       "output": "\"min=1, max=9\""
     },
     "rules": [
-      "getMinMax recebe numbers e devolve a tupla [min, max]; desestruture essa tupla."
+      "getMinMax recebe numbers e devolve uma tupla [min, max]; desestruture essa tupla."
     ],
     "pitfalls": []
   },
@@ -127,8 +123,8 @@
       "output": "[\"nome: Ana\", \"cidade: Recife\"]"
     },
     "rules": [
-      "Percorra Object.entries(record) com for...of.",
-      "Desestruture cada par como [key, value]."
+      "Percorra as entradas do objeto com for...of.",
+      "Desestruture cada par em chave e valor."
     ],
     "pitfalls": []
   },
@@ -140,7 +136,7 @@
       "output": "\"4x9\""
     },
     "rules": ["Desestruture sem renomear as chaves."],
-    "pitfalls": ["A renomeação { width: height, height: width } troca os valores."]
+    "pitfalls": ["A renomeação das chaves na desestruturação troca os valores."]
   },
   "fixNestedPathDestructureBug": {
     "objective": "Corrigir a origem da desestruturação para alcançar o país do endereço do cliente.",
@@ -172,7 +168,7 @@
       "output": "{\n  debug: true,\n  retries: 3,\n  mode: \"production\",\n  verbose: false,\n}"
     },
     "rules": [
-      "Percorra com for...of desestruturando [key, value].",
+      "Percorra com for...of desestruturando cada par em chave e valor.",
       "\"true\" vira true e \"false\" vira false.",
       "Strings que representam número (ex.: \"3\") viram number.",
       "Qualquer outro valor permanece string."

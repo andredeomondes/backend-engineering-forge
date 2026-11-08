@@ -6,7 +6,7 @@
       "input": "cloneArray([1, 2, 3])",
       "output": "[1, 2, 3]"
     },
-    "rules": ["Use spread: [...arr]."],
+    "rules": ["Use spread."],
     "pitfalls": ["A cópia deve ser outro array: alterá-la não pode alterar o original."]
   },
   "mergeArrays": {
@@ -26,7 +26,7 @@
       "input": "cloneObject({ a: 1, b: 2 })",
       "output": "{ a: 1, b: 2 }"
     },
-    "rules": ["Use spread: {...obj}."],
+    "rules": ["Use spread."],
     "pitfalls": ["A cópia deve ser outro objeto: alterá-la não pode alterar o original."]
   },
   "mergeObjectsWithOverride": {
@@ -56,7 +56,7 @@
       "input": "firstAndRest([1, 2, 3, 4])",
       "output": "{ first: 1, rest: [2, 3, 4] }"
     },
-    "rules": ["Use destructuring com rest: const [first, ...rest] = arr."],
+    "rules": ["Use destructuring com rest."],
     "pitfalls": ["Array de um só elemento devolve rest vazio: { first: 9, rest: [] }."]
   },
   "spreadIntoCall": {
@@ -66,7 +66,7 @@
       "input": "spreadIntoCall([1, 2, 3], (a, b, c) => a + b + c)",
       "output": "6"
     },
-    "rules": ["Espalhe os elementos na chamada: fn(...numbers)."],
+    "rules": ["Espalhe os elementos de numbers como argumentos da chamada (spread)."],
     "pitfalls": []
   },
   "addProperty": {
@@ -98,7 +98,7 @@
       "input": "shallowMergeConfig(\n  { env: \"dev\", server: { port: 3000, host: \"localhost\" } },\n  { env: \"prod\", server: { port: 8080 } },\n)",
       "output": "{ env: \"prod\", server: { port: 8080 } }"
     },
-    "rules": ["Faça o merge raso: {...base, ...patch}."],
+    "rules": ["Faça o merge raso com spread, patch por cima de base."],
     "pitfalls": [
       "Spread não faz merge profundo: um objeto aninhado de patch substitui inteiramente o de base."
     ]
@@ -111,7 +111,7 @@
       "output": "{ id: 1, name: \"x\" }"
     },
     "rules": [
-      "Capture a chave indesejada com destructuring + rest e devolva o resto: const { [keyToRemove]: removed, ...rest } = obj."
+      "Use destructuring com rest para separar a chave indesejada e devolver o resto."
     ],
     "pitfalls": ["Não altere o objeto original."]
   },
@@ -149,7 +149,7 @@
     },
     "rules": ["O rótulo aparece só uma vez, antes dos dois-pontos."],
     "pitfalls": [
-      "Montar [label, ...values] e juntar tudo repete o rótulo no texto final."
+      "Juntar o rótulo com os valores e acrescentar o rótulo de novo o repete no texto final."
     ]
   },
   "refactorConcatViaPush": {

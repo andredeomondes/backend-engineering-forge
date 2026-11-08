@@ -1,4 +1,7 @@
 import assert from "node:assert/strict";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import test from "node:test";
 
 import {
@@ -8,6 +11,7 @@ import {
   listProjects,
   listUnits,
   mergeMissions,
+  readMissions,
 } from "./curriculum.js";
 
 test("currículo descobre as unidades preparadas", () => {
@@ -119,6 +123,26 @@ test("summary é o texto do item do README, em uma linha só", () => {
         exercise.summary.length > 0 && !/\n/.test(exercise.summary),
         `${unit.id}: ${exercise.name}`,
       );
+});
+
+test("readMissions: JSON malformado lança erro com o caminho do arquivo", () => {
+  const directory = mkdtempSync(path.join(tmpdir(), "forge-missions-"));
+  try {
+    assert.equal(readMissions(directory).missions, null);
+    const file = path.join(directory, "missions.json");
+    writeFileSync(file, "{ nao e json");
+    assert.throws(
+      () => readMissions(directory),
+      (error) => error.message.includes(file),
+    );
+    writeFileSync(file, "[]");
+    assert.throws(
+      () => readMissions(directory),
+      (error) => error.message.includes(file),
+    );
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
 });
 
 test("mergeMissions: chave sem exercício lança erro com chave e arquivo", () => {
