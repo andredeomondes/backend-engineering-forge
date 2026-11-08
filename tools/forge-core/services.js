@@ -5,6 +5,7 @@ import {
   getSetting,
   getStudyStats,
   getUnitProgress,
+  listExerciseProgress,
   listAllStudySessions,
   listAllHintReveals,
   listDueReviews,
@@ -13,11 +14,20 @@ import {
   listStudySessions,
   listUnitProgress,
   markUnitCompleted,
+  recordMissionRun,
   recordTestRun,
+  listTopicChecks,
   restoreData,
   revealHint,
+  saveReflection,
+  setExerciseManual,
   setSetting,
+  setTopicCheck,
+  upsertExerciseResult,
 } from "./database.js";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+
 import { daysBetween, localDateString } from "./dates.js";
 import {
   getUnit,
@@ -26,7 +36,10 @@ import {
   listProjects,
   listUnits,
 } from "./curriculum.js";
+import { PROGRESS_PATH, WORKSPACE_ROOT } from "./paths.js";
 import { runUnitTests } from "./test-runner.js";
+import { buildNodeItems, computeTrail } from "./trail.js";
+import { loadTrailContent } from "./trail-content.js";
 
 function computeStreak(dates, today = localDateString()) {
   if (!dates.length) return 0;
@@ -58,6 +71,7 @@ function unitSummary(unit, progress) {
 }
 
 export function getDashboard() {
+  runMigrations();
   const units = listUnits();
   const progressRows = listUnitProgress();
   const progress = new Map(progressRows.map((row) => [row.unitId, row]));
@@ -74,33 +88,17 @@ export function getDashboard() {
     : null;
 
   const unitSummaries = units.map((unit) => unitSummary(unit, progress.get(unit.id)));
-  const trackRequirements = {
-    javascript: null,
-    dsa: null,
-    typescript: "js-27",
-    node: "ts-08",
-    sql: "node-07",
-  };
-  for (const track of Object.keys(trackRequirements)) {
-    const trackUnits = unitSummaries.filter((unit) => unit.track === track);
-    trackUnits.forEach((unit, index) => {
-      const previous = trackUnits[index - 1];
-      const requirement = trackRequirements[track];
-      const trackReleased =
-        !requirement || progress.get(requirement)?.status === "completed";
-      const unlocked =
-        (index === 0 && trackReleased) ||
-        unit.id === currentUnitId ||
-        unit.status === "completed" ||
-        previous?.status === "completed";
-      if (!unlocked) unit.status = "locked";
-    });
-  }
   const projectSummaries = listProjects().map((project) => ({
     ...project,
-    status:
-      progress.get(project.unlockAfter)?.status === "completed" ? "available" : "locked",
+    status: "available",
   }));
+  const phasePercents = trailPhasePercents(unitSummaries, currentUnit?.id);
+  const phaseSummaries = listPhases().map((phase) => {
+    let status = "available";
+    if (phasePercents.get(phase.number) === 100) status = "completed";
+    else if (currentUnit?.phase === phase.number) status = "active";
+    return { ...phase, status };
+  });
 
   return {
     currentUnit: unitSummaries.find((unit) => unit.id === currentUnit?.id) || null,
@@ -118,34 +116,88 @@ export function getDashboard() {
     recentSessions: listStudySessions(5),
     units: unitSummaries,
     projects: projectSummaries,
-    phases: listPhases(),
+    phases: phaseSummaries,
     polyglotTracks: listPolyglotTracks(),
   };
 }
 
+// Percentual de cada fase pela mesma conta da Trilha (unidades ou tópicos), para
+// o Progresso e a Trilha nunca discordarem sobre o que está concluído.
+function trailPhasePercents(units, currentUnitId) {
+  let trail;
+  try {
+    trail = computeTrail({
+      content: loadTrailContent(),
+      units,
+      checkedItemIds: listTopicChecks().map((check) => check.itemId),
+      currentUnitId,
+    });
+  } catch (error) {
+    console.error("[forge] trilha indisponível para o status das fases:", error);
+    return new Map();
+  }
+  return new Map(
+    trail.nodes
+      .filter((node) => node.phase !== null && node.kind !== "java")
+      .map((node) => [node.phase, node.percent]),
+  );
+}
+
+const MIN_REFLECTION_LENGTH = 30;
+const MIN_REFLECTION_CONFIDENCE = 3;
+
+function missionStatus(row) {
+  if (row?.lastResult === "pass") return "passed";
+  if (row?.manualDone) return "manual";
+  if (row?.lastResult === "fail") return "failing";
+  return "todo";
+}
+
+function listMissions(unit) {
+  const rows = new Map(listExerciseProgress(unit.id).map((row) => [row.exerciseId, row]));
+  return unit.exercises.map((exercise) => ({
+    index: exercise.index,
+    id: exercise.id,
+    name: exercise.name,
+    group: exercise.group,
+    status: missionStatus(rows.get(exercise.id)),
+  }));
+}
+
 export function getUnitDetail(unitId) {
+  runMigrations();
   const unit = getUnit(unitId);
   if (!unit) throw new Error("Unidade não encontrada.");
   const progress = getUnitProgress(unitId);
   const revealed = new Set(listRevealedHints(unitId).map((item) => item.level));
+  const tests = Boolean(progress.lastTestSuccess);
+  const reflection =
+    (progress.reflection || "").length >= MIN_REFLECTION_LENGTH &&
+    (progress.confidence || 0) >= MIN_REFLECTION_CONFIDENCE;
   return {
     ...unitSummary(unit, progress),
     markdown: unit.markdown,
+    // Caminho relativo ao workspace, com "/", para o comando copiável da missão.
+    testPath: path
+      .relative(WORKSPACE_ROOT, path.resolve(unit.testPath))
+      .split(path.sep)
+      .join("/"),
+    missionTestable: unit.missionTestable !== false,
     exercises: unit.exercises,
+    missions: listMissions(unit),
     progress,
     hints: unit.hints.map((hint) => ({ ...hint, revealed: revealed.has(hint.level) })),
     gate: {
-      tests: Boolean(progress.lastTestSuccess),
+      tests,
+      reflection,
       completed: progress.status === "completed",
+      badge: tests && reflection,
     },
   };
 }
 
 export function setCurrentUnit(unitId) {
   if (!getUnit(unitId)) throw new Error("Unidade não encontrada.");
-  const summary = getDashboard().units.find((unit) => unit.id === unitId);
-  if (summary?.status === "locked")
-    throw new Error("Conclua o gate anterior para liberar esta unidade.");
   setSetting("current_unit", unitId);
   return getUnitDetail(unitId);
 }
@@ -168,29 +220,111 @@ export function revealUnitHint(unitId, level) {
   return getUnitDetail(unitId);
 }
 
-function evaluateGate(unitId) {
+// Conclui a unidade quando a suíte fica verde ou todas as missões estão feitas.
+// Nunca reabre uma unidade já concluída.
+function evaluateCompletion(unitId) {
+  const unit = getUnit(unitId);
   const progress = getUnitProgress(unitId);
-  if (progress.status !== "completed" && progress.lastTestSuccess) {
-    markUnitCompleted(unitId);
+  if (progress.status === "completed") return;
+  const missionsDone =
+    unit &&
+    unit.exercises.length > 0 &&
+    listMissions(unit).every((mission) => ["passed", "manual"].includes(mission.status));
+  if (progress.lastTestSuccess || missionsDone) markUnitCompleted(unitId);
+}
+
+// Devolve true só quando PROGRESS.md e trilha.json foram lidos. Em erro, registra
+// e devolve false: o guard fica sem marcar e o seed é tentado de novo depois.
+function seedPhase0FromProgress() {
+  try {
+    const text = readFileSync(PROGRESS_PATH, "utf8");
+    const lines = new Set(text.split(/\r?\n/).map((line) => line.trimEnd()));
+    const phase0 = loadTrailContent().nodes.find((node) => node.id === "f00");
+    for (const item of phase0?.items || [])
+      if (lines.has(`- [x] ${item.label}`)) setTopicCheck(item.id, true);
+    return true;
+  } catch (error) {
+    console.error("[forge] seed da Fase 0 ignorado:", error);
+    return false;
   }
+}
+
+export function runMigrations() {
+  if (!getSetting("migration_trail_v1")) {
+    for (const row of listUnitProgress()) {
+      if (row.status !== "completed") continue;
+      const unit = getUnit(row.unitId);
+      if (!unit) continue;
+      for (const exercise of unit.exercises)
+        upsertExerciseResult(row.unitId, exercise.id, true);
+    }
+    setSetting("migration_trail_v1", "done");
+  }
+  if (!getSetting("migration_trail_phase0_v1")) {
+    if (seedPhase0FromProgress()) setSetting("migration_trail_phase0_v1", "done");
+  }
+}
+
+function requireUnit(unitId) {
+  const unit = getUnit(unitId);
+  if (!unit) throw new Error("Unidade não encontrada.");
+  return unit;
+}
+
+export function markMission(unitId, exerciseId, done) {
+  const unit = requireUnit(unitId);
+  if (!unit.exercises.some((exercise) => exercise.id === exerciseId))
+    throw new Error("Exercício desconhecido.");
+  setExerciseManual(unitId, exerciseId, Boolean(done));
+  evaluateCompletion(unitId);
   return getUnitDetail(unitId);
 }
 
-function escapeRegExp(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+export function markAllMissions(unitId) {
+  const unit = requireUnit(unitId);
+  for (const exercise of unit.exercises) setExerciseManual(unitId, exercise.id, true);
+  evaluateCompletion(unitId);
+  return getUnitDetail(unitId);
 }
 
-export async function testUnit(unitId, exerciseName) {
-  let pattern;
-  if (exerciseName) {
-    const unit = getUnit(unitId);
-    const known = unit?.exercises.some((exercise) => exercise.name === exerciseName);
-    if (!known) throw new Error("Exercício desconhecido.");
-    pattern = escapeRegExp(exerciseName);
+export function saveUnitReflection(unitId, reflection, confidence) {
+  requireUnit(unitId);
+  const value = Number(confidence);
+  if (!Number.isInteger(value) || value < 1 || value > 5)
+    throw new Error("A confiança deve ser de 1 a 5.");
+  saveReflection(unitId, String(reflection ?? ""), value);
+  evaluateCompletion(unitId);
+  return getUnitDetail(unitId);
+}
+
+export async function testUnit(unitId, exerciseId, runTests = runUnitTests) {
+  const unit = getUnit(unitId);
+  if (exerciseId) {
+    if (!unit?.exercises.some((exercise) => exercise.id === exerciseId))
+      throw new Error("Exercício desconhecido.");
+    if (unit.missionTestable === false)
+      throw new Error("Esta unidade não tem teste por missão.");
   }
-  const result = await runUnitTests(unitId, pattern);
-  recordTestRun(unitId, result);
-  return { result, unit: evaluateGate(unitId) };
+  const result = await runTests(unitId, exerciseId || undefined);
+  if (exerciseId) {
+    // Rodar uma missão nunca mexe no resultado da suíte nem nas tentativas da
+    // unidade; mas, se era a última missão pendente, evaluateCompletion conclui.
+    recordMissionRun(unitId, result);
+    // Sem teste com esse nome (missão só de tipos): não há resultado a gravar.
+    if (result.total !== 0) upsertExerciseResult(unitId, exerciseId, result.success);
+  } else {
+    recordTestRun(unitId, result);
+    if (result.success && unit) {
+      for (const exercise of unit.exercises)
+        upsertExerciseResult(unitId, exercise.id, true);
+    }
+  }
+  evaluateCompletion(unitId);
+  return {
+    result,
+    unit: getUnitDetail(unitId),
+    noTests: Boolean(exerciseId) && result.total === 0,
+  };
 }
 
 export function getReviews() {
@@ -208,6 +342,8 @@ export function finishReview(reviewId, confidence) {
 }
 
 export function exportData() {
+  // Garante que o backup já contém o resultado das migrações da trilha.
+  runMigrations();
   return {
     exportedAt: new Date().toISOString(),
     currentUnit: getSetting("current_unit", "js-01"),
@@ -215,6 +351,8 @@ export function exportData() {
     progress: listUnitProgress(),
     hints: listAllHintReveals(),
     reviews: listReviews(),
+    exerciseProgress: listExerciseProgress(),
+    topicChecks: listTopicChecks(),
   };
 }
 
@@ -241,4 +379,42 @@ export function exportSessionsCsv() {
       .join(","),
   );
   return ["date,minutes,unit,summary,difficulty,next_step", ...rows].join("\n");
+}
+
+function trailUnits() {
+  const progress = new Map(listUnitProgress().map((row) => [row.unitId, row]));
+  return listUnits().map((unit) => unitSummary(unit, progress.get(unit.id)));
+}
+
+export function getTrail() {
+  runMigrations();
+  const units = trailUnits();
+  return computeTrail({
+    content: loadTrailContent(),
+    units,
+    checkedItemIds: listTopicChecks().map((check) => check.itemId),
+    currentUnitId: getSetting("current_unit", units[0]?.id || "js-01"),
+  });
+}
+
+export function setTrailItem(itemId, done) {
+  runMigrations();
+  if (typeof done !== "boolean") throw new Error("Valor 'done' deve ser booleano.");
+  const known = loadTrailContent().nodes.some((node) =>
+    node.items.some((item) => item.id === itemId),
+  );
+  if (!known) throw new Error("Item da trilha desconhecido.");
+  setTopicCheck(itemId, done);
+  return getTrail();
+}
+
+export function markTrailNode(nodeId) {
+  runMigrations();
+  const node = loadTrailContent().nodes.find((candidate) => candidate.id === nodeId);
+  if (!node) throw new Error("Nó da trilha desconhecido.");
+  for (const item of buildNodeItems(node, trailUnits(), new Set())) {
+    if (item.kind === "unit") markAllMissions(item.unitId);
+    else setTopicCheck(item.id, true);
+  }
+  return getTrail();
 }

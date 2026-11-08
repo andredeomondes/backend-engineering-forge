@@ -3,16 +3,16 @@
 ## Propósito
 
 Adicionar profundidade em uma segunda stack sem substituir a formação principal
-em TypeScript, Node.js e NestJS. A especialização começa somente depois da
-conclusão verificável da Fase 9.
+em TypeScript, Node.js e NestJS. A especialização pode começar a qualquer momento;
+concluir a Fase 9 antes é recomendado, não obrigatório.
 
 ## Estado inicial
 
 | Opção | Módulos | Estado |
 |---|---:|---|
-| Java + Spring | `JAVA-01`–`JAVA-09` | BLOQUEADA — escolha permitida somente após o gate da Fase 9 |
-| C# + .NET | `DOTNET-01`–`DOTNET-09` | BLOQUEADA — escolha permitida somente após o gate da Fase 9 |
-| Go | `GO-01`–`GO-09` | BLOQUEADA — escolha permitida somente após o gate da Fase 9 |
+| Java + Spring | `JAVA-01`–`JAVA-09` | disponível |
+| C# + .NET | `DOTNET-01`–`DOTNET-09` | disponível |
+| Go | `GO-01`–`GO-09` | disponível |
 
 Nenhuma opção está selecionada.
 
@@ -26,15 +26,15 @@ SELECIONAR_TRILHA GO
 
 Ao receber o comando, a mentoria deve:
 
-1. verificar em `PROGRESS.md` se o gate da Fase 9 foi concluído;
-2. recusar a seleção quando o gate estiver pendente;
+1. verificar em `PROGRESS.md` o estado da Fase 9 e, se o gate estiver pendente, apenas avisar (recomendado, nunca obrigatório);
+2. aceitar a seleção mesmo assim, por escolha do estudante;
 3. verificar se já existe uma trilha ativa;
 4. marcar a escolhida como `ATIVA` e as outras como `NÃO SELECIONADA`;
 5. registrar a escolha em `PROGRESS.md` e `SKILLS_MATRIX.md`;
-6. liberar apenas o módulo 01 da opção escolhida.
+6. sugerir o módulo 01 da opção escolhida (os demais seguem abertos).
 
-Uma segunda trilha só pode começar depois da conclusão da primeira e mediante
-justificativa profissional registrada em ADR.
+Recomenda-se concluir a primeira trilha antes de iniciar outra, registrando a
+justificativa profissional em ADR.
 
 ## Distribuição de estudo
 
@@ -51,7 +51,7 @@ estudam as três opções simultaneamente.
 ## Progressão
 
 Cada módulo contém objetivo, pré-requisitos, conteúdo, laboratório, evidência,
-gate e critério de avanço. O próximo módulo só é liberado após o gate anterior.
+gate e critério de avanço. O gate anterior é recomendado antes do próximo módulo, nunca obrigatório.
 
 Gate final obrigatório:
 

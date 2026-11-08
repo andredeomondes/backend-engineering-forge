@@ -5,6 +5,7 @@ import {
   ChevronRight,
   Flame,
   LayoutDashboard,
+  Map,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -13,16 +14,18 @@ import { Dashboard } from "./components/Dashboard";
 import { PomodoroWidget } from "./components/PomodoroWidget";
 import { ProgressView } from "./components/ProgressView";
 import { ThemeToggle } from "./components/ThemeToggle";
+import { TrailView } from "./components/trail/TrailView";
 import { UnitView } from "./components/UnitView";
 import { Button } from "./components/ui/8bit/button";
 import { sfx } from "./lib/sound";
 import type { DashboardData } from "./types";
 
-type Page = "dashboard" | "unit" | "progress";
+type Page = "dashboard" | "unit" | "trail" | "progress";
 
 const navigation = [
   { id: "dashboard" as const, label: "Dashboard", icon: LayoutDashboard },
   { id: "unit" as const, label: "Unidade", icon: BookOpenText },
+  { id: "trail" as const, label: "Trilha", icon: Map },
   { id: "progress" as const, label: "Progresso", icon: ChartNoAxesColumnIncreasing },
 ];
 
@@ -164,7 +167,11 @@ export function App() {
             {page !== "dashboard" && <ChevronRight size={14} />}
             {page !== "dashboard" && (
               <strong>
-                {page === "unit" ? data.currentUnit.id.toUpperCase() : pageLabel(page)}
+                {page === "unit"
+                  ? data.currentUnit.id.toUpperCase()
+                  : page === "trail"
+                    ? "Mapa da formação"
+                    : pageLabel(page)}
               </strong>
             )}
           </div>
@@ -187,6 +194,9 @@ export function App() {
           )}
           {page === "unit" && (
             <UnitView key="unit" unitId={data.currentUnit.id} onChanged={refresh} />
+          )}
+          {page === "trail" && (
+            <TrailView key="trail" onOpenUnit={selectUnit} onChanged={refresh} />
           )}
           {page === "progress" && (
             <ProgressView key="progress" data={data} onSelect={selectUnit} />

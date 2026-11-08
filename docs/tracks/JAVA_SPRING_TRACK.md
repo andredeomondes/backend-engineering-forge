@@ -1,6 +1,6 @@
 # Java com Spring
 
-Estado: `BLOQUEADA — escolha permitida somente após o gate da Fase 9`.
+Estado: `disponível`.
 
 Padrão da trilha: JDK LTS suportado no momento da liberação, Maven como build
 tool inicial, Spring Boot, PostgreSQL e Testcontainers. Versões são confirmadas
@@ -94,4 +94,4 @@ na documentação oficial quando cada módulo for materializado.
 - **Projeto:** API com PostgreSQL, segurança, testes, Docker, CI, logs, métricas e um ADR.
 - **Evidência:** aplicação e relatório sobre arquitetura, DI, ORM, segurança, testes, concorrência, observabilidade, performance, produtividade e trade-offs.
 - **Gate:** gate final definido na trilha geral e defesa oral de quando escolher ou evitar Spring.
-- **Avanço:** trilha concluída; outra opção continua bloqueada até justificativa profissional.
+- **Avanço:** trilha concluída; outra opção segue disponível; registre a justificativa profissional em ADR.

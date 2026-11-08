@@ -3,8 +3,9 @@
 ## Contexto mínimo
 
 O Forge é uma formação backend-first. TypeScript, Node.js e NestJS são a stack
-principal. Não antecipe frameworks, microsserviços, Kubernetes, soluções de
-exercícios ou trilhas poliglotas.
+principal. Não antecipe frameworks, microsserviços, Kubernetes nem soluções de
+exercícios, e não empurre trilhas poliglotas: elas estão abertas por escolha do
+estudante.
 
 Antes de qualquer alteração:
 
@@ -19,7 +20,7 @@ Antes de qualquer alteração:
 | Necessidade | Fonte |
 |---|---|
 | Estado atual | `PROGRESS.md` |
-| Sequência e bloqueios | `ROADMAP.md` |
+| Sequência recomendada | `ROADMAP.md` |
 | Competências | `SKILLS_MATRIX.md` |
 | Regras de mentoria | `LEARNING_CONTRACT.md` |
 | Currículo da fase | `docs/curriculum/` |
@@ -33,13 +34,13 @@ Não leia toda a documentação por padrão. `BACKEND_ENGINEERING_FORGE.md` é u
 
 ## Regras de progressão
 
-- Uma unidade só avança após seu gate.
-- A Fase 9 precisa estar concluída antes de `SELECIONAR_TRILHA`.
-- Apenas Java, .NET ou Go pode ser selecionada inicialmente.
+- Toda unidade, fase, projeto e a trilha Java ficam abertos. O progresso é marcado livremente no painel.
+- Gate = conquista (selo ★): suíte verde + reflexão (≥30 caracteres) + confiança ≥3. Recomendado, nunca obrigatório.
+- `PROGRESS.md` prevalece para o estado narrativo e de mentoria; `.forge/forge.db` para as marcações de progresso do painel.
+- Java, .NET ou Go pode ser ativada a qualquer momento, por escolha do estudante.
 - Exercícios completos são preparados para a unidade atual e, no máximo, as
   duas seguintes. Para o restante, mantenha apenas catálogo, objetivo e gate.
 - Não altere exercícios concluídos nem forneça soluções antes da tentativa.
-- `PROGRESS.md` prevalece quando outro resumo estiver desatualizado.
 
 ## Validação
 

@@ -11,9 +11,15 @@ import {
   getDashboard,
   getReviews,
   getUnitDetail,
+  markAllMissions,
+  markMission,
+  saveUnitReflection,
   removeStudySession,
   revealUnitHint,
+  getTrail,
+  markTrailNode,
   setCurrentUnit,
+  setTrailItem,
   testUnit,
 } from "../forge-core/services.js";
 import { getDatabase } from "../forge-core/database.js";
@@ -66,7 +72,41 @@ app.post(
 );
 app.post(
   "/api/units/:unitId/tests",
-  api((request) => testUnit(request.params.unitId, request.body?.exerciseName)),
+  api((request) => testUnit(request.params.unitId, request.body?.exerciseId)),
+);
+app.post(
+  "/api/units/:unitId/missions/:exerciseId",
+  api((request) => {
+    const done = request.body?.done;
+    if (typeof done !== "boolean") throw new Error("Valor 'done' deve ser booleano.");
+    return markMission(request.params.unitId, request.params.exerciseId, done);
+  }),
+);
+app.post(
+  "/api/units/:unitId/missions",
+  api((request) => markAllMissions(request.params.unitId)),
+);
+app.post(
+  "/api/units/:unitId/reflection",
+  api((request) =>
+    saveUnitReflection(
+      request.params.unitId,
+      request.body?.reflection,
+      request.body?.confidence,
+    ),
+  ),
+);
+app.get(
+  "/api/trail",
+  api(() => getTrail()),
+);
+app.post(
+  "/api/trail/items/:itemId",
+  api((request) => setTrailItem(request.params.itemId, request.body?.done)),
+);
+app.post(
+  "/api/trail/nodes/:nodeId/complete",
+  api((request) => markTrailNode(request.params.nodeId)),
 );
 app.get(
   "/api/reviews",

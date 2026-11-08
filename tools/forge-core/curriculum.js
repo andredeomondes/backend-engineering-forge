@@ -24,11 +24,68 @@ function titleFromMarkdown(markdown, fallback) {
   return markdown.match(/^#\s+(.+)$/m)?.[1]?.trim() || fallback;
 }
 
+const SIGNATURE_KEYWORDS =
+  /^(?:(?:export|default|abstract|class|interface|type|const|enum|function)\s+)+/;
+
+// "class ValidationError extends Error" -> "ValidationError", "identity<T>(x)" -> "identity"
+function missionId(name) {
+  const stripped = name.trim().replace(SIGNATURE_KEYWORDS, "");
+  return stripped.match(/^[A-Za-z_$][\w$]*/)?.[0] ?? name.trim();
+}
+
 function extractExercises(markdown) {
-  return [...markdown.matchAll(/^\d+\.\s+\*\*`([^`]+)`\*\*/gm)].map((match, index) => ({
-    index: index + 1,
-    name: match[1],
+  const headings = [...markdown.matchAll(/^## (.+)$/gm)].map((match) => ({
+    position: match.index,
+    group: match[1].replace(/\s*\(\d+\)\s*$/, "").trim(),
   }));
+  return [
+    ...markdown.matchAll(
+      /^\d+\.\s+\*\*`([^`]+)`\*\*([^\n]*(?:\n(?!\s*\n|\d+\.\s)[^\n]*)*)/gm,
+    ),
+  ].map((match, index) => {
+    const heading = headings.filter((item) => item.position < match.index).at(-1);
+    const summary = match[2]
+      .replace(/\s+/g, " ")
+      .trim()
+      .replace(/^[—–-]\s*/, "");
+    return {
+      index: index + 1,
+      id: missionId(match[1]),
+      name: match[1],
+      group: heading?.group || "",
+      summary: summary || match[1],
+    };
+  });
+}
+
+export function mergeMissions(exercises, missions, filePath) {
+  if (!missions) return exercises.map((exercise) => ({ ...exercise, detail: null }));
+  const ids = new Set(exercises.map((exercise) => exercise.id));
+  for (const key of Object.keys(missions)) {
+    if (!ids.has(key)) {
+      throw new Error(`${filePath}: a chave "${key}" não corresponde a nenhum exercício`);
+    }
+  }
+  return exercises.map((exercise) => ({
+    ...exercise,
+    detail: missions[exercise.id] ?? null,
+  }));
+}
+
+export function readMissions(directory) {
+  const missionsPath = path.join(directory, "missions.json");
+  if (!existsSync(missionsPath)) return { missions: null, missionsPath };
+  try {
+    const missions = JSON.parse(readFileSync(missionsPath, "utf8"));
+    if (!missions || typeof missions !== "object" || Array.isArray(missions)) {
+      throw new Error("o conteúdo deve ser um objeto { idDoExercício: detalhe }");
+    }
+    return { missions, missionsPath };
+  } catch (error) {
+    throw new Error(`${missionsPath}: missions.json inválido (${error.message})`, {
+      cause: error,
+    });
+  }
 }
 
 function parseHints(markdown) {
@@ -48,8 +105,17 @@ function parseHints(markdown) {
 }
 
 function extractSqlExercises(sql) {
-  return [...sql.matchAll(/^-- TODO(?:\s+\d+|\s+Migration\s+\d+|\s+Seed|\s+Paginação|:)?\s*:?\s*(.*)$/gmi)]
-    .map((match, index) => ({ index: index + 1, name: match[1].trim() || `Exercício ${index + 1}` }));
+  return [
+    ...sql.matchAll(
+      /^-- TODO(?:\s+\d+|\s+Migration\s+\d+|\s+Seed|\s+Paginação|:)?\s*:?\s*(.*)$/gim,
+    ),
+  ].map((match, index) => ({
+    index: index + 1,
+    id: `sql-ex-${index + 1}`,
+    name: match[1].trim() || `Exercício ${index + 1}`,
+    group: "Exercícios",
+    summary: match[1].trim() || `Exercício ${index + 1}`,
+  }));
 }
 
 function readUnit(root, directoryName, track) {
@@ -64,8 +130,14 @@ function readUnit(root, directoryName, track) {
   const { prefix, phase, extension } = TRACK_CONFIG[track];
   const hintsPath = path.join(directory, "hints.md");
   const hintsRaw = existsSync(hintsPath) ? readFileSync(hintsPath, "utf8") : "";
-  const exercisePath = path.join(directory, track === "sql" ? "exercises.sql" : `exercises.${extension}`);
+  const exercisePath = path.join(
+    directory,
+    track === "sql" ? "exercises.sql" : `exercises.${extension}`,
+  );
   const exerciseRaw = existsSync(exercisePath) ? readFileSync(exercisePath, "utf8") : "";
+  const { missions, missionsPath } = readMissions(directory);
+  const baseExercises =
+    track === "sql" ? extractSqlExercises(exerciseRaw) : extractExercises(parsed.content);
 
   return {
     id: parsed.data.id || `${prefix}-${String(number).padStart(2, "0")}`,
@@ -78,10 +150,14 @@ function readUnit(root, directoryName, track) {
     prerequisites: parsed.data.prerequisites || [],
     directory,
     readmePath,
-    testPath: path.join(directory, track === "sql" ? "checks.sql" : `exercises.test.${extension}`),
+    testPath: path.join(
+      directory,
+      track === "sql" ? "checks.sql" : `exercises.test.${extension}`,
+    ),
     exercisePath,
     markdown: parsed.content,
-    exercises: track === "sql" ? extractSqlExercises(exerciseRaw) : extractExercises(parsed.content),
+    exercises: mergeMissions(baseExercises, missions, missionsPath),
+    missionTestable: track !== "sql",
     hints: parseHints(hintsRaw),
   };
 }
@@ -112,7 +188,11 @@ export function getUnit(unitId) {
 export function listProjects() {
   if (!existsSync(PROJECTS_PATH)) return [];
   return readdirSync(PROJECTS_PATH, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && existsSync(path.join(PROJECTS_PATH, entry.name, "README.md")))
+    .filter(
+      (entry) =>
+        entry.isDirectory() &&
+        existsSync(path.join(PROJECTS_PATH, entry.name, "README.md")),
+    )
     .map((entry) => {
       const raw = readFileSync(path.join(PROJECTS_PATH, entry.name, "README.md"), "utf8");
       const parsed = matter(raw);
@@ -128,23 +208,33 @@ export function listProjects() {
 
 export function listPhases() {
   const markdown = readFileSync(ROADMAP_PATH, "utf8");
-  return [...markdown.matchAll(/^\|\s*(\d{1,2})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|$/gm)].map(
-    (match) => {
-      const label = match[3].trim();
-      return {
-        number: Number(match[1]),
-        title: match[2].trim(),
-        label,
-        status: label.includes("🟢") ? "completed" : label.includes("🟡") ? "active" : "locked",
-      };
-    },
-  );
+  return [
+    ...markdown.matchAll(/^\|\s*(\d{1,2})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|$/gm),
+  ].map((match) => {
+    const label = match[3].trim();
+    return {
+      number: Number(match[1]),
+      title: match[2].trim(),
+      label,
+      status: "available",
+    };
+  });
 }
 
 export function listPolyglotTracks() {
   return [
-    { id: "java", title: "Java + Spring", modules: "JAVA-01–JAVA-09", status: "locked" },
-    { id: "dotnet", title: "C# + .NET", modules: "DOTNET-01–DOTNET-09", status: "locked" },
-    { id: "go", title: "Go para backend", modules: "GO-01–GO-09", status: "locked" },
+    {
+      id: "java",
+      title: "Java + Spring",
+      modules: "JAVA-01–JAVA-09",
+      status: "available",
+    },
+    {
+      id: "dotnet",
+      title: "C# + .NET",
+      modules: "DOTNET-01–DOTNET-09",
+      status: "available",
+    },
+    { id: "go", title: "Go para backend", modules: "GO-01–GO-09", status: "available" },
   ];
 }

@@ -27,9 +27,34 @@ export const api = {
     request<import("./types").UnitDetail>(`/api/units/${unitId}/hints/${level}`, {
       method: "POST",
     }),
-  test: (unitId: string, exerciseName?: string) =>
-    request<{ result: import("./types").TestResult; unit: import("./types").UnitDetail }>(
-      `/api/units/${unitId}/tests`,
-      { method: "POST", body: JSON.stringify({ exerciseName }) },
+  test: (unitId: string, exerciseId?: string) =>
+    request<import("./types").TestResponse>(`/api/units/${unitId}/tests`, {
+      method: "POST",
+      body: JSON.stringify({ exerciseId }),
+    }),
+  markMission: (unitId: string, exerciseId: string, done: boolean) =>
+    request<import("./types").UnitDetail>(
+      `/api/units/${unitId}/missions/${encodeURIComponent(exerciseId)}`,
+      { method: "POST", body: JSON.stringify({ done }) },
+    ),
+  markAllMissions: (unitId: string) =>
+    request<import("./types").UnitDetail>(`/api/units/${unitId}/missions`, {
+      method: "POST",
+    }),
+  saveReflection: (unitId: string, reflection: string, confidence: number) =>
+    request<import("./types").UnitDetail>(`/api/units/${unitId}/reflection`, {
+      method: "POST",
+      body: JSON.stringify({ reflection, confidence }),
+    }),
+  trail: () => request<import("./types").TrailData>("/api/trail"),
+  trailItem: (itemId: string, done: boolean) =>
+    request<import("./types").TrailData>(
+      `/api/trail/items/${encodeURIComponent(itemId)}`,
+      { method: "POST", body: JSON.stringify({ done }) },
+    ),
+  trailNodeComplete: (nodeId: string) =>
+    request<import("./types").TrailData>(
+      `/api/trail/nodes/${encodeURIComponent(nodeId)}/complete`,
+      { method: "POST" },
     ),
 };

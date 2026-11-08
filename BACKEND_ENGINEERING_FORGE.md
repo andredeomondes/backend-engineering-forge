@@ -33,23 +33,23 @@ Fases 0–8
 → Fases 10–27 continuam como formação principal
 ```
 
-A trilha poliglota não substitui nem renumera nenhuma fase. Depois do gate da
-Fase 9, o estudante pode escolher exatamente uma opção inicial:
+A trilha poliglota não substitui nem renumera nenhuma fase. O estudante pode
+escolher uma opção a qualquer momento (o gate da Fase 9 é recomendado):
 
 - Java com Spring;
 - C# com .NET;
 - Go para backend.
 
 Distribuição após a escolha: aproximadamente 70% do tempo no Forge principal e
-30% na especialização escolhida. As três opções começam como
-`BLOQUEADA — escolha permitida somente após o gate da Fase 9`.
+30% na especialização escolhida. As três opções estão
+`disponível`.
 
 Regras, seleção e integração: [`docs/tracks/POLYGLOT_BACKEND_TRACK.md`](docs/tracks/POLYGLOT_BACKEND_TRACK.md).
 
 ## Fontes de estado
 
 - [`PROGRESS.md`](PROGRESS.md): estado atual e trilha selecionada.
-- [`ROADMAP.md`](ROADMAP.md): sequência, gates e bloqueios.
+- [`ROADMAP.md`](ROADMAP.md): sequência, gates (conquistas) e disponibilidade.
 - [`SKILLS_MATRIX.md`](SKILLS_MATRIX.md): competências demonstradas.
 - [`LEARNING_CONTRACT.md`](LEARNING_CONTRACT.md): regras e comandos de mentoria.
 

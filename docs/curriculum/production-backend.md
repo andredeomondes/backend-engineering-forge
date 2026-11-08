@@ -58,7 +58,7 @@ especialização inicial em Java/Spring, C#/.NET ou Go. Ela é executada em para
 às Fases 10–27, com aproximadamente 70% do tempo dedicado ao Forge principal e
 30% à opção escolhida.
 
-As três opções permanecem bloqueadas até esse momento e nenhuma é selecionada
+As três opções são recomendadas a partir desse momento e nenhuma é selecionada
 automaticamente. Regras, módulos, gates e comando `SELECIONAR_TRILHA` estão em
 [`../tracks/POLYGLOT_BACKEND_TRACK.md`](../tracks/POLYGLOT_BACKEND_TRACK.md).
 

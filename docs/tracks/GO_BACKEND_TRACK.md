@@ -1,6 +1,6 @@
 # Go para backend
 
-Estado: `BLOQUEADA — escolha permitida somente após o gate da Fase 9`.
+Estado: `disponível`.
 
 Padrão da trilha: versão estável suportada no momento da liberação, biblioteca
 padrão primeiro, PostgreSQL com `pgx` e dependências adicionais somente quando

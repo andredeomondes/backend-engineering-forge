@@ -66,13 +66,13 @@ Não começamos por microsserviços, nem por Kubernetes, nem pelo frontend.
 | --- | --- |
 | Fase 0 — Ambiente e fundamentos da Web | 🟡 em andamento (repositório, lint, testes e painel prontos; tópicos conceituais pendentes) |
 | Fase 1 — JavaScript profundo | 🟡 unidades 1–8 com gate fechado, **Unidade 9 (map/filter/reduce) ativa**, 10–27 já geradas |
-| Fase 2 — TypeScript | ⚪ 8/8 unidades geradas, nenhuma liberada |
-| Fase 3 — Node.js | ⚪ bloqueada (7 unidades preparadas) |
-| Fase 4 — SQL e PostgreSQL | ⚪ bloqueada (8/8 unidades + ambiente Docker + Projeto 4 preparados) |
+| Fase 2 — TypeScript | ⚪ 8/8 unidades geradas, disponível |
+| Fase 3 — Node.js | ⚪ disponível (7 unidades preparadas) |
+| Fase 4 — SQL e PostgreSQL | ⚪ disponível (8/8 unidades + ambiente Docker + Projeto 4 preparados) |
 | Fase 12 — DSA em paralelo | 🟡 Sessão 01 (Big O + arrays) entregue, aguardando tentativa |
 | Project 01 — Order Workbench CLI | 🟢 gate fechado: 12/12 testes, retrospectiva e explicação oral |
-| Project 04 — Marketplace Database Lab | ⚪ material preparado, libera após `sql-08` |
-| Trilha poliglota (Java / .NET / Go) | ⚪ bloqueada até o gate da Fase 9 |
+| Project 04 — Marketplace Database Lab | ⚪ material preparado, disponível |
+| Trilha poliglota (Java / .NET / Go) | ⚪ disponível (nenhuma selecionada) |
 
 Números do momento:
 
@@ -171,7 +171,7 @@ Revisões pendentes: 19
 | `hint <1\|2\|3>` | revela uma dica progressiva |
 | `progress` | lista todas as unidades |
 | `review` | lista revisões agendadas |
-| `next` | avança após concluir o gate |
+| `next` | abre a próxima unidade (o gate é recomendado) |
 | `export [json\|csv]` | exporta seus dados |
 | `import <json> --replace` | restaura um backup |
 
@@ -182,12 +182,13 @@ ler a aula → responder as perguntas iniciais → implementar exercises.js
 → rodar os testes → (dica 1/2/3 só se travar) → fechar o gate → revisar
 ```
 
-- **Gate:** a unidade só é concluída com a suíte verde, uma reflexão escrita
-  de pelo menos 30 caracteres e confiança informada ≥ 3.
+- **Gate = conquista (selo ★):** suíte verde, uma reflexão escrita de pelo menos
+  30 caracteres e confiança informada ≥ 3. Recomendado, nunca obrigatório.
 - **Revisão espaçada:** fechar o gate agenda revisões em 2, 7 e 30 dias.
 - **Autonomia:** o nível mais alto de dica revelada é registrado. Não é nota;
   serve para perceber a ajuda diminuindo com a prática.
-- **Avanço:** uma fase só anda com `PROXIMA_UNIDADE`, depois do gate anterior.
+- **Avanço:** toda unidade, fase, projeto e a trilha Java ficam abertos; o
+  progresso é marcado livremente no painel.
 
 As regras completas do método e da mentoria estão em
 [`LEARNING_CONTRACT.md`](LEARNING_CONTRACT.md).
@@ -216,11 +217,11 @@ completo em [`BACKEND_ENGINEERING_FORGE.md`](BACKEND_ENGINEERING_FORGE.md).
 
 ### Trilha poliglota opcional
 
-Depois do gate da Fase 9, será possível selecionar uma única especialização
+A qualquer momento é possível ativar uma especialização
 em Java/Spring, C#/.NET ou Go. TypeScript, Node.js e NestJS continuam sendo a
 formação principal, com divisão aproximada de 70%/30% depois da escolha.
 
-As três opções estão bloqueadas e nenhuma foi selecionada. Veja
+As três opções estão disponíveis e nenhuma foi selecionada. Veja
 [`docs/tracks/POLYGLOT_BACKEND_TRACK.md`](docs/tracks/POLYGLOT_BACKEND_TRACK.md).
 
 ## Como rodar
@@ -286,7 +287,7 @@ Mapa detalhado em [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md).
 
 ## Documentos de acompanhamento
 
-- [`PROGRESS.md`](PROGRESS.md) — o que já foi liberado e concluído (fonte oficial do estado).
+- [`PROGRESS.md`](PROGRESS.md) — estado narrativo e de mentoria (o que foi estudado e concluído); as marcações do painel ficam em `.forge/forge.db`.
 - [`ROADMAP.md`](ROADMAP.md) — fases completas da formação.
 - [`STUDY_LOG.md`](STUDY_LOG.md) — diário de sessões de estudo.
 - [`SKILLS_MATRIX.md`](SKILLS_MATRIX.md) — estado de cada competência.

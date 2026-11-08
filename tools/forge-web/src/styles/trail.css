@@ -1,0 +1,248 @@
+/* Trilha — RPG sheet + clickable skill tree. Monochrome only: states are drawn with
+   fill, outline, dashed outline and a stepped blink (never hue). */
+
+.trail-k {
+  display: block;
+  margin: 14px 0 7px;
+  color: var(--muted-foreground);
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.trail-k:first-child { margin-top: 0; }
+.trail-v { display: block; font-size: 11px; font-weight: 400; line-height: 1.7; }
+
+/* Bars ------------------------------------------------------------------ */
+.trail-meter { position: relative; border: 2px solid var(--foreground); background: var(--background); }
+.trail-meter > i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: repeating-linear-gradient(90deg, var(--foreground) 0 6px, transparent 6px 8px);
+}
+.trail-meter-lg { height: 16px; }
+.trail-meter-sm { height: 12px; }
+.trail-meter-solid { height: 14px; }
+.trail-meter-solid > i { background: var(--foreground); }
+
+/* Character sheet ------------------------------------------------------- */
+.trail-sheet { background: var(--card); border: 2px solid var(--foreground); padding: 16px 18px; }
+.trail-sheet-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.trail-sheet-col { min-width: 0; }
+.trail-sheet-count { display: block; margin-top: 8px; font-size: 8px; color: var(--muted-foreground); }
+.trail-sheet-side {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.trail-mini { display: grid; grid-template-columns: auto minmax(60px, 1fr) auto; align-items: center; gap: 10px; }
+.trail-mini .trail-k { margin: 0; }
+.trail-mini-pct { font-size: 8px; }
+
+/* Layout: tree left, sticky panel right; panel drops below under 900px -- */
+.trail-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 18px; align-items: start; }
+
+.trail-tree-box { min-width: 0; background: var(--card); border: 2px solid var(--foreground); container-type: inline-size; }
+.trail-box-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  padding: 12px 14px;
+  border-bottom: 2px solid var(--foreground);
+}
+.trail-box-head h3 { margin: 0; }
+.trail-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0; padding: 0; list-style: none; font-size: 7px; color: var(--muted-foreground); }
+.trail-legend li { display: flex; align-items: center; gap: 6px; }
+.trail-legend i { display: inline-block; width: 10px; height: 10px; border: 2px solid var(--foreground); background: var(--background); }
+.trail-legend .lg-done { background: var(--foreground); }
+.trail-legend .lg-current { background: var(--foreground); outline: 1px solid var(--foreground); outline-offset: 1px; }
+.trail-legend .lg-side { border-style: dashed; }
+
+/* Tree: level groups stacked; DSA beside LV1–LV2, Java beside LV3. */
+.trail-tree {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 200px);
+  grid-template-areas:
+    "lv1 dsa"
+    "lv2 dsa"
+    "lv3 java"
+    "lv4 .";
+  column-gap: 14px;
+  padding: 12px;
+}
+.trail-area { min-width: 0; }
+.trail-area-lv1 { grid-area: lv1; }
+.trail-area-lv2 { grid-area: lv2; }
+.trail-area-lv3 { grid-area: lv3; }
+.trail-area-lv4 { grid-area: lv4; }
+.trail-area-dsa { grid-area: dsa; align-self: center; }
+.trail-area-java { grid-area: java; align-self: start; padding-top: 22px; }
+
+@container (max-width: 520px) {
+  .trail-tree {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "lv1" "lv2" "dsa" "lv3" "java" "lv4";
+    row-gap: 10px;
+  }
+  .trail-area-java { padding-top: 0; }
+}
+
+.trail-group { border: 1px solid var(--border); padding: 10px; }
+.trail-group.is-side { border-style: dashed; }
+.trail-group-title {
+  margin: 0 0 10px;
+  color: var(--muted-foreground);
+  font-size: 7px !important;
+  line-height: 1.7 !important;
+  font-weight: 400;
+}
+
+.trail-stack { display: grid; margin: 0; padding: 0; list-style: none; }
+.trail-arrow { display: block; text-align: center; font-size: 8px; line-height: 1; padding: 5px 0; color: var(--foreground); }
+.trail-arrow-group { padding: 8px 0; }
+
+/* Side connectors: a dashed line leading into the lateral column. */
+.trail-side-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  color: var(--muted-foreground);
+  font-size: 7px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.trail-side-link::before { content: ""; flex: 1; border-top: 2px dashed var(--foreground); }
+
+/* Nodes --------------------------------------------------------------- */
+.trail-node {
+  width: 100%;
+  min-height: 44px;
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  text-align: left;
+  border: 2px solid var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Press Start 2P", ui-monospace, monospace;
+  transition: transform 0.1s steps(2);
+}
+.trail-node.is-compact { min-height: 38px; gap: 4px; padding: 7px 10px; }
+.trail-node:hover { transform: translateX(3px); }
+.trail-node:focus-visible { outline: 2px solid var(--foreground); outline-offset: 3px; }
+.trail-node-name { overflow-wrap: anywhere; }
+.trail-node-bar { font-size: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* todo = outline (default). done = filled. */
+.trail-node.is-done { background: var(--foreground); color: var(--background); }
+/* current = inverted + stepped blink (+ "◀ AQUI" text). */
+.trail-node.is-current {
+  background: var(--foreground);
+  color: var(--background);
+  animation: blink 1.1s steps(2) infinite;
+}
+/* side quests (Java, DSA) = dashed outline while not done. */
+.trail-node.is-java:not(.is-done):not(.is-current),
+.trail-node.is-dsa:not(.is-done):not(.is-current) { border-style: dashed; }
+/* selected = dashed ring around the node. */
+.trail-node[aria-pressed="true"] { outline: 2px dashed var(--foreground); outline-offset: 3px; }
+
+@keyframes blink { 50% { opacity: 0.35; } }
+
+/* Phase panel ---------------------------------------------------------- */
+.trail-panel {
+  position: sticky;
+  top: 84px;
+  max-height: calc(100vh - 100px);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 2px solid var(--foreground);
+  padding: 16px;
+}
+.trail-panel h3 { margin: 0 0 10px; overflow-wrap: anywhere; }
+.trail-panel h3:focus { outline: none; }
+.trail-panel h3:focus-visible { outline: 2px solid var(--foreground); outline-offset: 2px; }
+.trail-tag {
+  align-self: flex-start;
+  margin-bottom: 14px;
+  padding: 4px 8px;
+  border: 2px solid var(--foreground);
+  font-size: 8px;
+  line-height: 1.6;
+}
+.trail-tag.is-current { background: var(--foreground); color: var(--background); }
+.trail-panel-pct { margin-top: 6px; font-size: 8px; color: var(--muted-foreground); }
+
+.trail-quote {
+  margin: 0;
+  padding: 8px 10px;
+  border-left: 4px solid var(--foreground);
+  background: var(--muted);
+  font-family: var(--font-read);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.trail-quote.is-dashed { border-left-style: dashed; }
+
+.trail-items { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.trail-item label { display: grid; grid-template-columns: 16px minmax(0, 1fr); align-items: start; gap: 10px; padding: 4px 0; cursor: pointer; }
+.trail-item.is-unit { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; align-items: start; gap: 10px; padding: 4px 0; }
+.trail-item-label { font-family: var(--font-read); font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+.trail-item.is-done .trail-item-label { color: var(--muted-foreground); text-decoration: line-through; }
+
+.trail-item input[type="checkbox"],
+.trail-check {
+  appearance: none;
+  display: block;
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  border: 2px solid var(--foreground);
+  background: var(--background);
+}
+.trail-item input[type="checkbox"] { cursor: pointer; }
+.trail-item input[type="checkbox"]:checked,
+.trail-item.is-done .trail-check { background: var(--foreground); }
+.trail-item input[type="checkbox"]:focus-visible { outline: 2px solid var(--foreground); outline-offset: 2px; }
+.trail-item input[type="checkbox"]:disabled { cursor: progress; opacity: 0.55; }
+
+.trail-open {
+  padding: 2px 8px;
+  border: 2px solid var(--foreground);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Press Start 2P", ui-monospace, monospace;
+  font-size: 8px !important;
+}
+.trail-open:hover:not(:disabled) { background: var(--foreground); color: var(--background); }
+.trail-open:focus-visible { outline: 2px solid var(--foreground); outline-offset: 2px; }
+.trail-open:disabled { opacity: 0.55; cursor: progress; }
+
+.trail-actions { margin-top: 18px; }
+.trail-error { color: var(--foreground); }
+
+@media (max-width: 900px) {
+  .trail-layout { grid-template-columns: minmax(0, 1fr); }
+  .trail-panel { position: static; max-height: none; overflow: visible; }
+}
+
+@media (max-width: 720px) {
+  .trail-sheet-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .trail-sheet-side { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .trail-sheet { padding: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trail-node, .trail-node.is-current {
+    animation: none !important;
+    transition: none !important;
+  }
+  .trail-node:hover { transform: none; }
+}

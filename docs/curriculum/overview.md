@@ -464,9 +464,10 @@ Inclua estes formatos:
 - decisão arquitetural;
 - mini projeto.
 
-## 4.6 Progressão bloqueada por competência
+## 4.6 Progressão guiada por competência
 
-Não permita avanço apenas porque li o conteúdo.
+Não considere uma fase concluída apenas porque li o conteúdo. Nada fica
+bloqueado: o gate é recomendado, não obrigatório.
 
 Cada fase deve terminar com:
 

@@ -5,8 +5,8 @@ import {
   Code2,
   Database,
   FolderKanban,
+  Compass,
   Languages,
-  LockKeyhole,
   Map,
   Server,
   TableProperties,
@@ -39,7 +39,7 @@ export function ProgressView({ data, onSelect }: Props) {
       <section className="roadmap-section">
         <div className="track-heading">
           <Map size={20} />
-          <div><h3>Fases do Forge</h3><span>0–27 · avance somente por gate</span></div>
+          <div><h3>Fases do Forge</h3><span>0–27 · tudo aberto · o gate vira selo</span></div>
         </div>
         <div className="phase-groups">
           <PhaseGroup title="Fundamentos" phases={data.phases.filter((phase) => phase.number <= 3)} />
@@ -60,7 +60,7 @@ export function ProgressView({ data, onSelect }: Props) {
       <section className="track-section">
         <div className="track-heading">
           <Braces size={20} />
-          <div><h3>TypeScript profissional</h3><span>Fase 2 · bloqueada até o gate de JavaScript</span></div>
+          <div><h3>TypeScript profissional</h3><span>Fase 2</span></div>
         </div>
         <UnitTable units={typescript} currentId={data.currentUnit.id} onSelect={onSelect} />
       </section>
@@ -68,7 +68,7 @@ export function ProgressView({ data, onSelect }: Props) {
       <section className="track-section">
         <div className="track-heading">
           <Server size={20} />
-          <div><h3>Node.js por baixo dos frameworks</h3><span>Fase 3 · bloqueada até o gate de TypeScript</span></div>
+          <div><h3>Node.js por baixo dos frameworks</h3><span>Fase 3</span></div>
         </div>
         <UnitTable units={node} currentId={data.currentUnit.id} onSelect={onSelect} />
       </section>
@@ -76,7 +76,7 @@ export function ProgressView({ data, onSelect }: Props) {
       <section className="track-section">
         <div className="track-heading">
           <TableProperties size={20} />
-          <div><h3>SQL e PostgreSQL de verdade</h3><span>Fase 4 · preparada e bloqueada até o gate de Node.js</span></div>
+          <div><h3>SQL e PostgreSQL de verdade</h3><span>Fase 4</span></div>
         </div>
         <UnitTable units={sql} currentId={data.currentUnit.id} onSelect={onSelect} />
       </section>
@@ -98,12 +98,14 @@ export function ProgressView({ data, onSelect }: Props) {
           {data.projects.map((project) => (
             <article key={project.id}>
               <div>
-                <span className={`status-badge ${project.status === "available" ? "complete" : "active"}`}>
-                  {project.status === "available" ? "Disponível" : `Após ${project.unlockAfter?.toUpperCase()}`}
-                </span>
+                <span className="status-badge complete">Disponível</span>
                 <h4>{project.title}</h4>
               </div>
-              <span>{project.status === "available" ? "Pronto para iniciar" : "Bloqueado"}</span>
+              <span>
+                {project.unlockAfter
+                  ? `Sugerido após ${project.unlockAfter.toUpperCase()}`
+                  : "Pronto para iniciar"}
+              </span>
             </article>
           ))}
         </div>
@@ -112,14 +114,14 @@ export function ProgressView({ data, onSelect }: Props) {
       <section className="polyglot-section">
         <div className="track-heading">
           <Languages size={20} />
-          <div><h3>Polyglot Backend Engineering</h3><span>Uma opção após o gate da Fase 9</span></div>
+          <div><h3>Polyglot Backend Engineering</h3><span>Side quest · sugerida a partir da Fase 9</span></div>
         </div>
         <div className="polyglot-list">
           {data.polyglotTracks.map((track) => (
             <article key={track.id}>
-              <LockKeyhole size={17} />
+              <Compass size={17} />
               <div><strong>{track.title}</strong><span>{track.modules}</span></div>
-              <span className="status-badge active">Bloqueada</span>
+              <span className="status-badge complete">Disponível</span>
             </article>
           ))}
         </div>
@@ -164,9 +166,9 @@ function UnitTable({ units, currentId, onSelect }: {
           </div>
           <button
             className="icon-button"
-            title={unit.status === "locked" ? "Conclua a unidade anterior" : "Definir como unidade atual"}
+            title="Definir como unidade atual"
+            aria-label={`Abrir ${unit.id.toUpperCase()}`}
             onClick={() => onSelect(unit.id)}
-            disabled={unit.status === "locked"}
           >
             <ArrowRight size={18} />
           </button>
