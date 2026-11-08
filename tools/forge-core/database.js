@@ -484,6 +484,41 @@ export function restoreData(data) {
         review.confidence || null,
       );
     }
+    // Backups novos trazem missões e tópicos: substituem as tabelas. Backups
+    // antigos não trazem: as tabelas ficam como estão e a migração correspondente
+    // roda de novo contra os dados restaurados (no próximo runMigrations).
+    if (Array.isArray(data.exerciseProgress)) {
+      db.exec("DELETE FROM exercise_progress");
+      const insertExercise = db.prepare(`
+        INSERT INTO exercise_progress
+          (unit_id, exercise_id, last_result, last_run_at, manual_done, manual_at)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `);
+      for (const row of data.exerciseProgress) {
+        insertExercise.run(
+          row.unitId,
+          row.exerciseId,
+          ["pass", "fail"].includes(row.lastResult) ? row.lastResult : null,
+          row.lastRunAt || null,
+          row.manualDone ? 1 : 0,
+          row.manualAt || null,
+        );
+      }
+    } else {
+      db.prepare("DELETE FROM settings WHERE key = ?").run("migration_trail_v1");
+    }
+
+    if (Array.isArray(data.topicChecks)) {
+      db.exec("DELETE FROM topic_checks");
+      const insertCheck = db.prepare(
+        "INSERT OR IGNORE INTO topic_checks (item_id, checked_at) VALUES (?, COALESCE(?, CURRENT_TIMESTAMP))",
+      );
+      for (const check of data.topicChecks)
+        insertCheck.run(check.itemId, check.checkedAt || null);
+    } else {
+      db.prepare("DELETE FROM settings WHERE key = ?").run("migration_trail_phase0_v1");
+    }
+
     setSetting("current_unit", data.currentUnit || "js-01");
     db.exec("COMMIT");
   } catch (error) {
@@ -556,5 +591,12 @@ export function recordMissionRun(unitId, result) {
     VALUES (?, ?, ?, ?, ?, ?)
   `,
     )
-    .run(unitId, result.passed, result.failed, result.success ? 1 : 0, result.durationMs, result.output);
+    .run(
+      unitId,
+      result.passed,
+      result.failed,
+      result.success ? 1 : 0,
+      result.durationMs,
+      result.output,
+    );
 }

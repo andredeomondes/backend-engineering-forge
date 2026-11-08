@@ -76,13 +76,11 @@ app.post(
 );
 app.post(
   "/api/units/:unitId/missions/:exerciseId",
-  api((request) =>
-    markMission(
-      request.params.unitId,
-      request.params.exerciseId,
-      Boolean(request.body?.done),
-    ),
-  ),
+  api((request) => {
+    const done = request.body?.done;
+    if (typeof done !== "boolean") throw new Error("Valor 'done' deve ser booleano.");
+    return markMission(request.params.unitId, request.params.exerciseId, done);
+  }),
 );
 app.post(
   "/api/units/:unitId/missions",

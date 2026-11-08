@@ -39,6 +39,16 @@ test("fase atual 12 usa nível da primeira fase pendente", () => {
   assert.equal(services.getTrail().sheet.level.id, "lv1");
 });
 
+test("status das fases no Progresso segue a Trilha (tópicos contam)", () => {
+  services.setCurrentUnit("js-09");
+  const f05 = services.getTrail().nodes.find((n) => n.id === "f05");
+  for (const item of f05.items) services.setTrailItem(item.id, true);
+  const phases = services.getDashboard().phases;
+  assert.equal(phases.find((p) => p.number === 5).status, "completed");
+  assert.equal(phases.find((p) => p.number === 1).status, "active");
+  assert.equal(phases.find((p) => p.number === 6).status, "available");
+});
+
 test("item desconhecido é recusado", () => {
   assert.throws(() => services.setTrailItem("nao-existe", true));
   assert.throws(() => services.markTrailNode("nao-existe"));

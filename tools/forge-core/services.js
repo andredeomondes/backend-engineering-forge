@@ -92,12 +92,11 @@ export function getDashboard() {
     ...project,
     status: "available",
   }));
+  const phasePercents = trailPhasePercents(unitSummaries, currentUnit?.id);
   const phaseSummaries = listPhases().map((phase) => {
-    const phaseUnits = unitSummaries.filter((unit) => unit.phase === phase.number);
     let status = "available";
-    if (currentUnit?.phase === phase.number) status = "active";
-    else if (phaseUnits.length && phaseUnits.every((unit) => unit.status === "completed"))
-      status = "completed";
+    if (phasePercents.get(phase.number) === 100) status = "completed";
+    else if (currentUnit?.phase === phase.number) status = "active";
     return { ...phase, status };
   });
 
@@ -120,6 +119,28 @@ export function getDashboard() {
     phases: phaseSummaries,
     polyglotTracks: listPolyglotTracks(),
   };
+}
+
+// Percentual de cada fase pela mesma conta da Trilha (unidades ou tópicos), para
+// o Progresso e a Trilha nunca discordarem sobre o que está concluído.
+function trailPhasePercents(units, currentUnitId) {
+  let trail;
+  try {
+    trail = computeTrail({
+      content: loadTrailContent(),
+      units,
+      checkedItemIds: listTopicChecks().map((check) => check.itemId),
+      currentUnitId,
+    });
+  } catch (error) {
+    console.error("[forge] trilha indisponível para o status das fases:", error);
+    return new Map();
+  }
+  return new Map(
+    trail.nodes
+      .filter((node) => node.phase !== null && node.kind !== "java")
+      .map((node) => [node.phase, node.percent]),
+  );
 }
 
 const MIN_REFLECTION_LENGTH = 30;
@@ -212,17 +233,20 @@ function evaluateCompletion(unitId) {
   if (progress.lastTestSuccess || missionsDone) markUnitCompleted(unitId);
 }
 
+// Devolve true só quando PROGRESS.md e trilha.json foram lidos. Em erro, registra
+// e devolve false: o guard fica sem marcar e o seed é tentado de novo depois.
 function seedPhase0FromProgress() {
-  let text;
   try {
-    text = readFileSync(PROGRESS_PATH, "utf8");
-  } catch {
-    return;
+    const text = readFileSync(PROGRESS_PATH, "utf8");
+    const lines = new Set(text.split(/\r?\n/).map((line) => line.trimEnd()));
+    const phase0 = loadTrailContent().nodes.find((node) => node.id === "f00");
+    for (const item of phase0?.items || [])
+      if (lines.has(`- [x] ${item.label}`)) setTopicCheck(item.id, true);
+    return true;
+  } catch (error) {
+    console.error("[forge] seed da Fase 0 ignorado:", error);
+    return false;
   }
-  const lines = new Set(text.split(/\r?\n/).map((line) => line.trimEnd()));
-  const phase0 = loadTrailContent().nodes.find((node) => node.id === "f00");
-  for (const item of phase0?.items || [])
-    if (lines.has(`- [x] ${item.label}`)) setTopicCheck(item.id, true);
 }
 
 export function runMigrations() {
@@ -237,8 +261,7 @@ export function runMigrations() {
     setSetting("migration_trail_v1", "done");
   }
   if (!getSetting("migration_trail_phase0_v1")) {
-    seedPhase0FromProgress();
-    setSetting("migration_trail_phase0_v1", "done");
+    if (seedPhase0FromProgress()) setSetting("migration_trail_phase0_v1", "done");
   }
 }
 
@@ -284,7 +307,8 @@ export async function testUnit(unitId, exerciseId, runTests = runUnitTests) {
   }
   const result = await runTests(unitId, exerciseId || undefined);
   if (exerciseId) {
-    // Rodar uma missão só nunca pode concluir (nem reabrir) a unidade.
+    // Rodar uma missão nunca mexe no resultado da suíte nem nas tentativas da
+    // unidade; mas, se era a última missão pendente, evaluateCompletion conclui.
     recordMissionRun(unitId, result);
     // Sem teste com esse nome (missão só de tipos): não há resultado a gravar.
     if (result.total !== 0) upsertExerciseResult(unitId, exerciseId, result.success);
@@ -318,6 +342,8 @@ export function finishReview(reviewId, confidence) {
 }
 
 export function exportData() {
+  // Garante que o backup já contém o resultado das migrações da trilha.
+  runMigrations();
   return {
     exportedAt: new Date().toISOString(),
     currentUnit: getSetting("current_unit", "js-01"),
@@ -325,6 +351,8 @@ export function exportData() {
     progress: listUnitProgress(),
     hints: listAllHintReveals(),
     reviews: listReviews(),
+    exerciseProgress: listExerciseProgress(),
+    topicChecks: listTopicChecks(),
   };
 }
 
