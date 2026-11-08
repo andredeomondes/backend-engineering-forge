@@ -49,7 +49,13 @@ function UnitScreen({ unitId, onChanged }: Props) {
     api
       .unit(unitId)
       .then((detail) => {
-        if (active) setUnit(detail);
+        if (!active) return;
+        setUnit(detail);
+        // Pin the selection once, on load: the card must never move to another
+        // mission because the one on screen just became done.
+        const firstOpen =
+          detail.missions.find((m) => !isMissionDone(m.status)) ?? detail.missions[0];
+        setSelectedId(firstOpen?.id ?? null);
       })
       .catch((caught) => {
         if (active)
@@ -125,6 +131,11 @@ function UnitScreen({ unitId, onChanged }: Props) {
     close: "4 · Fechar unidade",
   };
 
+  function selectTab(next: Tab) {
+    setTab(next);
+    setActionError("");
+  }
+
   function onTabKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     const index = TABS.indexOf(tab);
     let next: number | null = null;
@@ -134,11 +145,12 @@ function UnitScreen({ unitId, onChanged }: Props) {
     else if (event.key === "End") next = TABS.length - 1;
     if (next === null) return;
     event.preventDefault();
-    setTab(TABS[next]);
+    selectTab(TABS[next]);
     document.getElementById(tabId(TABS[next]))?.focus();
   }
 
   function runMission(missionId: string) {
+    setSelectedId(missionId);
     setRunning(missionId);
     return mutate(
       async () => {
@@ -199,7 +211,7 @@ function UnitScreen({ unitId, onChanged }: Props) {
               aria-selected={tab === item}
               aria-controls={panelId(item)}
               tabIndex={tab === item ? 0 : -1}
-              onClick={() => setTab(item)}
+              onClick={() => selectTab(item)}
             >
               {labels[item]}
             </button>
@@ -238,20 +250,22 @@ function UnitScreen({ unitId, onChanged }: Props) {
                   running={running === mission.id}
                   run={missionRuns[mission.id] ?? null}
                   onRun={() => runMission(mission.id)}
-                  onToggleDone={(done) =>
-                    mutate(
+                  onToggleDone={(done) => {
+                    setSelectedId(mission.id);
+                    return mutate(
                       () => api.markMission(current.id, mission.id, done),
                       missionDoneId(mission.id),
                       "Não foi possível marcar a missão.",
-                    )
-                  }
-                  onRevealHint={(level) =>
-                    mutate(
+                    );
+                  }}
+                  onRevealHint={(level) => {
+                    setSelectedId(mission.id);
+                    return mutate(
                       () => api.revealHint(current.id, level),
                       HINT_LIST_ID,
                       "Não foi possível abrir a dica.",
-                    )
-                  }
+                    );
+                  }}
                 />
               </div>
             ) : (
@@ -286,7 +300,7 @@ function UnitScreen({ unitId, onChanged }: Props) {
         </div>
 
         {actionError && (
-          <p className="form-message unit-error" role="status">
+          <p className="form-message unit-error" role="alert">
             {actionError}
           </p>
         )}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 import type { Exercise, Mission, TestResult, UnitDetail } from "../../types";
@@ -80,6 +80,13 @@ function RuleList({ items, warn = false }: { items: string[]; warn?: boolean }) 
 
 function CopyCommand({ command }: { command: string }) {
   const [copied, setCopied] = useState<"" | "ok" | "fail">("");
+
+  // The "Copiado" feedback fades back to "Copiar" after ~2s.
+  useEffect(() => {
+    if (!copied) return;
+    const id = setTimeout(() => setCopied(""), 2000);
+    return () => clearTimeout(id);
+  }, [copied]);
 
   async function copy() {
     try {
