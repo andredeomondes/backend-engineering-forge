@@ -286,7 +286,7 @@ Mapa detalhado em [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md).
 
 ## Documentos de acompanhamento
 
-- [`PROGRESS.md`](PROGRESS.md) — o que já foi liberado e concluído (fonte oficial do estado).
+- [`PROGRESS.md`](PROGRESS.md) — estado narrativo e de mentoria (o que foi estudado e concluído); as marcações do painel ficam em `.forge/forge.db`.
 - [`ROADMAP.md`](ROADMAP.md) — fases completas da formação.
 - [`STUDY_LOG.md`](STUDY_LOG.md) — diário de sessões de estudo.
 - [`SKILLS_MATRIX.md`](SKILLS_MATRIX.md) — estado de cada competência.

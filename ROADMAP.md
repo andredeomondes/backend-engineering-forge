@@ -1,7 +1,7 @@
 # Roadmap
 
 Índice completo: `BACKEND_ENGINEERING_FORGE.md`. Currículo modular em
-`docs/curriculum/`. Este arquivo resume fases e bloqueios; o estado detalhado
+`docs/curriculum/`. Este arquivo resume fases e a ordem recomendada; o estado detalhado
 fica em `PROGRESS.md`.
 
 ## PARTE I — Backend Foundations
@@ -10,7 +10,7 @@ fica em `PROGRESS.md`.
 | ---- | ------------------------------------------- | ------------------------------------ |
 | 0    | Ambiente profissional e fundamentos da Web  | 🟡 em andamento                     |
 | 1    | JavaScript profundo para backend            | 🟡 unidades 1-4 concluídas, unidade 5 ativa |
-| 2    | TypeScript profissional                     | 🟡 8/8 unidades geradas, nenhuma liberada para estudo |
+| 2    | TypeScript profissional                     | 🟡 8/8 unidades geradas, nenhuma iniciada |
 | 3    | Node.js por baixo dos frameworks            | ⚪ disponível                         |
 
 ## PARTE II — Professional Backend Engineering
@@ -55,7 +55,7 @@ Nenhuma opção está selecionada. Detalhes em
 
 ## PARTE IV — Senior Backend Engineering Track (após Pleno)
 
-Detalhe completo em `docs/curriculum/senior-backend.md`. Não libera antes da
+Detalhe completo em `docs/curriculum/senior-backend.md`. Recomendado após a
 Definição de Pronto de Pleno em `docs/curriculum/production-backend.md`.
 
 | Fase | Tema                                                       | Status       |

@@ -20,7 +20,7 @@ Antes de qualquer alteração:
 | Necessidade | Fonte |
 |---|---|
 | Estado atual | `PROGRESS.md` |
-| Sequência e bloqueios | `ROADMAP.md` |
+| Sequência recomendada | `ROADMAP.md` |
 | Competências | `SKILLS_MATRIX.md` |
 | Regras de mentoria | `LEARNING_CONTRACT.md` |
 | Currículo da fase | `docs/curriculum/` |

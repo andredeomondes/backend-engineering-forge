@@ -1,7 +1,8 @@
 # PARTE IV — Senior Backend Engineering Track
 
-> Só começa depois da Definição de Pronto da seção 10 (competências técnicas
-> de pleno). Não libera nenhuma fase desta parte antes disso.
+> Recomendado depois da Definição de Pronto da seção 10 (competências técnicas
+> de pleno). Nenhuma fase desta parte fica bloqueada; o gate de pleno é a
+> referência recomendada.
 
 A diferença central desta parte:
 
