@@ -79,7 +79,9 @@ test("id de missão é o primeiro identificador, sem palavras-chave nem genéric
     for (const exercise of unit.exercises.filter((e) => !e.id.startsWith("sql-ex-"))) {
       assert.match(exercise.id, /^[A-Za-z_$][\w$]*$/, `${unit.id}: ${exercise.name}`);
       assert.ok(
-        !/^(export|default|abstract|class|interface|type|const|enum|function)$/.test(exercise.id),
+        !/^(export|default|abstract|class|interface|type|const|enum|function)$/.test(
+          exercise.id,
+        ),
         `${unit.id}: ${exercise.name}`,
       );
     }

@@ -24,7 +24,8 @@ function titleFromMarkdown(markdown, fallback) {
   return markdown.match(/^#\s+(.+)$/m)?.[1]?.trim() || fallback;
 }
 
-const SIGNATURE_KEYWORDS = /^(?:(?:export|default|abstract|class|interface|type|const|enum|function)\s+)+/;
+const SIGNATURE_KEYWORDS =
+  /^(?:(?:export|default|abstract|class|interface|type|const|enum|function)\s+)+/;
 
 // "class ValidationError extends Error" -> "ValidationError", "identity<T>(x)" -> "identity"
 function missionId(name) {
