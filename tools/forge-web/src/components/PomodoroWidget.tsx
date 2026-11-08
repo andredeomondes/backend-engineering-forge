@@ -89,7 +89,12 @@ export function PomodoroWidget({ unitId, onLogged }: Props) {
   const loggedCycles = useRef(state.cycles);
 
   useEffect(() => {
-    const { running, ...persisted } = state;
+    // `running` is never persisted: a reload always starts paused.
+    const persisted = {
+      mode: state.mode,
+      secondsLeft: state.secondsLeft,
+      cycles: state.cycles,
+    };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted));
   }, [state]);
 

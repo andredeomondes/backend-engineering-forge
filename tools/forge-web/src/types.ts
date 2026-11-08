@@ -48,19 +48,51 @@ export type DashboardData = {
     number: number;
     title: string;
     label: string;
-    status: "completed" | "active" | "locked";
+    status: "completed" | "active" | "available";
   }>;
   polyglotTracks: Array<{
     id: "java" | "dotnet" | "go";
     title: string;
     modules: string;
-    status: "locked";
+    status: "available";
   }>;
+};
+
+export type MissionDetail = {
+  objective: string;
+  uses?: string;
+  example?: { input: string; output: string };
+  rules: string[];
+  pitfalls: string[];
+};
+
+export type Exercise = {
+  index: number;
+  id: string;
+  name: string;
+  group: string;
+  summary: string;
+  detail: MissionDetail | null;
+};
+
+export type MissionStatus = "todo" | "failing" | "passed" | "manual";
+
+export type Mission = {
+  index: number;
+  id: string;
+  name: string;
+  group: string;
+  status: MissionStatus;
 };
 
 export type UnitDetail = UnitSummary & {
   markdown: string;
-  exercises: Array<{ index: number; name: string }>;
+  /** Workspace-relative path with "/" (for the copyable command). */
+  testPath: string;
+  /** False for units without per-mission tests (SQL). */
+  missionTestable: boolean;
+  exercises: Exercise[];
+  missions: Mission[];
   progress: {
     status: string;
     attempts: number;
@@ -72,16 +104,19 @@ export type UnitDetail = UnitSummary & {
     helpLevel: number;
   };
   hints: Array<{ level: number; title: string; content: string; revealed: boolean }>;
-  gate: { tests: boolean; completed: boolean };
+  gate: { tests: boolean; reflection: boolean; completed: boolean; badge: boolean };
 };
 
 export type TestResult = {
   success: boolean;
   passed: number;
   failed: number;
+  total: number;
   durationMs: number;
   output: string;
 };
+
+export type TestResponse = { result: TestResult; unit: UnitDetail; noTests: boolean };
 
 export type TrailLevelId = "lv1" | "lv2" | "lv3" | "lv4";
 

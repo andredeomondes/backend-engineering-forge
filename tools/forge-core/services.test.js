@@ -101,3 +101,10 @@ test("missão com teste verde fica passed e noTests é falso", async () => {
   assert.equal(noTests, false);
   assert.equal(unit.missions.find((m) => m.id === "identity").status, "passed");
 });
+
+test("detalhe da unidade traz testPath relativo com barras", () => {
+  assert.equal(
+    services.getUnitDetail("js-09").testPath,
+    "exercises/01-javascript-core/unit-09-map-filter-reduce/exercises.test.js",
+  );
+});

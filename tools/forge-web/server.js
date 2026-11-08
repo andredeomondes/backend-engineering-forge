@@ -72,7 +72,7 @@ app.post(
 );
 app.post(
   "/api/units/:unitId/tests",
-  api((request) => testUnit(request.params.unitId, request.body?.exerciseName)),
+  api((request) => testUnit(request.params.unitId, request.body?.exerciseId)),
 );
 app.post(
   "/api/units/:unitId/missions/:exerciseId",

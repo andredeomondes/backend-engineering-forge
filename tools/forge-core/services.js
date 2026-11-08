@@ -26,6 +26,7 @@ import {
   upsertExerciseResult,
 } from "./database.js";
 import { readFileSync } from "node:fs";
+import path from "node:path";
 
 import { daysBetween, localDateString } from "./dates.js";
 import {
@@ -35,7 +36,7 @@ import {
   listProjects,
   listUnits,
 } from "./curriculum.js";
-import { PROGRESS_PATH } from "./paths.js";
+import { PROGRESS_PATH, WORKSPACE_ROOT } from "./paths.js";
 import { runUnitTests } from "./test-runner.js";
 import { buildNodeItems, computeTrail } from "./trail.js";
 import { loadTrailContent } from "./trail-content.js";
@@ -155,6 +156,12 @@ export function getUnitDetail(unitId) {
   return {
     ...unitSummary(unit, progress),
     markdown: unit.markdown,
+    // Caminho relativo ao workspace, com "/", para o comando copiável da missão.
+    testPath: path
+      .relative(WORKSPACE_ROOT, path.resolve(unit.testPath))
+      .split(path.sep)
+      .join("/"),
+    missionTestable: unit.missionTestable !== false,
     exercises: unit.exercises,
     missions: listMissions(unit),
     progress,
