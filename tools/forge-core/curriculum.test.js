@@ -7,6 +7,7 @@ import {
   listPolyglotTracks,
   listProjects,
   listUnits,
+  mergeMissions,
 } from "./curriculum.js";
 
 test("currículo descobre as unidades preparadas", () => {
@@ -89,4 +90,47 @@ test("id de missão é o primeiro identificador, sem palavras-chave nem genéric
   const all = listUnits().flatMap((u) => u.exercises.map((e) => `${e.name} => ${e.id}`));
   assert.ok(all.some((s) => /^identity<T>.* => identity$/.test(s)));
   assert.ok(all.some((s) => /^type Box<T>.* => Box$/.test(s)));
+});
+
+test("missões de JS-09 têm conteúdo estruturado", () => {
+  const maxBy = getUnit("js-09").exercises.find((e) => e.id === "maxBy");
+  assert.equal(maxBy.detail.uses, "reduce");
+  assert.ok(maxBy.detail.example.output.includes("{"));
+  assert.ok(maxBy.detail.pitfalls.some((p) => /vazio/.test(p)));
+});
+
+test("toda missão de JS-09…11 tem detalhe; demais caem no resumo", () => {
+  for (const id of ["js-09", "js-10", "js-11"])
+    assert.ok(getUnit(id).exercises.every((e) => e.detail?.objective));
+  const js12 = getUnit("js-12").exercises[0];
+  assert.equal(js12.detail, null);
+  assert.ok(js12.summary.length > 10);
+});
+
+test("summary é o texto do item do README, em uma linha só", () => {
+  const doubleAll = getUnit("js-09").exercises.find((e) => e.id === "doubleAll");
+  assert.equal(
+    doubleAll.summary,
+    "retorna um novo array com cada número multiplicado por 2, usando `map`.",
+  );
+  for (const unit of listUnits())
+    for (const exercise of unit.exercises)
+      assert.ok(
+        exercise.summary.length > 0 && !/\n/.test(exercise.summary),
+        `${unit.id}: ${exercise.name}`,
+      );
+});
+
+test("mergeMissions: chave sem exercício lança erro com chave e arquivo", () => {
+  const exercises = [{ id: "a" }];
+  assert.throws(
+    () =>
+      mergeMissions(exercises, { a: { objective: "x" }, typo: {} }, "/x/missions.json"),
+    /typo.*missions\.json|missions\.json.*typo/,
+  );
+  assert.equal(mergeMissions(exercises, null, "/x/missions.json")[0].detail, null);
+  assert.equal(
+    mergeMissions(exercises, { a: { objective: "x" } }, "f")[0].detail.objective,
+    "x",
+  );
 });

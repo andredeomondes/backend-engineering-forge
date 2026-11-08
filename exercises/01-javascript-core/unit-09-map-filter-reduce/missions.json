@@ -1,0 +1,179 @@
+{
+  "doubleAll": {
+    "objective": "Devolver um novo array com cada número da lista multiplicado por 2.",
+    "uses": "map",
+    "example": {
+      "input": "doubleAll([1, 2, 3])",
+      "output": "[2, 4, 6]"
+    },
+    "rules": ["Use map."],
+    "pitfalls": ["Lista vazia devolve lista vazia."]
+  },
+  "keepEven": {
+    "objective": "Devolver apenas os números pares da lista.",
+    "uses": "filter",
+    "example": {
+      "input": "keepEven([1, 2, 3, 4, 5, 6])",
+      "output": "[2, 4, 6]"
+    },
+    "rules": ["Use filter."],
+    "pitfalls": []
+  },
+  "findFirstAbove": {
+    "objective": "Devolver o primeiro número estritamente maior que o limite.",
+    "uses": "find",
+    "example": {
+      "input": "findFirstAbove([1, 5, 10, 3, 20], 8)",
+      "output": "10"
+    },
+    "rules": ["Use find."],
+    "pitfalls": [
+      "Estritamente maior: um número igual ao limite não conta.",
+      "Se nenhum número passar, devolva undefined."
+    ]
+  },
+  "hasNegative": {
+    "objective": "Dizer se a lista tem ao menos um número negativo.",
+    "uses": "some",
+    "example": {
+      "input": "hasNegative([1, 2, -3])",
+      "output": "true"
+    },
+    "rules": ["Use some."],
+    "pitfalls": []
+  },
+  "allPositive": {
+    "objective": "Dizer se todos os números da lista são positivos.",
+    "uses": "every",
+    "example": {
+      "input": "allPositive([1, -2, 3])",
+      "output": "false"
+    },
+    "rules": ["Use every."],
+    "pitfalls": ["Lista vazia é considerada true."]
+  },
+  "sumAll": {
+    "objective": "Somar todos os números da lista.",
+    "uses": "reduce",
+    "example": {
+      "input": "sumAll([1, 2, 3, 4])",
+      "output": "10"
+    },
+    "rules": ["Use reduce com valor inicial 0."],
+    "pitfalls": ["Lista vazia deve devolver 0, não lançar erro."]
+  },
+  "pluck": {
+    "objective": "Devolver um array só com o valor de uma chave de cada objeto da lista.",
+    "uses": "map",
+    "example": {
+      "input": "pluck([{ name: \"Ana\" }, { name: \"Bia\" }, { name: \"Caio\" }], \"name\")",
+      "output": "[\"Ana\", \"Bia\", \"Caio\"]"
+    },
+    "rules": ["Use map."],
+    "pitfalls": []
+  },
+  "countMatching": {
+    "objective": "Contar quantos itens da lista satisfazem o predicado.",
+    "uses": "filter",
+    "example": {
+      "input": "countMatching([1, 2, 3, 4, 5, 6], (n) => n % 2 === 0)",
+      "output": "3"
+    },
+    "rules": ["Use filter e .length."],
+    "pitfalls": ["Lista vazia devolve 0."]
+  },
+  "groupByKey": {
+    "objective": "Agrupar os itens em um objeto cujas chaves são os valores distintos de item[key].",
+    "uses": "reduce",
+    "example": {
+      "input": "groupByKey(\n  [\n    { name: \"cachorro\", type: \"mamífero\" },\n    { name: \"gato\", type: \"mamífero\" },\n    { name: \"jacaré\", type: \"réptil\" },\n  ],\n  \"type\",\n)",
+      "output": "{\n  mamífero: [\n    { name: \"cachorro\", type: \"mamífero\" },\n    { name: \"gato\", type: \"mamífero\" },\n  ],\n  réptil: [{ name: \"jacaré\", type: \"réptil\" }],\n}"
+    },
+    "rules": [
+      "Use reduce.",
+      "O valor de cada chave é um array com os itens daquele grupo."
+    ],
+    "pitfalls": ["Mantenha a ordem original dos itens dentro de cada grupo."]
+  },
+  "maxBy": {
+    "objective": "Devolver o item cujo fn(item) é o maior da lista.",
+    "uses": "reduce",
+    "example": {
+      "input": "maxBy(\n  [\n    { name: \"A\", price: 10 },\n    { name: \"B\", price: 50 },\n    { name: \"C\", price: 30 },\n  ],\n  (p) => p.price,\n)",
+      "output": "{ name: \"B\", price: 50 }"
+    },
+    "rules": ["Use reduce."],
+    "pitfalls": [
+      "Devolva o item inteiro, não o valor calculado.",
+      "Array vazio devolve undefined."
+    ]
+  },
+  "sumNested": {
+    "objective": "Somar todos os números de todos os sub-arrays.",
+    "uses": "reduce",
+    "example": {
+      "input": "sumNested([[1, 2], [3, 4, 5], []])",
+      "output": "15"
+    },
+    "rules": ["Combine reduce externo com reduce (ou soma) interno."],
+    "pitfalls": ["Sub-arrays vazios contribuem com 0."]
+  },
+  "uniqueBy": {
+    "objective": "Devolver os itens mantendo só a primeira ocorrência de cada valor distinto de item[key].",
+    "uses": "filter + Set",
+    "example": {
+      "input": "uniqueBy(\n  [\n    { id: 1, name: \"a\" },\n    { id: 2, name: \"b\" },\n    { id: 1, name: \"a-duplicado\" },\n  ],\n  \"id\",\n)",
+      "output": "[\n  { id: 1, name: \"a\" },\n  { id: 2, name: \"b\" },\n]"
+    },
+    "rules": ["Use filter com um Set para rastrear o que já foi visto."],
+    "pitfalls": [
+      "Mantenha a primeira ocorrência, não a última.",
+      "Preserve a ordem original."
+    ]
+  },
+  "fixFilterThresholdBug": {
+    "objective": "Corrigir o filtro para manter apenas números estritamente maiores que o limite.",
+    "example": {
+      "input": "fixFilterThresholdBug([1, 5, 10, 10, 15], 10)",
+      "output": "[15]"
+    },
+    "rules": ["Corrija o operador de comparação; o resto do código já existe."],
+    "pitfalls": ["Números iguais ao limite não devem ser mantidos."]
+  },
+  "fixReduceInitialValueBug": {
+    "objective": "Corrigir o reduce para somar os preços também quando a lista é vazia.",
+    "uses": "reduce",
+    "example": {
+      "input": "fixReduceInitialValueBug([])",
+      "output": "0"
+    },
+    "rules": ["Adicione o valor inicial correto ao reduce; o resto do código já existe."],
+    "pitfalls": ["Sem valor inicial, o reduce lança erro para lista vazia."]
+  },
+  "refactorImperativeTotal": {
+    "objective": "Refatorar o cálculo do total dos pedidos pagos mantendo o mesmo resultado.",
+    "uses": "filter + reduce",
+    "example": {
+      "input": "refactorImperativeTotal([\n  { status: \"paid\", amount: 10, quantity: 2 },\n  { status: \"pending\", amount: 100, quantity: 1 },\n  { status: \"paid\", amount: 5, quantity: 3 },\n])",
+      "output": "35"
+    },
+    "rules": [
+      "Troque o for manual por filter seguido de reduce (ou reduce com checagem interna).",
+      "Some amount * quantity apenas dos pedidos com status \"paid\"."
+    ],
+    "pitfalls": ["O resultado deve continuar idêntico ao da versão original."]
+  },
+  "summarizeSalesByCategory": {
+    "objective": "Totalizar as transações por categoria e no geral.",
+    "uses": "reduce",
+    "example": {
+      "input": "summarizeSalesByCategory([\n  { category: \"livros\", amount: 50 },\n  { category: \"eletrônicos\", amount: 200 },\n  { category: \"livros\", amount: 30 },\n  { category: \"eletrônicos\", amount: 100 },\n])",
+      "output": "{\n  byCategory: { livros: 80, eletrônicos: 300 },\n  grandTotal: 380,\n}"
+    },
+    "rules": [
+      "Use reduce para montar byCategory.",
+      "grandTotal é a soma de tudo (reduce ou soma dos valores de byCategory)."
+    ],
+    "pitfalls": ["Lista vazia devolve { byCategory: {}, grandTotal: 0 }."]
+  }
+}

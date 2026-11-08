@@ -1,0 +1,181 @@
+{
+  "cloneArray": {
+    "objective": "Devolver uma cópia rasa do array.",
+    "uses": "spread",
+    "example": {
+      "input": "cloneArray([1, 2, 3])",
+      "output": "[1, 2, 3]"
+    },
+    "rules": ["Use spread: [...arr]."],
+    "pitfalls": ["A cópia deve ser outro array: alterá-la não pode alterar o original."]
+  },
+  "mergeArrays": {
+    "objective": "Devolver um novo array com os elementos de a seguidos dos de b.",
+    "uses": "spread",
+    "example": {
+      "input": "mergeArrays([1, 2], [3, 4])",
+      "output": "[1, 2, 3, 4]"
+    },
+    "rules": ["Use spread."],
+    "pitfalls": []
+  },
+  "cloneObject": {
+    "objective": "Devolver uma cópia rasa do objeto.",
+    "uses": "spread",
+    "example": {
+      "input": "cloneObject({ a: 1, b: 2 })",
+      "output": "{ a: 1, b: 2 }"
+    },
+    "rules": ["Use spread: {...obj}."],
+    "pitfalls": ["A cópia deve ser outro objeto: alterá-la não pode alterar o original."]
+  },
+  "mergeObjectsWithOverride": {
+    "objective": "Devolver um novo objeto combinando base e overrides, com overrides vencendo nos conflitos.",
+    "uses": "spread",
+    "example": {
+      "input": "mergeObjectsWithOverride({ name: \"produto\", price: 10, stock: 5 }, { price: 15 })",
+      "output": "{ name: \"produto\", price: 15, stock: 5 }"
+    },
+    "rules": ["Os campos de overrides sobrescrevem os de base."],
+    "pitfalls": []
+  },
+  "sumAllArgs": {
+    "objective": "Somar qualquer quantidade de números recebidos como argumentos.",
+    "uses": "parâmetro rest",
+    "example": {
+      "input": "sumAllArgs(1, 2, 3)",
+      "output": "6"
+    },
+    "rules": ["Use parâmetro rest para aceitar qualquer quantidade de números."],
+    "pitfalls": ["Sem argumentos, devolva 0."]
+  },
+  "firstAndRest": {
+    "objective": "Devolver { first, rest } separando o primeiro elemento do restante do array.",
+    "uses": "destructuring com rest",
+    "example": {
+      "input": "firstAndRest([1, 2, 3, 4])",
+      "output": "{ first: 1, rest: [2, 3, 4] }"
+    },
+    "rules": ["Use destructuring com rest: const [first, ...rest] = arr."],
+    "pitfalls": ["Array de um só elemento devolve rest vazio: { first: 9, rest: [] }."]
+  },
+  "spreadIntoCall": {
+    "objective": "Chamar fn com os elementos de numbers como argumentos posicionais e devolver o resultado.",
+    "uses": "spread",
+    "example": {
+      "input": "spreadIntoCall([1, 2, 3], (a, b, c) => a + b + c)",
+      "output": "6"
+    },
+    "rules": ["Espalhe os elementos na chamada: fn(...numbers)."],
+    "pitfalls": []
+  },
+  "addProperty": {
+    "objective": "Devolver um novo objeto igual a obj, com key definida como value.",
+    "uses": "spread",
+    "example": {
+      "input": "addProperty({ a: 1 }, \"b\", 2)",
+      "output": "{ a: 1, b: 2 }"
+    },
+    "rules": ["Não altere obj."],
+    "pitfalls": ["Se key já existir, o valor é sobrescrito."]
+  },
+  "describeMainAndExtras": {
+    "objective": "Devolver a string \"<first>, <second> e mais <rest.length>: <rest.join(', ')>\".",
+    "uses": "parâmetro rest",
+    "example": {
+      "input": "describeMainAndExtras(\"Ana\", \"Bia\", \"Caio\", \"Duda\")",
+      "output": "\"Ana, Bia e mais 2: Caio, Duda\""
+    },
+    "rules": [
+      "Os dois primeiros parâmetros são nomeados; o restante é coletado com rest."
+    ],
+    "pitfalls": ["Sem itens extras, a saída é \"Ana, Bia e mais 0: \"."]
+  },
+  "shallowMergeConfig": {
+    "objective": "Devolver o merge raso de duas configurações, com patch por cima de base.",
+    "uses": "spread",
+    "example": {
+      "input": "shallowMergeConfig(\n  { env: \"dev\", server: { port: 3000, host: \"localhost\" } },\n  { env: \"prod\", server: { port: 8080 } },\n)",
+      "output": "{ env: \"prod\", server: { port: 8080 } }"
+    },
+    "rules": ["Faça o merge raso: {...base, ...patch}."],
+    "pitfalls": [
+      "Spread não faz merge profundo: um objeto aninhado de patch substitui inteiramente o de base."
+    ]
+  },
+  "removeKey": {
+    "objective": "Devolver um novo objeto igual a obj, mas sem a propriedade keyToRemove.",
+    "uses": "destructuring com rest",
+    "example": {
+      "input": "removeKey({ id: 1, name: \"x\", secret: \"shh\" }, \"secret\")",
+      "output": "{ id: 1, name: \"x\" }"
+    },
+    "rules": [
+      "Capture a chave indesejada com destructuring + rest e devolva o resto: const { [keyToRemove]: removed, ...rest } = obj."
+    ],
+    "pitfalls": ["Não altere o objeto original."]
+  },
+  "combineArraysUnique": {
+    "objective": "Devolver um único array com todos os elementos dos arrays recebidos, sem duplicados.",
+    "uses": "rest + spread + Set",
+    "example": {
+      "input": "combineArraysUnique([1, 2], [2, 3], [3, 4])",
+      "output": "[1, 2, 3, 4]"
+    },
+    "rules": [
+      "Receba os arrays com rest, combine com spread e remova duplicados com Set."
+    ],
+    "pitfalls": [
+      "Mantenha a ordem de primeira aparição.",
+      "Sem argumentos, devolva array vazio."
+    ]
+  },
+  "fixSpreadMutationBug": {
+    "objective": "Corrigir a função para devolver um novo array com o item adicionado, sem mutar o carrinho recebido.",
+    "uses": "spread",
+    "example": {
+      "input": "fixSpreadMutationBug([\"camisa\", \"calça\"], \"boné\")",
+      "output": "[\"camisa\", \"calça\", \"boné\"]"
+    },
+    "rules": ["Use spread para criar o novo array."],
+    "pitfalls": ["cart.push(newItem) muta o array original; cart deve ficar intocado."]
+  },
+  "fixRestParamsOrderBug": {
+    "objective": "Corrigir a função para que o rótulo apareça uma única vez, antes dos dois-pontos.",
+    "uses": "parâmetro rest",
+    "example": {
+      "input": "fixRestParamsOrderBug(\"cores\", \"azul\", \"verde\")",
+      "output": "\"cores: azul, verde\""
+    },
+    "rules": ["O rótulo aparece só uma vez, antes dos dois-pontos."],
+    "pitfalls": [
+      "Montar [label, ...values] e juntar tudo repete o rótulo no texto final."
+    ]
+  },
+  "refactorConcatViaPush": {
+    "objective": "Refatorar a concatenação de arrays com push para usar spread, mantendo o mesmo resultado.",
+    "uses": "spread",
+    "example": {
+      "input": "refactorConcatViaPush([[1, 2], [3], [], [4, 5]])",
+      "output": "[1, 2, 3, 4, 5]"
+    },
+    "rules": [
+      "Troque os dois laços for aninhados com push por spread (em um for...of, ou concat/spread direto)."
+    ],
+    "pitfalls": ["O resultado deve continuar idêntico ao da versão original."]
+  },
+  "buildUpdatedOrder": {
+    "objective": "Devolver um novo pedido com updates aplicados, extraItems adicionados ao final e total recalculado.",
+    "uses": "spread + reduce",
+    "example": {
+      "input": "buildUpdatedOrder(\n  {\n    id: 1,\n    status: \"pending\",\n    items: [\n      { name: \"Camisa\", price: 50, qty: 2 },\n      { name: \"Calça\", price: 100, qty: 1 },\n    ],\n    total: 200,\n  },\n  { status: \"paid\" },\n  [{ name: \"Brinde\", price: 0, qty: 1 }],\n)",
+      "output": "{\n  id: 1,\n  status: \"paid\",\n  items: [\n    { name: \"Camisa\", price: 50, qty: 2 },\n    { name: \"Calça\", price: 100, qty: 1 },\n    { name: \"Brinde\", price: 0, qty: 1 },\n  ],\n  total: 200,\n}"
+    },
+    "rules": [
+      "Aplique os campos de updates por cima de order (spread com override).",
+      "Adicione extraItems ao final de items (spread de arrays).",
+      "Recalcule total como a soma de price * qty de todos os itens (originais + extras) com reduce."
+    ],
+    "pitfalls": ["Não modifique o pedido original."]
+  }
+}

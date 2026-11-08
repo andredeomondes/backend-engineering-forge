@@ -38,15 +38,54 @@ function extractExercises(markdown) {
     position: match.index,
     group: match[1].replace(/\s*\(\d+\)\s*$/, "").trim(),
   }));
-  return [...markdown.matchAll(/^\d+\.\s+\*\*`([^`]+)`\*\*/gm)].map((match, index) => {
+  return [
+    ...markdown.matchAll(
+      /^\d+\.\s+\*\*`([^`]+)`\*\*([^\n]*(?:\n(?!\s*\n|\d+\.\s)[^\n]*)*)/gm,
+    ),
+  ].map((match, index) => {
     const heading = headings.filter((item) => item.position < match.index).at(-1);
+    const summary = match[2]
+      .replace(/\s+/g, " ")
+      .trim()
+      .replace(/^[—–-]\s*/, "");
     return {
       index: index + 1,
       id: missionId(match[1]),
       name: match[1],
       group: heading?.group || "",
+      summary: summary || match[1],
     };
   });
+}
+
+export function mergeMissions(exercises, missions, filePath) {
+  if (!missions) return exercises.map((exercise) => ({ ...exercise, detail: null }));
+  const ids = new Set(exercises.map((exercise) => exercise.id));
+  for (const key of Object.keys(missions)) {
+    if (!ids.has(key)) {
+      throw new Error(`${filePath}: a chave "${key}" não corresponde a nenhum exercício`);
+    }
+  }
+  return exercises.map((exercise) => ({
+    ...exercise,
+    detail: missions[exercise.id] ?? null,
+  }));
+}
+
+function readMissions(directory) {
+  const missionsPath = path.join(directory, "missions.json");
+  if (!existsSync(missionsPath)) return { missions: null, missionsPath };
+  try {
+    const missions = JSON.parse(readFileSync(missionsPath, "utf8"));
+    if (!missions || typeof missions !== "object" || Array.isArray(missions)) {
+      throw new Error("o conteúdo deve ser um objeto { idDoExercício: detalhe }");
+    }
+    return { missions, missionsPath };
+  } catch (error) {
+    throw new Error(`${missionsPath}: missions.json inválido (${error.message})`, {
+      cause: error,
+    });
+  }
 }
 
 function parseHints(markdown) {
@@ -75,6 +114,7 @@ function extractSqlExercises(sql) {
     id: `sql-ex-${index + 1}`,
     name: match[1].trim() || `Exercício ${index + 1}`,
     group: "Exercícios",
+    summary: match[1].trim() || `Exercício ${index + 1}`,
   }));
 }
 
@@ -95,6 +135,9 @@ function readUnit(root, directoryName, track) {
     track === "sql" ? "exercises.sql" : `exercises.${extension}`,
   );
   const exerciseRaw = existsSync(exercisePath) ? readFileSync(exercisePath, "utf8") : "";
+  const { missions, missionsPath } = readMissions(directory);
+  const baseExercises =
+    track === "sql" ? extractSqlExercises(exerciseRaw) : extractExercises(parsed.content);
 
   return {
     id: parsed.data.id || `${prefix}-${String(number).padStart(2, "0")}`,
@@ -113,10 +156,7 @@ function readUnit(root, directoryName, track) {
     ),
     exercisePath,
     markdown: parsed.content,
-    exercises:
-      track === "sql"
-        ? extractSqlExercises(exerciseRaw)
-        : extractExercises(parsed.content),
+    exercises: mergeMissions(baseExercises, missions, missionsPath),
     missionTestable: track !== "sql",
     hints: parseHints(hintsRaw),
   };
