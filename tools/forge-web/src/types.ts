@@ -82,3 +82,47 @@ export type TestResult = {
   durationMs: number;
   output: string;
 };
+
+export type TrailLevelId = "lv1" | "lv2" | "lv3" | "lv4";
+
+export type TrailItem = {
+  id: string;
+  label: string;
+  kind: "unit" | "topic";
+  done: boolean;
+  unitId?: string;
+};
+
+export type TrailNode = {
+  id: string;
+  kind: "phase" | "java" | "dsa";
+  phase: number | null;
+  level: TrailLevelId | null;
+  title: string;
+  shortTitle: string;
+  who: string;
+  becomes: string;
+  percent: number;
+  state: "done" | "current" | "todo";
+  items: TrailItem[];
+};
+
+export type TrailData = {
+  sheet: {
+    className: "Backend Dev";
+    level: { id: string; name: string };
+    nextLevel: { id: string; name: string; firstPhase: number } | null;
+    xpPercent: number;
+    phasesDone: number;
+    phasesTotal: 27;
+    unitsDone: number;
+    unitsTotal: number;
+    currentPhase: number;
+    currentUnitId: string;
+    remainingInPhase: number;
+    java: { percent: number };
+    dsa: { percent: number };
+  };
+  levels: Array<{ id: TrailLevelId; name: string; phases: number[] }>;
+  nodes: TrailNode[];
+};

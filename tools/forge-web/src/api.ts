@@ -32,4 +32,15 @@ export const api = {
       `/api/units/${unitId}/tests`,
       { method: "POST", body: JSON.stringify({ exerciseName }) },
     ),
+  trail: () => request<import("./types").TrailData>("/api/trail"),
+  trailItem: (itemId: string, done: boolean) =>
+    request<import("./types").TrailData>(
+      `/api/trail/items/${encodeURIComponent(itemId)}`,
+      { method: "POST", body: JSON.stringify({ done }) },
+    ),
+  trailNodeComplete: (nodeId: string) =>
+    request<import("./types").TrailData>(
+      `/api/trail/nodes/${encodeURIComponent(nodeId)}/complete`,
+      { method: "POST" },
+    ),
 };
