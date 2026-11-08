@@ -123,31 +123,31 @@
       "becomes": "Entrega uma API REST coerente, documentada e testada, com erros padronizados e operações idempotentes.",
       "items": [
         {
-          "id": "f05-endpoints-coerentes-e-bem-nomeados",
+          "id": "f05-endpoints-coerentes",
           "label": "Endpoints coerentes e bem nomeados"
         },
         {
-          "id": "f05-erros-de-cliente-4xx-vs-servidor-5xx",
+          "id": "f05-erros-4xx-5xx",
           "label": "Erros de cliente (4xx) vs. servidor (5xx)"
         },
         {
-          "id": "f05-resposta-de-erro-consistente",
+          "id": "f05-erro-consistente",
           "label": "Resposta de erro consistente"
         },
         {
-          "id": "f05-documentacao-da-api-openapi",
+          "id": "f05-openapi",
           "label": "Documentação da API (OpenAPI)"
         },
         {
-          "id": "f05-teste-de-integracao-de-endpoint",
+          "id": "f05-teste-integracao",
           "label": "Teste de integração de endpoint"
         },
         {
-          "id": "f05-transacao-em-operacao-de-escrita",
+          "id": "f05-transacao",
           "label": "Transação em operação de escrita"
         },
         {
-          "id": "f05-idempotencia-em-operacao-sensivel",
+          "id": "f05-idempotencia",
           "label": "Idempotência em operação sensível"
         }
       ]
@@ -162,39 +162,39 @@
       "becomes": "Organiza uma API em módulos, injeção de dependência e testes, e explica o que o Nest abstrai.",
       "items": [
         {
-          "id": "f06-modulos-controllers-e-providers",
+          "id": "f06-modulos-controllers",
           "label": "Módulos, controllers e providers"
         },
         {
-          "id": "f06-injecao-de-dependencia-e-custom-provider",
+          "id": "f06-injecao-dependencia",
           "label": "Injeção de dependência e custom providers"
         },
         {
-          "id": "f06-dtos-pipes-e-validacao",
+          "id": "f06-dtos-pipes-validacao",
           "label": "DTOs, pipes e validação"
         },
         {
-          "id": "f06-guards-interceptors-e-exception-filters",
+          "id": "f06-guards-interceptors",
           "label": "Guards, interceptors e exception filters"
         },
         {
-          "id": "f06-configuracao-e-ciclo-de-vida-com-gracefu",
+          "id": "f06-graceful-shutdown",
           "label": "Configuração e ciclo de vida com graceful shutdown"
         },
         {
-          "id": "f06-swagger-e-serializacao",
+          "id": "f06-swagger-serializacao",
           "label": "Swagger e serialização"
         },
         {
-          "id": "f06-testes-unitarios-de-integracao-e-e2e",
+          "id": "f06-testes-unit-e2e",
           "label": "Testes unitários, de integração e E2E"
         },
         {
-          "id": "f06-prisma-e-organizacao-por-feature",
+          "id": "f06-prisma-features",
           "label": "Prisma e organização por feature"
         },
         {
-          "id": "f06-limites-de-dominio-sem-dependencia-circu",
+          "id": "f06-limites-dominio",
           "label": "Limites de domínio sem dependência circular"
         }
       ]
@@ -209,35 +209,35 @@
       "becomes": "Implementa login, tokens e permissões com critério e aplica as proteções básicas de uma API.",
       "items": [
         {
-          "id": "f07-autenticacao-vs-autorizacao",
+          "id": "f07-authn-vs-authz",
           "label": "Autenticação vs. autorização"
         },
         {
-          "id": "f07-hash-de-senha-e-politica-de-senhas",
+          "id": "f07-senhas-hash",
           "label": "Hash de senha e política de senhas"
         },
         {
-          "id": "f07-jwt-refresh-token-e-sessao",
+          "id": "f07-jwt-refresh-token",
           "label": "JWT, refresh token e sessão"
         },
         {
-          "id": "f07-oauth-2-0-e-openid-connect",
+          "id": "f07-oauth-oidc",
           "label": "OAuth 2.0 e OpenID Connect"
         },
         {
-          "id": "f07-rbac-e-checagem-de-permissao-por-recurso",
+          "id": "f07-rbac-permissoes",
           "label": "RBAC e checagem de permissão por recurso"
         },
         {
-          "id": "f07-rate-limiting-cors-e-headers-de-seguranc",
+          "id": "f07-rate-limit-cors",
           "label": "Rate limiting, CORS e headers de segurança"
         },
         {
-          "id": "f07-validacao-de-entrada-e-prevencao-de-inje",
+          "id": "f07-validacao-injecao",
           "label": "Validação de entrada e prevenção de injeção"
         },
         {
-          "id": "f07-revisao-de-seguranca-da-api-de-identidad",
+          "id": "f07-revisao-seguranca",
           "label": "Revisão de segurança da API de identidade"
         }
       ]
@@ -252,27 +252,27 @@
       "becomes": "Move trabalho pesado para filas, usa cache com invalidação e integra serviços externos de forma resiliente.",
       "items": [
         {
-          "id": "f08-estruturas-do-redis-e-ttl",
+          "id": "f08-redis-ttl",
           "label": "Estruturas do Redis e TTL"
         },
         {
-          "id": "f08-cache-aside-e-invalidacao",
+          "id": "f08-cache-aside",
           "label": "Cache-aside e invalidação"
         },
         {
-          "id": "f08-cache-stampede-e-rate-limiting",
+          "id": "f08-cache-stampede",
           "label": "Cache stampede e rate limiting"
         },
         {
-          "id": "f08-filas-com-producer-consumer-e-workers",
+          "id": "f08-filas-workers",
           "label": "Filas com producer, consumer e workers"
         },
         {
-          "id": "f08-retries-backoff-e-dead-letter",
+          "id": "f08-retries-dead-letter",
           "label": "Retries, backoff e dead-letter"
         },
         {
-          "id": "f08-idempotencia-e-entrega-at-least-once",
+          "id": "f08-idempotencia-at-least-once",
           "label": "Idempotência e entrega at-least-once"
         },
         {
@@ -280,11 +280,11 @@
           "label": "Webhooks assinados"
         },
         {
-          "id": "f08-timeout-circuit-breaker-e-fallback",
+          "id": "f08-circuit-breaker",
           "label": "Timeout, circuit breaker e fallback"
         },
         {
-          "id": "f08-outbox-pattern",
+          "id": "f08-outbox",
           "label": "Outbox pattern"
         }
       ]
@@ -299,39 +299,39 @@
       "becomes": "Mantém código legado com testes de caracterização e refatora em passos pequenos e seguros.",
       "items": [
         {
-          "id": "f09-piramide-de-testes",
+          "id": "f09-piramide-testes",
           "label": "Pirâmide de testes"
         },
         {
-          "id": "f09-doubles-mocks-stubs-e-spies",
+          "id": "f09-doubles",
           "label": "Doubles: mocks, stubs e spies"
         },
         {
-          "id": "f09-fixtures-factories-e-testes-deterministi",
+          "id": "f09-fixtures-factories",
           "label": "Fixtures, factories e testes determinísticos"
         },
         {
-          "id": "f09-banco-isolado-e-testcontainers",
+          "id": "f09-testcontainers",
           "label": "Banco isolado e Testcontainers"
         },
         {
-          "id": "f09-testes-de-contrato-e-de-concorrencia",
+          "id": "f09-testes-contrato-concorrencia",
           "label": "Testes de contrato e de concorrência"
         },
         {
-          "id": "f09-cobertura-e-mutation-testing-conceitual",
+          "id": "f09-cobertura-mutation",
           "label": "Cobertura e mutation testing conceitual"
         },
         {
-          "id": "f09-testes-de-caracterizacao-em-codigo-legad",
+          "id": "f09-caracterizacao-legado",
           "label": "Testes de caracterização em código legado"
         },
         {
-          "id": "f09-refatoracao-segura-em-prs-pequenos",
+          "id": "f09-refatoracao-segura",
           "label": "Refatoração segura em PRs pequenos"
         },
         {
-          "id": "f09-relatorio-antes-depois-de-uma-refatoraca",
+          "id": "f09-relatorio-antes-depois",
           "label": "Relatório antes/depois de uma refatoração"
         }
       ]
@@ -346,39 +346,39 @@
       "becomes": "Projeta um monólito modular com fronteiras claras e defende cada decisão com seus trade-offs.",
       "items": [
         {
-          "id": "f10-coesao-acoplamento-e-solid-com-senso-cri",
+          "id": "f10-coesao-acoplamento-solid",
           "label": "Coesão, acoplamento e SOLID com senso crítico"
         },
         {
-          "id": "f10-ports-and-adapters-e-arquitetura-hexagon",
+          "id": "f10-ports-adapters",
           "label": "Ports and adapters e arquitetura hexagonal"
         },
         {
-          "id": "f10-use-cases-repositories-e-service-layer",
+          "id": "f10-use-cases-repositories",
           "label": "Use cases, repositories e service layer"
         },
         {
-          "id": "f10-entities-value-objects-e-ddd-tatico",
+          "id": "f10-entities-value-objects",
           "label": "Entities, value objects e DDD tático"
         },
         {
-          "id": "f10-patterns-uteis-strategy-factory-adapter",
+          "id": "f10-patterns-uteis",
           "label": "Patterns úteis: strategy, factory, adapter"
         },
         {
-          "id": "f10-idempotency-key-outbox-e-saga-conceitual",
+          "id": "f10-idempotency-outbox-saga",
           "label": "Idempotency key, outbox e saga conceitual"
         },
         {
-          "id": "f10-eventos-de-dominio-e-pub-sub",
+          "id": "f10-eventos-dominio",
           "label": "Eventos de domínio e pub/sub"
         },
         {
-          "id": "f10-consistencia-forte-vs-eventual-e-cap-pra",
+          "id": "f10-consistencia-cap",
           "label": "Consistência forte vs. eventual e CAP prático"
         },
         {
-          "id": "f10-monolito-modular-do-ticketatlas",
+          "id": "f10-monolito-modular",
           "label": "Monólito modular do TicketAtlas"
         }
       ]
@@ -393,39 +393,39 @@
       "becomes": "Publica um serviço com pipeline, infraestrutura básica na AWS e logs, métricas e alertas.",
       "items": [
         {
-          "id": "f11-dockerfile-multi-stage-e-usuario-nao-roo",
+          "id": "f11-dockerfile-multistage",
           "label": "Dockerfile multi-stage e usuário não-root"
         },
         {
-          "id": "f11-docker-compose-com-api-postgres-redis-e",
+          "id": "f11-docker-compose",
           "label": "Docker Compose com API, Postgres, Redis e worker"
         },
         {
-          "id": "f11-health-checks-e-logs-de-container",
+          "id": "f11-health-checks",
           "label": "Health checks e logs de container"
         },
         {
-          "id": "f11-github-actions-lint-testes-build-e-image",
+          "id": "f11-github-actions",
           "label": "GitHub Actions: lint, testes, build e imagem"
         },
         {
-          "id": "f11-deploy-em-staging-aprovacao-e-rollback",
+          "id": "f11-deploy-staging-rollback",
           "label": "Deploy em staging, aprovação e rollback"
         },
         {
-          "id": "f11-iam-com-least-privilege-e-alertas-de-cus",
+          "id": "f11-iam-custos",
           "label": "IAM com least privilege e alertas de custo"
         },
         {
-          "id": "f11-s3-rds-ecr-ecs-fargate-e-sqs",
+          "id": "f11-s3-rds-ecs",
           "label": "S3, RDS, ECR, ECS/Fargate e SQS"
         },
         {
-          "id": "f11-logs-estruturados-metricas-e-alertas",
+          "id": "f11-logs-metricas-alertas",
           "label": "Logs estruturados, métricas e alertas"
         },
         {
-          "id": "f11-terraform-basico",
+          "id": "f11-terraform",
           "label": "Terraform básico"
         }
       ]
@@ -450,39 +450,39 @@
       "becomes": "Constrói o produto completo, do React ao banco, e entende o contrato real entre frontend e backend.",
       "items": [
         {
-          "id": "f13-autorizacao-no-backend-nao-so-na-interfa",
+          "id": "f13-autorizacao-backend",
           "label": "Autorização no backend, não só na interface"
         },
         {
-          "id": "f13-fluxo-de-autenticacao-completo-com-401-4",
+          "id": "f13-fluxo-autenticacao",
           "label": "Fluxo de autenticação completo com 401/403 tratados"
         },
         {
-          "id": "f13-html-semantico-e-css-responsivo",
+          "id": "f13-html-css-responsivo",
           "label": "HTML semântico e CSS responsivo"
         },
         {
-          "id": "f13-react-com-typescript-e-vite",
+          "id": "f13-react-vite",
           "label": "React com TypeScript e Vite"
         },
         {
-          "id": "f13-tailwind-e-design-system-basico",
+          "id": "f13-tailwind-design-system",
           "label": "Tailwind e design system básico"
         },
         {
-          "id": "f13-consumo-de-endpoint-paginado-com-tanstac",
+          "id": "f13-paginacao-tanstack",
           "label": "Consumo de endpoint paginado com TanStack Query"
         },
         {
-          "id": "f13-cache-e-invalidation-corretos-no-cliente",
+          "id": "f13-cache-invalidation",
           "label": "Cache e invalidation corretos no cliente"
         },
         {
-          "id": "f13-processamento-assincrono-por-polling-ou",
+          "id": "f13-polling-sse",
           "label": "Processamento assíncrono por polling ou SSE"
         },
         {
-          "id": "f13-quando-usar-next-js-numa-vaga-real",
+          "id": "f13-nextjs-quando",
           "label": "Quando usar Next.js numa vaga real"
         }
       ]
@@ -497,39 +497,39 @@
       "becomes": "Entrega um produto multi-tenant completo no ar, com testes, observabilidade e decisões documentadas.",
       "items": [
         {
-          "id": "f14-multi-tenancy-usuarios-roles-e-permissio",
+          "id": "f14-multi-tenancy",
           "label": "Multi-tenancy, usuários, roles e permissions"
         },
         {
-          "id": "f14-autenticacao-segura",
+          "id": "f14-auth-segura",
           "label": "Autenticação segura"
         },
         {
-          "id": "f14-busca-por-proximidade-com-geolocalizacao",
+          "id": "f14-busca-proximidade",
           "label": "Busca por proximidade com geolocalização"
         },
         {
-          "id": "f14-mapa-de-assentos-e-trava-com-timeout",
+          "id": "f14-mapa-assentos",
           "label": "Mapa de assentos e trava com timeout"
         },
         {
-          "id": "f14-checkout-e-emissao-de-ingresso-com-qr",
+          "id": "f14-checkout-qr",
           "label": "Checkout e emissão de ingresso com QR"
         },
         {
-          "id": "f14-revenda-p2p-com-transferencia-atomica",
+          "id": "f14-revenda-p2p",
           "label": "Revenda P2P com transferência atômica"
         },
         {
-          "id": "f14-filas-cache-e-importacao-assincrona",
+          "id": "f14-filas-importacao",
           "label": "Filas, cache e importação assíncrona"
         },
         {
-          "id": "f14-webhooks-integracao-de-pagamento-e-audit",
+          "id": "f14-webhooks-pagamento",
           "label": "Webhooks, integração de pagamento e auditoria"
         },
         {
-          "id": "f14-testes-observabilidade-aws-e-ci-cd",
+          "id": "f14-testes-observabilidade",
           "label": "Testes, observabilidade, AWS e CI/CD"
         }
       ]
@@ -544,31 +544,31 @@
       "becomes": "Mede, perfila e otimiza com baseline e evidência, olhando p99 e não só a média.",
       "items": [
         {
-          "id": "f15-testes-de-carga-stress-spike-e-soak",
+          "id": "f15-testes-carga",
           "label": "Testes de carga, stress, spike e soak"
         },
         {
-          "id": "f15-baseline-de-performance-performance-base",
+          "id": "f15-baseline-performance",
           "label": "Baseline de performance (performance-baseline.md)"
         },
         {
-          "id": "f15-latencia-p50-p95-p99-throughput-e-error",
+          "id": "f15-latencia-percentis",
           "label": "Latência p50/p95/p99, throughput e error rate"
         },
         {
-          "id": "f15-cpu-e-heap-profiling-com-flamegraphs",
+          "id": "f15-profiling-flamegraph",
           "label": "CPU e heap profiling com flamegraphs"
         },
         {
-          "id": "f15-event-loop-lag-e-memory-leaks",
+          "id": "f15-event-loop-leaks",
           "label": "Event loop lag e memory leaks"
         },
         {
-          "id": "f15-connection-pool-e-keep-alive",
+          "id": "f15-pool-keepalive",
           "label": "Connection pool e keep-alive"
         },
         {
-          "id": "f15-benchmark-antes-depois-de-uma-otimizacao",
+          "id": "f15-benchmark-antes-depois",
           "label": "Benchmark antes/depois de uma otimização"
         }
       ]
@@ -583,31 +583,31 @@
       "becomes": "Estima capacidade e aplica padrões de confiabilidade sem piorar uma degradação com retries.",
       "items": [
         {
-          "id": "f16-estimativa-de-capacidade-e-primeiro-garg",
+          "id": "f16-capacidade-gargalo",
           "label": "Estimativa de capacidade e primeiro gargalo"
         },
         {
-          "id": "f16-timeout-retry-backoff-e-jitter",
+          "id": "f16-timeout-retry-jitter",
           "label": "Timeout, retry, backoff e jitter"
         },
         {
-          "id": "f16-circuit-breaker-bulkhead-e-fallback",
+          "id": "f16-circuit-bulkhead",
           "label": "Circuit breaker, bulkhead e fallback"
         },
         {
-          "id": "f16-graceful-degradation-e-load-shedding",
+          "id": "f16-degradacao-graceful",
           "label": "Graceful degradation e load shedding"
         },
         {
-          "id": "f16-rate-limiting-e-health-checks",
+          "id": "f16-rate-limit-health",
           "label": "Rate limiting e health checks"
         },
         {
-          "id": "f16-idempotencia-e-deduplicacao",
+          "id": "f16-idempotencia-dedup",
           "label": "Idempotência e deduplicação"
         },
         {
-          "id": "f16-retry-mal-configurado-derruba-servico-de",
+          "id": "f16-retry-storm",
           "label": "Retry mal configurado derruba serviço degradado"
         }
       ]
@@ -622,31 +622,31 @@
       "becomes": "Provoca falhas de forma segura, define SLOs e responde a incidentes com runbook e postmortem.",
       "items": [
         {
-          "id": "f17-failure-injection-local-e-seguro",
+          "id": "f17-failure-injection",
           "label": "Failure injection local e seguro"
         },
         {
-          "id": "f17-experimento-de-falha-no-ticketatlas",
+          "id": "f17-experimento-falha",
           "label": "Experimento de falha no TicketAtlas"
         },
         {
-          "id": "f17-sli-slo-sla-e-error-budget",
+          "id": "f17-sli-slo-sla",
           "label": "SLI, SLO, SLA e error budget"
         },
         {
-          "id": "f17-mttd-mttr-e-severidade-de-incidente",
+          "id": "f17-mttd-mttr",
           "label": "MTTD, MTTR e severidade de incidente"
         },
         {
-          "id": "f17-runbooks-e-alertas-sem-fadiga",
+          "id": "f17-runbooks-alertas",
           "label": "Runbooks e alertas sem fadiga"
         },
         {
-          "id": "f17-postmortem-sem-culpa",
+          "id": "f17-postmortem",
           "label": "Postmortem sem culpa"
         },
         {
-          "id": "f17-proposta-de-mitigacao-a-partir-do-experi",
+          "id": "f17-mitigacao-proposta",
           "label": "Proposta de mitigação a partir do experimento"
         }
       ]
@@ -661,27 +661,27 @@
       "becomes": "Diagnostica incidentes com hipótese, evidência, causa, correção e validação.",
       "items": [
         {
-          "id": "f18-logs-estruturados-correlation-id-e-trace",
+          "id": "f18-logs-correlation",
           "label": "Logs estruturados, correlation ID e trace ID"
         },
         {
-          "id": "f18-metricas-e-tracing-distribuido-com-opent",
+          "id": "f18-metricas-tracing",
           "label": "Métricas e tracing distribuído com OpenTelemetry"
         },
         {
-          "id": "f18-red-use-e-golden-signals",
+          "id": "f18-red-use-golden",
           "label": "RED, USE e Golden Signals"
         },
         {
-          "id": "f18-dashboards-e-alertas-com-cardinalidade-c",
+          "id": "f18-dashboards-alertas",
           "label": "Dashboards e alertas com cardinalidade controlada"
         },
         {
-          "id": "f18-seguranca-de-logs-sem-pii-segredos-ou-to",
+          "id": "f18-seguranca-logs",
           "label": "Segurança de logs: sem PII, segredos ou tokens"
         },
         {
-          "id": "f18-diagnostico-de-3-cenarios-de-production",
+          "id": "f18-debugging-3-cenarios",
           "label": "Diagnóstico de 3 cenários de production-debugging"
         }
       ]
@@ -696,39 +696,39 @@
       "becomes": "Reproduz e corrige condições de corrida e raciocina sobre consistência em sistemas distribuídos.",
       "items": [
         {
-          "id": "f19-mvcc-locks-e-deadlocks",
+          "id": "f19-mvcc-locks",
           "label": "MVCC, locks e deadlocks"
         },
         {
-          "id": "f19-locking-otimista-vs-pessimista",
+          "id": "f19-locking-otimista",
           "label": "Locking otimista vs. pessimista"
         },
         {
-          "id": "f19-anomalias-de-isolamento",
+          "id": "f19-anomalias-isolamento",
           "label": "Anomalias de isolamento"
         },
         {
-          "id": "f19-explain-analyze-e-investigacao-de-query",
+          "id": "f19-explain-analyze",
           "label": "EXPLAIN ANALYZE e investigação de query lenta"
         },
         {
-          "id": "f19-indices-parciais-covering-e-vacuum",
+          "id": "f19-indices-vacuum",
           "label": "Índices parciais, covering e vacuum"
         },
         {
-          "id": "f19-replicas-lag-e-backup-com-point-in-time",
+          "id": "f19-replicas-pitr",
           "label": "Réplicas, lag e backup com point-in-time recovery"
         },
         {
-          "id": "f19-consistencia-forte-vs-eventual-cap-e-pac",
+          "id": "f19-consistencia-cap",
           "label": "Consistência forte vs. eventual, CAP e PACELC"
         },
         {
-          "id": "f19-saga-outbox-e-inbox",
+          "id": "f19-saga-outbox-inbox",
           "label": "Saga, outbox e inbox"
         },
         {
-          "id": "f19-overselling-de-assento-corrigido-com-tes",
+          "id": "f19-overselling-assento",
           "label": "Overselling de assento corrigido com teste concorrente"
         }
       ]
@@ -743,35 +743,35 @@
       "becomes": "Evolui eventos sem quebrar consumidores antigos e opera cache sem stampede nem dado velho.",
       "items": [
         {
-          "id": "f20-consumer-groups-retries-e-dlq",
+          "id": "f20-consumer-groups-dlq",
           "label": "Consumer groups, retries e DLQ"
         },
         {
-          "id": "f20-poison-message-e-ordenacao",
+          "id": "f20-poison-ordenacao",
           "label": "Poison message e ordenação"
         },
         {
-          "id": "f20-consumer-idempotente-e-deduplicacao",
+          "id": "f20-consumer-idempotente",
           "label": "Consumer idempotente e deduplicação"
         },
         {
-          "id": "f20-versionamento-de-eventos-e-replay",
+          "id": "f20-versionamento-replay",
           "label": "Versionamento de eventos e replay"
         },
         {
-          "id": "f20-outbox-inbox-e-contratos-de-evento",
+          "id": "f20-outbox-inbox",
           "label": "Outbox, inbox e contratos de evento"
         },
         {
-          "id": "f20-write-through-write-behind-e-invalidacao",
+          "id": "f20-write-through-invalidacao",
           "label": "Write-through, write-behind e invalidação"
         },
         {
-          "id": "f20-stampede-penetration-e-avalanche-de-cach",
+          "id": "f20-stampede-avalanche",
           "label": "Stampede, penetration e avalanche de cache"
         },
         {
-          "id": "f20-politicas-de-eviction-e-hot-keys",
+          "id": "f20-eviction-hot-keys",
           "label": "Políticas de eviction e hot keys"
         }
       ]
@@ -786,35 +786,35 @@
       "becomes": "Produz threat models, protege a cadeia de dependências e responde a incidentes de segurança.",
       "items": [
         {
-          "id": "f21-threat-modeling-com-stride-e-abuse-cases",
+          "id": "f21-stride-abuse-cases",
           "label": "Threat modeling com STRIDE e abuse cases"
         },
         {
-          "id": "f21-tenant-escape-e-abuso-de-logica-de-negoc",
+          "id": "f21-tenant-escape",
           "label": "Tenant escape e abuso de lógica de negócio"
         },
         {
-          "id": "f21-rotacao-de-segredos-e-chaves-kms-e-iam-a",
+          "id": "f21-rotacao-kms-iam",
           "label": "Rotação de segredos e chaves, KMS e IAM avançado"
         },
         {
-          "id": "f21-roubo-de-refresh-token-e-credential-stuf",
+          "id": "f21-refresh-token-theft",
           "label": "Roubo de refresh token e credential stuffing"
         },
         {
-          "id": "f21-audit-logs-e-resposta-a-incidente-de-seg",
+          "id": "f21-audit-logs",
           "label": "Audit logs e resposta a incidente de segurança"
         },
         {
-          "id": "f21-dependabot-sast-dast-e-scan-de-container",
+          "id": "f21-dependabot-sast",
           "label": "Dependabot, SAST, DAST e scan de container"
         },
         {
-          "id": "f21-lockfiles-pinning-e-typosquatting",
+          "id": "f21-lockfiles-typosquatting",
           "label": "Lockfiles, pinning e typosquatting"
         },
         {
-          "id": "f21-threat-model-md-da-revenda-p2p",
+          "id": "f21-threat-model-p2p",
           "label": "threat-model.md da revenda P2P"
         }
       ]
@@ -829,39 +829,39 @@
       "becomes": "Evolui APIs e bancos sem downtime e sem quebrar quem já consome.",
       "items": [
         {
-          "id": "f22-rate-limiting-distribuido-e-idempotency",
+          "id": "f22-rate-limit-idempotency",
           "label": "Rate limiting distribuído e idempotency keys"
         },
         {
-          "id": "f22-paginacao-por-cursor",
+          "id": "f22-paginacao-cursor",
           "label": "Paginação por cursor"
         },
         {
-          "id": "f22-versionamento-e-deprecation-de-api",
+          "id": "f22-versionamento-api",
           "label": "Versionamento e deprecation de API"
         },
         {
-          "id": "f22-cancelamento-timeout-e-retry-seguro",
+          "id": "f22-cancelamento-retry",
           "label": "Cancelamento, timeout e retry seguro"
         },
         {
-          "id": "f22-assinatura-de-webhook-e-protecao-contra",
+          "id": "f22-webhook-assinatura",
           "label": "Assinatura de webhook e proteção contra replay"
         },
         {
-          "id": "f22-contract-testing-e-consumer-driven-contr",
+          "id": "f22-contract-testing",
           "label": "Contract testing e consumer-driven contracts"
         },
         {
-          "id": "f22-rolling-blue-green-canary-e-feature-flag",
+          "id": "f22-deploy-strategies",
           "label": "Rolling, blue/green, canary e feature flags"
         },
         {
-          "id": "f22-migration-expand-contract-sem-downtime",
+          "id": "f22-expand-contract",
           "label": "Migration expand/contract sem downtime"
         },
         {
-          "id": "f22-rollback-e-roll-forward-de-migration-fal",
+          "id": "f22-rollback-migration",
           "label": "Rollback e roll-forward de migration falha"
         }
       ]
@@ -876,35 +876,35 @@
       "becomes": "Prova a recuperação com restore real, define RTO e RPO e investiga custo de nuvem com método.",
       "items": [
         {
-          "id": "f23-estrategia-de-backup-e-restore-testado",
+          "id": "f23-backup-restore",
           "label": "Estratégia de backup e restore testado"
         },
         {
-          "id": "f23-rto-rpo-e-point-in-time-recovery",
+          "id": "f23-rto-rpo-pitr",
           "label": "RTO, RPO e point-in-time recovery"
         },
         {
-          "id": "f23-runbook-de-desastre",
+          "id": "f23-runbook-desastre",
           "label": "Runbook de desastre"
         },
         {
-          "id": "f23-corrupcao-de-dados-e-recuperacao-de-serv",
+          "id": "f23-corrupcao-recuperacao",
           "label": "Corrupção de dados e recuperação de serviço"
         },
         {
-          "id": "f23-outage-regional-em-nivel-de-design",
+          "id": "f23-outage-regional",
           "label": "Outage regional em nível de design"
         },
         {
-          "id": "f23-cloud-avancado-sobre-a-base-da-fase-11",
+          "id": "f23-cloud-avancado",
           "label": "Cloud avançado sobre a base da Fase 11"
         },
         {
-          "id": "f23-investigacao-e-controle-de-custo-finops",
+          "id": "f23-finops-custos",
           "label": "Investigação e controle de custo (FinOps)"
         },
         {
-          "id": "f23-disaster-recovery-plan-md-e-cost-analysi",
+          "id": "f23-dr-plan-custos",
           "label": "disaster-recovery-plan.md e cost-analysis.md"
         }
       ]
@@ -919,31 +919,31 @@
       "becomes": "Propõe mudanças arquiteturais por RFC e revisa design e código dos outros apontando risco e severidade.",
       "items": [
         {
-          "id": "f24-system-design-com-requisitos-e-trade-off",
+          "id": "f24-system-design-tradeoffs",
           "label": "System design com requisitos e trade-offs explícitos"
         },
         {
-          "id": "f24-estimativas-e-gargalos-de-um-sistema",
+          "id": "f24-estimativas-gargalos",
           "label": "Estimativas e gargalos de um sistema"
         },
         {
-          "id": "f24-estrutura-de-um-rfc",
+          "id": "f24-estrutura-rfc",
           "label": "Estrutura de um RFC"
         },
         {
-          "id": "f24-alternativas-e-riscos-num-rfc",
+          "id": "f24-alternativas-riscos",
           "label": "Alternativas e riscos num RFC"
         },
         {
-          "id": "f24-rfc-completo-para-o-ticketatlas",
+          "id": "f24-rfc-ticketatlas",
           "label": "RFC completo para o TicketAtlas"
         },
         {
-          "id": "f24-code-review-de-nivel-senior",
+          "id": "f24-code-review-senior",
           "label": "Code review de nível sênior"
         },
         {
-          "id": "f24-simular-pr-com-8-problemas-por-severidad",
+          "id": "f24-simular-pr",
           "label": "SIMULAR_PR com 8 problemas por severidade"
         }
       ]
@@ -958,31 +958,31 @@
       "becomes": "Conduz uma entrega do começo ao fim, comunica risco a quem não é técnico e orienta outra pessoa.",
       "items": [
         {
-          "id": "f25-decompor-iniciativas-e-escrever-proposta",
+          "id": "f25-decompor-iniciativas",
           "label": "Decompor iniciativas e escrever propostas"
         },
         {
-          "id": "f25-estimar-priorizar-e-negociar-escopo",
+          "id": "f25-estimar-priorizar",
           "label": "Estimar, priorizar e negociar escopo"
         },
         {
-          "id": "f25-comunicar-divida-tecnica-e-trade-offs-a",
+          "id": "f25-comunicar-divida",
           "label": "Comunicar dívida técnica e trade-offs a produto"
         },
         {
-          "id": "f25-revisar-codigo-e-orientar-outro-desenvol",
+          "id": "f25-orientar-revisar",
           "label": "Revisar código e orientar outro desenvolvedor"
         },
         {
-          "id": "f25-responder-a-incidentes-e-conduzir-postmo",
+          "id": "f25-incidentes-postmortem",
           "label": "Responder a incidentes e conduzir postmortems"
         },
         {
-          "id": "f25-decidir-com-informacao-incompleta",
+          "id": "f25-decidir-incerteza",
           "label": "Decidir com informação incompleta"
         },
         {
-          "id": "f25-simular-trabalho-de-ponta-a-ponta",
+          "id": "f25-simular-trabalho",
           "label": "SIMULAR_TRABALHO de ponta a ponta"
         }
       ]
@@ -997,31 +997,31 @@
       "becomes": "Apresenta o sistema como se estivesse em produção, com capacidade, SLOs e planos apoiados em evidência.",
       "items": [
         {
-          "id": "f26-capacidade-atual-medida",
+          "id": "f26-capacidade-atual",
           "label": "Capacidade atual medida"
         },
         {
-          "id": "f26-primeiro-gargalo-identificado",
+          "id": "f26-primeiro-gargalo",
           "label": "Primeiro gargalo identificado"
         },
         {
-          "id": "f26-slos-definidos",
+          "id": "f26-slos",
           "label": "SLOs definidos"
         },
         {
-          "id": "f26-plano-de-resposta-a-incidente",
+          "id": "f26-plano-incidente",
           "label": "Plano de resposta a incidente"
         },
         {
-          "id": "f26-plano-de-recuperacao-de-desastre",
+          "id": "f26-plano-dr",
           "label": "Plano de recuperação de desastre"
         },
         {
-          "id": "f26-apresentacao-do-ticketatlas-como-em-prod",
+          "id": "f26-apresentacao-producao",
           "label": "Apresentação do TicketAtlas como em produção"
         },
         {
-          "id": "f26-evidencia-nao-opiniao-em-cada-afirmacao",
+          "id": "f26-evidencia",
           "label": "Evidência, não opinião, em cada afirmação"
         }
       ]
@@ -1036,43 +1036,43 @@
       "becomes": "Mostra competência sênior sob cenários reais. Isso não garante o cargo, que depende também de experiência real.",
       "items": [
         {
-          "id": "f27-p99-que-sobe-de-150-ms-para-3-s",
+          "id": "f27-p99-sobe",
           "label": "p99 que sobe de 150 ms para 3 s"
         },
         {
-          "id": "f27-banco-com-cpu-a-95",
+          "id": "f27-cpu-95",
           "label": "Banco com CPU a 95%"
         },
         {
-          "id": "f27-fila-com-1-000-000-de-jobs-atrasados",
+          "id": "f27-fila-atrasada",
           "label": "Fila com 1.000.000 de jobs atrasados"
         },
         {
-          "id": "f27-tenant-que-viu-dado-de-outro-tenant",
+          "id": "f27-tenant-vazou",
           "label": "Tenant que viu dado de outro tenant"
         },
         {
-          "id": "f27-deploy-que-aumenta-http-500-em-300",
+          "id": "f27-deploy-500",
           "label": "Deploy que aumenta HTTP 500 em 300%"
         },
         {
-          "id": "f27-migration-em-tabela-gigante-sem-downtime",
+          "id": "f27-migration-gigante",
           "label": "Migration em tabela gigante sem downtime"
         },
         {
-          "id": "f27-evento-alterado-sem-quebrar-consumidores",
+          "id": "f27-evento-alterado",
           "label": "Evento alterado sem quebrar consumidores"
         },
         {
-          "id": "f27-dois-pedidos-vendem-o-ultimo-item",
+          "id": "f27-ultimo-item",
           "label": "Dois pedidos vendem o último item"
         },
         {
-          "id": "f27-conta-aws-que-triplica",
+          "id": "f27-conta-aws",
           "label": "Conta AWS que triplica"
         },
         {
-          "id": "f27-incidente-as-02-00-sob-sua-responsabilid",
+          "id": "f27-incidente-0200",
           "label": "Incidente às 02:00 sob sua responsabilidade"
         }
       ]
