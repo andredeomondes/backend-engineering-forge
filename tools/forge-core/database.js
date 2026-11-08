@@ -77,6 +77,21 @@ function initializeSchema(db) {
       completed_at TEXT,
       retrospective TEXT NOT NULL DEFAULT ''
     );
+
+    CREATE TABLE IF NOT EXISTS exercise_progress (
+      unit_id TEXT NOT NULL,
+      exercise_id TEXT NOT NULL,
+      last_result TEXT CHECK (last_result IN ('pass','fail')),
+      last_run_at TEXT,
+      manual_done INTEGER NOT NULL DEFAULT 0,
+      manual_at TEXT,
+      PRIMARY KEY (unit_id, exercise_id)
+    );
+
+    CREATE TABLE IF NOT EXISTS topic_checks (
+      item_id TEXT PRIMARY KEY,
+      checked_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
   `);
 }
 
@@ -475,4 +490,56 @@ export function restoreData(data) {
     db.exec("ROLLBACK");
     throw error;
   }
+}
+
+export function upsertExerciseResult(unitId, exerciseId, pass) {
+  getDatabase()
+    .prepare(
+      `INSERT INTO exercise_progress (unit_id, exercise_id, last_result, last_run_at)
+       VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+       ON CONFLICT(unit_id, exercise_id) DO UPDATE SET
+         last_result = excluded.last_result,
+         last_run_at = excluded.last_run_at`,
+    )
+    .run(unitId, exerciseId, pass ? "pass" : "fail");
+}
+
+export function setExerciseManual(unitId, exerciseId, done) {
+  getDatabase()
+    .prepare(
+      `INSERT INTO exercise_progress (unit_id, exercise_id, manual_done, manual_at)
+       VALUES (?, ?, ?, CASE WHEN ? = 1 THEN CURRENT_TIMESTAMP END)
+       ON CONFLICT(unit_id, exercise_id) DO UPDATE SET
+         manual_done = excluded.manual_done,
+         manual_at = excluded.manual_at`,
+    )
+    .run(unitId, exerciseId, done ? 1 : 0, done ? 1 : 0);
+}
+
+export function listExerciseProgress(unitId) {
+  const rows = getDatabase()
+    .prepare(
+      `SELECT unit_id AS unitId, exercise_id AS exerciseId, last_result AS lastResult,
+              last_run_at AS lastRunAt, manual_done AS manualDone, manual_at AS manualAt
+       FROM exercise_progress
+       ${unitId ? "WHERE unit_id = ?" : ""}
+       ORDER BY unit_id, exercise_id`,
+    )
+    .all(...(unitId ? [unitId] : []));
+  return rows.map((row) => ({ ...row, manualDone: row.manualDone === 1 }));
+}
+
+export function setTopicCheck(itemId, done) {
+  const db = getDatabase();
+  if (done) {
+    db.prepare("INSERT OR IGNORE INTO topic_checks (item_id) VALUES (?)").run(itemId);
+  } else {
+    db.prepare("DELETE FROM topic_checks WHERE item_id = ?").run(itemId);
+  }
+}
+
+export function listTopicChecks() {
+  return getDatabase()
+    .prepare("SELECT item_id AS itemId, checked_at AS checkedAt FROM topic_checks ORDER BY item_id")
+    .all();
 }
