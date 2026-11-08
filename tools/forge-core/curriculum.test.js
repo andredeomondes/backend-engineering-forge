@@ -44,3 +44,12 @@ test("trilhas poliglotas começam bloqueadas e sem seleção", () => {
   assert.deepEqual(tracks.map((track) => track.id), ["java", "dotnet", "go"]);
   assert.ok(tracks.every((track) => track.status === "locked"));
 });
+
+test("missões têm id sem assinatura e grupo do README", () => {
+  const unit = getUnit("js-09");
+  const maxBy = unit.exercises.find((e) => e.id === "maxBy");
+  assert.equal(maxBy.name, "maxBy(items, fn)");
+  assert.equal(maxBy.group, "Exercícios intermediários");
+  assert.equal(unit.exercises.at(-1).group, "Desafio integrador");
+  assert.equal(getUnit("sql-01").missionTestable, false);
+});

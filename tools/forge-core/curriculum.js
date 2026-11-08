@@ -25,10 +25,19 @@ function titleFromMarkdown(markdown, fallback) {
 }
 
 function extractExercises(markdown) {
-  return [...markdown.matchAll(/^\d+\.\s+\*\*`([^`]+)`\*\*/gm)].map((match, index) => ({
-    index: index + 1,
-    name: match[1],
+  const headings = [...markdown.matchAll(/^## (.+)$/gm)].map((match) => ({
+    position: match.index,
+    group: match[1].replace(/\s*\(\d+\)\s*$/, "").trim(),
   }));
+  return [...markdown.matchAll(/^\d+\.\s+\*\*`([^`]+)`\*\*/gm)].map((match, index) => {
+    const heading = headings.filter((item) => item.position < match.index).at(-1);
+    return {
+      index: index + 1,
+      id: match[1].split("(")[0].trim(),
+      name: match[1],
+      group: heading?.group || "",
+    };
+  });
 }
 
 function parseHints(markdown) {
@@ -49,7 +58,12 @@ function parseHints(markdown) {
 
 function extractSqlExercises(sql) {
   return [...sql.matchAll(/^-- TODO(?:\s+\d+|\s+Migration\s+\d+|\s+Seed|\s+Paginação|:)?\s*:?\s*(.*)$/gmi)]
-    .map((match, index) => ({ index: index + 1, name: match[1].trim() || `Exercício ${index + 1}` }));
+    .map((match, index) => ({
+      index: index + 1,
+      id: `sql-ex-${index + 1}`,
+      name: match[1].trim() || `Exercício ${index + 1}`,
+      group: "Exercícios",
+    }));
 }
 
 function readUnit(root, directoryName, track) {
@@ -82,6 +96,7 @@ function readUnit(root, directoryName, track) {
     exercisePath,
     markdown: parsed.content,
     exercises: track === "sql" ? extractSqlExercises(exerciseRaw) : extractExercises(parsed.content),
+    missionTestable: track !== "sql",
     hints: parseHints(hintsRaw),
   };
 }

@@ -17,6 +17,7 @@ import {
   restoreData,
   revealHint,
   setSetting,
+  upsertExerciseResult,
 } from "./database.js";
 import { daysBetween, localDateString } from "./dates.js";
 import {
@@ -176,20 +177,25 @@ function evaluateGate(unitId) {
   return getUnitDetail(unitId);
 }
 
-function escapeRegExp(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-export async function testUnit(unitId, exerciseName) {
-  let pattern;
-  if (exerciseName) {
-    const unit = getUnit(unitId);
-    const known = unit?.exercises.some((exercise) => exercise.name === exerciseName);
-    if (!known) throw new Error("Exercício desconhecido.");
-    pattern = escapeRegExp(exerciseName);
+export async function testUnit(unitId, exerciseId) {
+  const unit = getUnit(unitId);
+  if (exerciseId) {
+    if (!unit?.exercises.some((exercise) => exercise.id === exerciseId))
+      throw new Error("Exercício desconhecido.");
+    if (unit.missionTestable === false)
+      throw new Error("Esta unidade não tem teste por missão.");
   }
-  const result = await runUnitTests(unitId, pattern);
-  recordTestRun(unitId, result);
+  const result = await runUnitTests(unitId, exerciseId || undefined);
+  if (exerciseId) {
+    // Rodar uma missão só nunca pode concluir (nem reabrir) a unidade.
+    recordTestRun(unitId, { ...result, success: false });
+    upsertExerciseResult(unitId, exerciseId, result.success);
+  } else {
+    recordTestRun(unitId, result);
+    if (result.success && unit) {
+      for (const exercise of unit.exercises) upsertExerciseResult(unitId, exercise.id, true);
+    }
+  }
   return { result, unit: evaluateGate(unitId) };
 }
 
