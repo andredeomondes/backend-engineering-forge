@@ -16,7 +16,10 @@ import {
   saveUnitReflection,
   removeStudySession,
   revealUnitHint,
+  getTrail,
+  markTrailNode,
   setCurrentUnit,
+  setTrailItem,
   testUnit,
 } from "../forge-core/services.js";
 import { getDatabase } from "../forge-core/database.js";
@@ -94,6 +97,18 @@ app.post(
       request.body?.confidence,
     ),
   ),
+);
+app.get(
+  "/api/trail",
+  api(() => getTrail()),
+);
+app.post(
+  "/api/trail/items/:itemId",
+  api((request) => setTrailItem(request.params.itemId, request.body?.done)),
+);
+app.post(
+  "/api/trail/nodes/:nodeId/complete",
+  api((request) => markTrailNode(request.params.nodeId)),
 );
 app.get(
   "/api/reviews",

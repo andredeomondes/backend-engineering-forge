@@ -16,13 +16,17 @@ import {
   markUnitCompleted,
   recordMissionRun,
   recordTestRun,
+  listTopicChecks,
   restoreData,
   revealHint,
   saveReflection,
   setExerciseManual,
   setSetting,
+  setTopicCheck,
   upsertExerciseResult,
 } from "./database.js";
+import { readFileSync } from "node:fs";
+
 import { daysBetween, localDateString } from "./dates.js";
 import {
   getUnit,
@@ -31,7 +35,10 @@ import {
   listProjects,
   listUnits,
 } from "./curriculum.js";
+import { PROGRESS_PATH } from "./paths.js";
 import { runUnitTests } from "./test-runner.js";
+import { buildNodeItems, computeTrail } from "./trail.js";
+import { loadTrailContent } from "./trail-content.js";
 
 function computeStreak(dates, today = localDateString()) {
   if (!dates.length) return 0;
@@ -198,16 +205,34 @@ function evaluateCompletion(unitId) {
   if (progress.lastTestSuccess || missionsDone) markUnitCompleted(unitId);
 }
 
-export function runMigrations() {
-  if (getSetting("migration_trail_v1")) return;
-  for (const row of listUnitProgress()) {
-    if (row.status !== "completed") continue;
-    const unit = getUnit(row.unitId);
-    if (!unit) continue;
-    for (const exercise of unit.exercises)
-      upsertExerciseResult(row.unitId, exercise.id, true);
+function seedPhase0FromProgress() {
+  let text;
+  try {
+    text = readFileSync(PROGRESS_PATH, "utf8");
+  } catch {
+    return;
   }
-  setSetting("migration_trail_v1", "done");
+  const lines = new Set(text.split(/\r?\n/).map((line) => line.trimEnd()));
+  const phase0 = loadTrailContent().nodes.find((node) => node.id === "f00");
+  for (const item of phase0?.items || [])
+    if (lines.has(`- [x] ${item.label}`)) setTopicCheck(item.id, true);
+}
+
+export function runMigrations() {
+  if (!getSetting("migration_trail_v1")) {
+    for (const row of listUnitProgress()) {
+      if (row.status !== "completed") continue;
+      const unit = getUnit(row.unitId);
+      if (!unit) continue;
+      for (const exercise of unit.exercises)
+        upsertExerciseResult(row.unitId, exercise.id, true);
+    }
+    setSetting("migration_trail_v1", "done");
+  }
+  if (!getSetting("migration_trail_phase0_v1")) {
+    seedPhase0FromProgress();
+    setSetting("migration_trail_phase0_v1", "done");
+  }
 }
 
 function requireUnit(unitId) {
@@ -319,4 +344,42 @@ export function exportSessionsCsv() {
       .join(","),
   );
   return ["date,minutes,unit,summary,difficulty,next_step", ...rows].join("\n");
+}
+
+function trailUnits() {
+  const progress = new Map(listUnitProgress().map((row) => [row.unitId, row]));
+  return listUnits().map((unit) => unitSummary(unit, progress.get(unit.id)));
+}
+
+export function getTrail() {
+  runMigrations();
+  const units = trailUnits();
+  return computeTrail({
+    content: loadTrailContent(),
+    units,
+    checkedItemIds: listTopicChecks().map((check) => check.itemId),
+    currentUnitId: getSetting("current_unit", units[0]?.id || "js-01"),
+  });
+}
+
+export function setTrailItem(itemId, done) {
+  runMigrations();
+  if (typeof done !== "boolean") throw new Error("Valor 'done' deve ser booleano.");
+  const known = loadTrailContent().nodes.some((node) =>
+    node.items.some((item) => item.id === itemId),
+  );
+  if (!known) throw new Error("Item da trilha desconhecido.");
+  setTopicCheck(itemId, done);
+  return getTrail();
+}
+
+export function markTrailNode(nodeId) {
+  runMigrations();
+  const node = loadTrailContent().nodes.find((candidate) => candidate.id === nodeId);
+  if (!node) throw new Error("Nó da trilha desconhecido.");
+  for (const item of buildNodeItems(node, trailUnits(), new Set())) {
+    if (item.kind === "unit") markAllMissions(item.unitId);
+    else setTopicCheck(item.id, true);
+  }
+  return getTrail();
 }
