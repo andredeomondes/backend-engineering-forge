@@ -13,6 +13,7 @@ import {
   listStudySessions,
   listUnitProgress,
   markUnitCompleted,
+  recordMissionRun,
   recordTestRun,
   restoreData,
   revealHint,
@@ -188,12 +189,13 @@ export async function testUnit(unitId, exerciseId) {
   const result = await runUnitTests(unitId, exerciseId || undefined);
   if (exerciseId) {
     // Rodar uma missão só nunca pode concluir (nem reabrir) a unidade.
-    recordTestRun(unitId, { ...result, success: false });
+    recordMissionRun(unitId, result);
     upsertExerciseResult(unitId, exerciseId, result.success);
   } else {
     recordTestRun(unitId, result);
     if (result.success && unit) {
-      for (const exercise of unit.exercises) upsertExerciseResult(unitId, exercise.id, true);
+      for (const exercise of unit.exercises)
+        upsertExerciseResult(unitId, exercise.id, true);
     }
   }
   return { result, unit: evaluateGate(unitId) };

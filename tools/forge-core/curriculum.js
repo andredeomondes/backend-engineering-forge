@@ -24,6 +24,14 @@ function titleFromMarkdown(markdown, fallback) {
   return markdown.match(/^#\s+(.+)$/m)?.[1]?.trim() || fallback;
 }
 
+const SIGNATURE_KEYWORDS = /^(?:(?:export|default|abstract|class|interface|type|const|enum|function)\s+)+/;
+
+// "class ValidationError extends Error" -> "ValidationError", "identity<T>(x)" -> "identity"
+function missionId(name) {
+  const stripped = name.trim().replace(SIGNATURE_KEYWORDS, "");
+  return stripped.match(/^[A-Za-z_$][\w$]*/)?.[0] ?? name.trim();
+}
+
 function extractExercises(markdown) {
   const headings = [...markdown.matchAll(/^## (.+)$/gm)].map((match) => ({
     position: match.index,
@@ -33,7 +41,7 @@ function extractExercises(markdown) {
     const heading = headings.filter((item) => item.position < match.index).at(-1);
     return {
       index: index + 1,
-      id: match[1].split("(")[0].trim(),
+      id: missionId(match[1]),
       name: match[1],
       group: heading?.group || "",
     };
@@ -57,13 +65,16 @@ function parseHints(markdown) {
 }
 
 function extractSqlExercises(sql) {
-  return [...sql.matchAll(/^-- TODO(?:\s+\d+|\s+Migration\s+\d+|\s+Seed|\s+Paginação|:)?\s*:?\s*(.*)$/gmi)]
-    .map((match, index) => ({
-      index: index + 1,
-      id: `sql-ex-${index + 1}`,
-      name: match[1].trim() || `Exercício ${index + 1}`,
-      group: "Exercícios",
-    }));
+  return [
+    ...sql.matchAll(
+      /^-- TODO(?:\s+\d+|\s+Migration\s+\d+|\s+Seed|\s+Paginação|:)?\s*:?\s*(.*)$/gim,
+    ),
+  ].map((match, index) => ({
+    index: index + 1,
+    id: `sql-ex-${index + 1}`,
+    name: match[1].trim() || `Exercício ${index + 1}`,
+    group: "Exercícios",
+  }));
 }
 
 function readUnit(root, directoryName, track) {
@@ -78,7 +89,10 @@ function readUnit(root, directoryName, track) {
   const { prefix, phase, extension } = TRACK_CONFIG[track];
   const hintsPath = path.join(directory, "hints.md");
   const hintsRaw = existsSync(hintsPath) ? readFileSync(hintsPath, "utf8") : "";
-  const exercisePath = path.join(directory, track === "sql" ? "exercises.sql" : `exercises.${extension}`);
+  const exercisePath = path.join(
+    directory,
+    track === "sql" ? "exercises.sql" : `exercises.${extension}`,
+  );
   const exerciseRaw = existsSync(exercisePath) ? readFileSync(exercisePath, "utf8") : "";
 
   return {
@@ -92,10 +106,16 @@ function readUnit(root, directoryName, track) {
     prerequisites: parsed.data.prerequisites || [],
     directory,
     readmePath,
-    testPath: path.join(directory, track === "sql" ? "checks.sql" : `exercises.test.${extension}`),
+    testPath: path.join(
+      directory,
+      track === "sql" ? "checks.sql" : `exercises.test.${extension}`,
+    ),
     exercisePath,
     markdown: parsed.content,
-    exercises: track === "sql" ? extractSqlExercises(exerciseRaw) : extractExercises(parsed.content),
+    exercises:
+      track === "sql"
+        ? extractSqlExercises(exerciseRaw)
+        : extractExercises(parsed.content),
     missionTestable: track !== "sql",
     hints: parseHints(hintsRaw),
   };
@@ -127,7 +147,11 @@ export function getUnit(unitId) {
 export function listProjects() {
   if (!existsSync(PROJECTS_PATH)) return [];
   return readdirSync(PROJECTS_PATH, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && existsSync(path.join(PROJECTS_PATH, entry.name, "README.md")))
+    .filter(
+      (entry) =>
+        entry.isDirectory() &&
+        existsSync(path.join(PROJECTS_PATH, entry.name, "README.md")),
+    )
     .map((entry) => {
       const raw = readFileSync(path.join(PROJECTS_PATH, entry.name, "README.md"), "utf8");
       const parsed = matter(raw);
@@ -143,23 +167,32 @@ export function listProjects() {
 
 export function listPhases() {
   const markdown = readFileSync(ROADMAP_PATH, "utf8");
-  return [...markdown.matchAll(/^\|\s*(\d{1,2})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|$/gm)].map(
-    (match) => {
-      const label = match[3].trim();
-      return {
-        number: Number(match[1]),
-        title: match[2].trim(),
-        label,
-        status: label.includes("🟢") ? "completed" : label.includes("🟡") ? "active" : "locked",
-      };
-    },
-  );
+  return [
+    ...markdown.matchAll(/^\|\s*(\d{1,2})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|$/gm),
+  ].map((match) => {
+    const label = match[3].trim();
+    return {
+      number: Number(match[1]),
+      title: match[2].trim(),
+      label,
+      status: label.includes("🟢")
+        ? "completed"
+        : label.includes("🟡")
+          ? "active"
+          : "locked",
+    };
+  });
 }
 
 export function listPolyglotTracks() {
   return [
     { id: "java", title: "Java + Spring", modules: "JAVA-01–JAVA-09", status: "locked" },
-    { id: "dotnet", title: "C# + .NET", modules: "DOTNET-01–DOTNET-09", status: "locked" },
+    {
+      id: "dotnet",
+      title: "C# + .NET",
+      modules: "DOTNET-01–DOTNET-09",
+      status: "locked",
+    },
     { id: "go", title: "Go para backend", modules: "GO-01–GO-09", status: "locked" },
   ];
 }

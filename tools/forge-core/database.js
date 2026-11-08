@@ -545,3 +545,16 @@ export function listTopicChecks() {
     )
     .all();
 }
+
+// Rodada de uma missão isolada: guarda o histórico em test_runs, mas não mexe
+// no resultado da suíte nem nas tentativas da unidade (unit_progress).
+export function recordMissionRun(unitId, result) {
+  getDatabase()
+    .prepare(
+      `
+    INSERT INTO test_runs (unit_id, passed, failed, success, duration_ms, output)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `,
+    )
+    .run(unitId, result.passed, result.failed, result.success ? 1 : 0, result.durationMs, result.output);
+}
