@@ -3,7 +3,7 @@ import { useState } from "react";
 import type { TrailData, TrailItem, TrailNode } from "../../types";
 import { ConfirmDialog } from "../ConfirmDialog";
 import { Button } from "../ui/8bit/button";
-import { nodeCode, nodeLevelTag } from "./format";
+import { TRAIL_PANEL_TITLE_ID, nodeCode, nodeLevelTag, trailItemInputId } from "./format";
 
 type Props = {
   node: TrailNode;
@@ -52,6 +52,7 @@ function ItemRow({
     <li className={`trail-item ${item.done ? "is-done" : ""}`}>
       <label>
         <input
+          id={trailItemInputId(item.id)}
           type="checkbox"
           checked={item.done}
           disabled={busy}
@@ -82,8 +83,8 @@ export function PhasePanel({
   const percent = Math.max(0, Math.min(100, node.percent));
 
   return (
-    <aside className="trail-panel" aria-labelledby="trail-panel-title">
-      <h3 id="trail-panel-title">
+    <aside className="trail-panel" aria-labelledby={TRAIL_PANEL_TITLE_ID}>
+      <h3 id={TRAIL_PANEL_TITLE_ID} tabIndex={-1}>
         {code ? `${code} · ` : ""}
         {node.title}
       </h3>
@@ -157,7 +158,11 @@ export function PhasePanel({
 
       <div className="button-row trail-actions">
         {firstUnitId && (
-          <Button variant="default" disabled={busy} onClick={() => onOpenUnit(firstUnitId)}>
+          <Button
+            variant="default"
+            disabled={busy}
+            onClick={() => onOpenUnit(firstUnitId)}
+          >
             Abrir fase ▸
           </Button>
         )}

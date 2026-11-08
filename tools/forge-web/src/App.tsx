@@ -195,7 +195,7 @@ export function App() {
           {page === "unit" && (
             <UnitView key="unit" unitId={data.currentUnit.id} onChanged={refresh} />
           )}
-          {page === "trail" && <TrailView key="trail" onOpenUnit={selectUnit} />}
+          {page === "trail" && <TrailView key="trail" onOpenUnit={selectUnit} onChanged={refresh} />}
           {page === "progress" && (
             <ProgressView key="progress" data={data} onSelect={selectUnit} />
           )}

@@ -271,7 +271,7 @@ textarea { resize: vertical; line-height: 1.5; }
   .markdown-body { padding: 17px 18px 28px; }
   .page-header { min-height: 75px; }
   .phase-groups { grid-template-columns: 1fr; padding: 15px; }
-  .mobile-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; height: 62px; display: grid; grid-template-columns: repeat(3, 1fr); background: var(--background); border-top: 2px solid var(--foreground); }
+  .mobile-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; height: 62px; display: grid; grid-template-columns: repeat(4, 1fr); background: var(--background); border-top: 2px solid var(--foreground); }
   .mobile-nav button { min-width: 0; border: 0; background: transparent; color: var(--muted); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 10px; }
   .mobile-nav button.active { color: var(--green); font-weight: 700; }
   .pomodoro-widget { right: 14px; bottom: 78px; }

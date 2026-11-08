@@ -1,11 +1,6 @@
 /* Trilha — RPG sheet + clickable skill tree. Monochrome only: states are drawn with
    fill, outline, dashed outline and a stepped blink (never hue). */
 
-/* Four nav entries now (Dashboard, Unidade, Trilha, Progresso). */
-@media (max-width: 720px) {
-  .mobile-nav { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-
 .trail-k {
   display: block;
   margin: 14px 0 7px;
@@ -145,11 +140,10 @@
 
 /* todo = outline (default). done = filled. */
 .trail-node.is-done { background: var(--foreground); color: var(--background); }
-/* current = inverted + thick frame + stepped blink. */
+/* current = inverted + stepped blink (+ "◀ AQUI" text). */
 .trail-node.is-current {
   background: var(--foreground);
   color: var(--background);
-  border-width: 3px;
   animation: blink 1.1s steps(2) infinite;
 }
 /* side quests (Java, DSA) = dashed outline while not done. */
@@ -173,6 +167,8 @@
   padding: 16px;
 }
 .trail-panel h3 { margin: 0 0 10px; overflow-wrap: anywhere; }
+.trail-panel h3:focus { outline: none; }
+.trail-panel h3:focus-visible { outline: 2px solid var(--foreground); outline-offset: 2px; }
 .trail-tag {
   align-self: flex-start;
   margin-bottom: 14px;

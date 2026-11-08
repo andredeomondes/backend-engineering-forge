@@ -99,10 +99,21 @@ export function TrailTree({ levels, nodes, selectedId, onSelect }: Props) {
       <header className="trail-box-head">
         <h3 id="trail-tree-title">Árvore da trilha</h3>
         <ul className="trail-legend" aria-label="Legenda">
-          <li><i className="lg-done" aria-hidden="true" />feito</li>
-          <li><i className="lg-current" aria-hidden="true" />aqui</li>
-          <li><i className="lg-todo" aria-hidden="true" />a fazer</li>
-          <li><i className="lg-side" aria-hidden="true" />java · dsa</li>
+          <li>
+            <i className="lg-done" aria-hidden="true" />
+            feito
+          </li>
+          <li>
+            <i className="lg-current" aria-hidden="true" />
+            aqui
+          </li>
+          <li>
+            <i className="lg-todo" aria-hidden="true" />a fazer
+          </li>
+          <li>
+            <i className="lg-side" aria-hidden="true" />
+            java · dsa
+          </li>
         </ul>
       </header>
 
@@ -118,7 +129,10 @@ export function TrailTree({ levels, nodes, selectedId, onSelect }: Props) {
                   ▼
                 </span>
               )}
-              <section className="trail-group" aria-label={`${level.id.toUpperCase()} · ${level.name}`}>
+              <section
+                className="trail-group"
+                aria-label={`${level.id.toUpperCase()} · ${level.name}`}
+              >
                 <h4 className="trail-group-title">
                   {level.id.toUpperCase()} · {level.name.toUpperCase()}
                 </h4>

@@ -8,7 +8,15 @@ function plural(count: number, singular: string, pluralForm: string) {
   return `${count} ${count === 1 ? singular : pluralForm}`;
 }
 
-function Meter({ label, percent, size = "lg" }: { label: string; percent: number; size?: "lg" | "sm" }) {
+function Meter({
+  label,
+  percent,
+  size = "lg",
+}: {
+  label: string;
+  percent: number;
+  size?: "lg" | "sm";
+}) {
   const value = Math.max(0, Math.min(100, Math.round(percent)));
   return (
     <div
@@ -42,8 +50,8 @@ export function CharacterSheet({ sheet }: Props) {
           <span className="trail-k">XP da formação · {sheet.xpPercent}%</span>
           <Meter label="XP da formação" percent={sheet.xpPercent} />
           <span className="trail-sheet-count">
-            {sheet.phasesDone}/{sheet.phasesTotal} fases · {sheet.unitsDone}/{sheet.unitsTotal}{" "}
-            unidades
+            {sheet.phasesDone}/{sheet.phasesTotal} fases · {sheet.unitsDone}/
+            {sheet.unitsTotal} unidades
           </span>
           <span className="trail-k">Próximo nível</span>
           <strong className="trail-v">{next}</strong>

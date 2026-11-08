@@ -10,6 +10,13 @@ export function blockBar(percent: number, blocks = 4) {
   return "█".repeat(filled) + "░".repeat(blocks - filled);
 }
 
+export const TRAIL_PANEL_TITLE_ID = "trail-panel-title";
+
+/** Stable DOM id of a topic item's checkbox (used to restore focus after a toggle). */
+export function trailItemInputId(itemId: string) {
+  return `trail-item-${itemId}`;
+}
+
 export function pad2(value: number) {
   return String(value).padStart(2, "0");
 }
