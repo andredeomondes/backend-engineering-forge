@@ -78,7 +78,8 @@ Números do momento:
 
 - **51 unidades** catalogadas (27 JS · 8 TS · 7 Node · 8 SQL · 1 DSA).
 - **Suíte de sistema: 26/26 testes verdes** (`npm run test:system`).
-- **21 revisões espaçadas pendentes** e 1 agendada (`npm run forge -- review`).
+- **8/51 unidades com gate fechado**.
+- **19 revisões espaçadas pendentes** (`npm run forge -- review`).
 - **Autonomia: 83%** (métrica baseada no nível de dica revelado).
 
 ![Progresso da formação](docs/screenshots/progress.png)
@@ -157,8 +158,8 @@ Backend Engineering Forge — status
 
 Foco atual: Unidade 9 — map, filter, find, some, every, reduce (js-09)
 Tempo total: 1.3h (75 min)
-Unidades concluídas: 9/51
-Revisões pendentes: 21
+Unidades concluídas: 8/51
+Revisões pendentes: 19
 ```
 
 | Comando | O que faz |

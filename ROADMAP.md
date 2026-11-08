@@ -9,7 +9,7 @@ fica em `PROGRESS.md`.
 | Fase | Tema                                        | Status                              |
 | ---- | ------------------------------------------- | ------------------------------------ |
 | 0    | Ambiente profissional e fundamentos da Web  | 🟡 em andamento                     |
-| 1    | JavaScript profundo para backend            | 🟡 unidades 1-4 concluídas, unidade 5 ativa |
+| 1    | JavaScript profundo para backend            | 🟡 unidades 1-8 concluídas, unidade 9 ativa · 27/27 geradas |
 | 2    | TypeScript profissional                     | 🟡 8/8 unidades geradas, nenhuma liberada para estudo |
 | 3    | Node.js por baixo dos frameworks            | ⚪ bloqueada                         |
 
@@ -49,7 +49,7 @@ Nenhuma opção está selecionada. Detalhes em
 | ---- | ------------------------------------------- | ------------------------------------ |
 | 10   | Arquitetura e design de software            | ⚪ bloqueada                         |
 | 11   | Docker, CI/CD, AWS e observabilidade        | ⚪ bloqueada                         |
-| 12   | Estruturas de dados e algoritmos (paralelo) | ⚪ inicia junto à Fase 1             |
+| 12   | Estruturas de dados e algoritmos (paralelo) | 🟡 sessão 01 entregue, aguardando tentativa |
 | 13   | Full-stack capability (React+Vite+integração real, Next.js opcional 13.6) | ⚪ bloqueada até API NestJS completa |
 | 14   | Projeto final full-stack (TicketAtlas)      | ⚪ bloqueada                         |
 
