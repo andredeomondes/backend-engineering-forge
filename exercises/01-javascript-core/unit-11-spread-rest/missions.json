@@ -174,7 +174,7 @@
     "rules": [
       "Aplique os campos de updates por cima de order (spread com override).",
       "Adicione extraItems ao final de items (spread de arrays).",
-      "Recalcule total como a soma de price * qty de todos os itens (originais + extras) com reduce."
+      "Recalcule total somando, entre todos os itens (originais e extras), o price multiplicado pela qty, usando reduce."
     ],
     "pitfalls": ["Não modifique o pedido original."]
   }

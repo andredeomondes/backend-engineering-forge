@@ -36,9 +36,7 @@
       "input": "extractWithDefault({ retries: 5 })",
       "output": "{ retries: 5, timeout: 1000 }"
     },
-    "rules": [
-      "Defina os padrões na própria desestruturação: retries = 3 e timeout = 1000."
-    ],
+    "rules": ["Valores padrão: retries 3 e timeout 1000."],
     "pitfalls": ["Objeto vazio deve devolver { retries: 3, timeout: 1000 }."]
   },
   "extractNestedCity": {

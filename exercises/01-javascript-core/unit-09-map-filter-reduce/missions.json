@@ -159,7 +159,7 @@
     },
     "rules": [
       "Troque o for manual por filter seguido de reduce (ou reduce com checagem interna).",
-      "Some amount * quantity apenas dos pedidos com status \"paid\"."
+      "O total soma, para cada pedido pago (status \"paid\"), o amount multiplicado pela quantity."
     ],
     "pitfalls": ["O resultado deve continuar idêntico ao da versão original."]
   },
