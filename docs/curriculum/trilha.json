@@ -1,0 +1,1150 @@
+{
+  "levels": [
+    {
+      "id": "lv1",
+      "name": "Júnior em construção",
+      "phases": [0, 1, 2, 3]
+    },
+    {
+      "id": "lv2",
+      "name": "Júnior",
+      "phases": [4, 5, 6, 7, 8, 9]
+    },
+    {
+      "id": "lv3",
+      "name": "Pleno",
+      "phases": [10, 11, 13, 14]
+    },
+    {
+      "id": "lv4",
+      "name": "Sênior",
+      "phases": [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "f00",
+      "kind": "phase",
+      "phase": 0,
+      "title": "Ambiente profissional e fundamentos da Web",
+      "shortTitle": "AMBIENTE+WEB",
+      "who": "Você usa o computador, mas ainda não tem o terminal, o Git e o HTTP como ferramentas do dia a dia.",
+      "becomes": "Trabalha num repositório profissional e explica o caminho de uma requisição entre cliente e servidor.",
+      "items": [
+        {
+          "id": "f00-terminal",
+          "label": "Terminal, processos, arquivos e permissões"
+        },
+        {
+          "id": "f00-git-github",
+          "label": "Git e GitHub (branches, commits, PRs, conflitos)"
+        },
+        {
+          "id": "f00-npm-package-json",
+          "label": "npm e `package.json`, versionamento semântico"
+        },
+        {
+          "id": "f00-env-dotenv",
+          "label": "Variáveis de ambiente e `.env`"
+        },
+        {
+          "id": "f00-cliente-servidor-dns-tcp",
+          "label": "Cliente/servidor, DNS e TCP em nível conceitual"
+        },
+        {
+          "id": "f00-http",
+          "label": "HTTP: métodos, headers, body, status codes, cookies, JSON, CORS"
+        },
+        {
+          "id": "f00-repositorio-estrutura",
+          "label": "Repositório criado com estrutura canônica"
+        },
+        {
+          "id": "f00-lint-formatter-testes",
+          "label": "Lint, formatter e test runner configurados"
+        },
+        {
+          "id": "f00-painel-web-local",
+          "label": "Painel web local com SQLite, diário, testes, dicas e revisões"
+        },
+        {
+          "id": "f00-testes-de-sistema",
+          "label": "Testes de sistema separados dos exercícios incompletos"
+        }
+      ]
+    },
+    {
+      "id": "f01",
+      "kind": "phase",
+      "phase": 1,
+      "title": "JavaScript profundo para backend",
+      "shortTitle": "JAVASCRIPT",
+      "who": "Você escreve JS que funciona, mas ainda depende de exemplo para resolver algo novo.",
+      "becomes": "Lê e escreve JS de backend sem travar na sintaxe.",
+      "items": []
+    },
+    {
+      "id": "f02",
+      "kind": "phase",
+      "phase": 2,
+      "title": "TypeScript profissional",
+      "shortTitle": "TYPESCRIPT",
+      "who": "Você escreve JS com segurança, mas os tipos ainda parecem burocracia e não uma ferramenta de design.",
+      "becomes": "Modela domínio e contratos com tipos que pegam erro antes de rodar.",
+      "items": []
+    },
+    {
+      "id": "f03",
+      "kind": "phase",
+      "phase": 3,
+      "title": "Node.js por baixo dos frameworks",
+      "shortTitle": "NODE.JS",
+      "who": "Você sabe usar o Node, mas ainda não enxerga o event loop, os streams e o processo por baixo.",
+      "becomes": "Explica o que o Node faz por baixo e constrói serviços simples sem framework.",
+      "items": []
+    },
+    {
+      "id": "f04",
+      "kind": "phase",
+      "phase": 4,
+      "title": "SQL e PostgreSQL de verdade",
+      "shortTitle": "SQL+POSTGRES",
+      "who": "Você consulta dados com SELECT, mas ainda não projeta schema nem lê um plano de execução.",
+      "becomes": "Modela tabelas, escreve queries com transação e justifica um índice com EXPLAIN.",
+      "items": []
+    },
+    {
+      "id": "f05",
+      "kind": "phase",
+      "phase": 5,
+      "title": "Engenharia de APIs com Express",
+      "shortTitle": "APIS EXPRESS",
+      "who": "Você tem Node e SQL na mão, mas ainda monta endpoints sem um contrato consistente.",
+      "becomes": "Entrega uma API REST coerente, documentada e testada, com erros padronizados e operações idempotentes.",
+      "items": [
+        {
+          "id": "f05-endpoints-coerentes-e-bem-nomeados",
+          "label": "Endpoints coerentes e bem nomeados"
+        },
+        {
+          "id": "f05-erros-de-cliente-4xx-vs-servidor-5xx",
+          "label": "Erros de cliente (4xx) vs. servidor (5xx)"
+        },
+        {
+          "id": "f05-resposta-de-erro-consistente",
+          "label": "Resposta de erro consistente"
+        },
+        {
+          "id": "f05-documentacao-da-api-openapi",
+          "label": "Documentação da API (OpenAPI)"
+        },
+        {
+          "id": "f05-teste-de-integracao-de-endpoint",
+          "label": "Teste de integração de endpoint"
+        },
+        {
+          "id": "f05-transacao-em-operacao-de-escrita",
+          "label": "Transação em operação de escrita"
+        },
+        {
+          "id": "f05-idempotencia-em-operacao-sensivel",
+          "label": "Idempotência em operação sensível"
+        }
+      ]
+    },
+    {
+      "id": "f06",
+      "kind": "phase",
+      "phase": 6,
+      "title": "NestJS profissional",
+      "shortTitle": "NESTJS",
+      "who": "Você constrói APIs em Express e sente o código crescer sem uma estrutura clara.",
+      "becomes": "Organiza uma API em módulos, injeção de dependência e testes, e explica o que o Nest abstrai.",
+      "items": [
+        {
+          "id": "f06-modulos-controllers-e-providers",
+          "label": "Módulos, controllers e providers"
+        },
+        {
+          "id": "f06-injecao-de-dependencia-e-custom-provider",
+          "label": "Injeção de dependência e custom providers"
+        },
+        {
+          "id": "f06-dtos-pipes-e-validacao",
+          "label": "DTOs, pipes e validação"
+        },
+        {
+          "id": "f06-guards-interceptors-e-exception-filters",
+          "label": "Guards, interceptors e exception filters"
+        },
+        {
+          "id": "f06-configuracao-e-ciclo-de-vida-com-gracefu",
+          "label": "Configuração e ciclo de vida com graceful shutdown"
+        },
+        {
+          "id": "f06-swagger-e-serializacao",
+          "label": "Swagger e serialização"
+        },
+        {
+          "id": "f06-testes-unitarios-de-integracao-e-e2e",
+          "label": "Testes unitários, de integração e E2E"
+        },
+        {
+          "id": "f06-prisma-e-organizacao-por-feature",
+          "label": "Prisma e organização por feature"
+        },
+        {
+          "id": "f06-limites-de-dominio-sem-dependencia-circu",
+          "label": "Limites de domínio sem dependência circular"
+        }
+      ]
+    },
+    {
+      "id": "f07",
+      "kind": "phase",
+      "phase": 7,
+      "title": "Autenticação, autorização e segurança de APIs",
+      "shortTitle": "AUTH+SEGURANÇA",
+      "who": "Você protege rotas com o que lembra de tutoriais, sem um modelo claro de ameaça.",
+      "becomes": "Implementa login, tokens e permissões com critério e aplica as proteções básicas de uma API.",
+      "items": [
+        {
+          "id": "f07-autenticacao-vs-autorizacao",
+          "label": "Autenticação vs. autorização"
+        },
+        {
+          "id": "f07-hash-de-senha-e-politica-de-senhas",
+          "label": "Hash de senha e política de senhas"
+        },
+        {
+          "id": "f07-jwt-refresh-token-e-sessao",
+          "label": "JWT, refresh token e sessão"
+        },
+        {
+          "id": "f07-oauth-2-0-e-openid-connect",
+          "label": "OAuth 2.0 e OpenID Connect"
+        },
+        {
+          "id": "f07-rbac-e-checagem-de-permissao-por-recurso",
+          "label": "RBAC e checagem de permissão por recurso"
+        },
+        {
+          "id": "f07-rate-limiting-cors-e-headers-de-seguranc",
+          "label": "Rate limiting, CORS e headers de segurança"
+        },
+        {
+          "id": "f07-validacao-de-entrada-e-prevencao-de-inje",
+          "label": "Validação de entrada e prevenção de injeção"
+        },
+        {
+          "id": "f07-revisao-de-seguranca-da-api-de-identidad",
+          "label": "Revisão de segurança da API de identidade"
+        }
+      ]
+    },
+    {
+      "id": "f08",
+      "kind": "phase",
+      "phase": 8,
+      "title": "Redis, cache, filas e integrações",
+      "shortTitle": "REDIS+FILAS",
+      "who": "Você resolve tudo de forma síncrona e ainda não sabe o que fazer quando algo demora ou falha.",
+      "becomes": "Move trabalho pesado para filas, usa cache com invalidação e integra serviços externos de forma resiliente.",
+      "items": [
+        {
+          "id": "f08-estruturas-do-redis-e-ttl",
+          "label": "Estruturas do Redis e TTL"
+        },
+        {
+          "id": "f08-cache-aside-e-invalidacao",
+          "label": "Cache-aside e invalidação"
+        },
+        {
+          "id": "f08-cache-stampede-e-rate-limiting",
+          "label": "Cache stampede e rate limiting"
+        },
+        {
+          "id": "f08-filas-com-producer-consumer-e-workers",
+          "label": "Filas com producer, consumer e workers"
+        },
+        {
+          "id": "f08-retries-backoff-e-dead-letter",
+          "label": "Retries, backoff e dead-letter"
+        },
+        {
+          "id": "f08-idempotencia-e-entrega-at-least-once",
+          "label": "Idempotência e entrega at-least-once"
+        },
+        {
+          "id": "f08-webhooks-assinados",
+          "label": "Webhooks assinados"
+        },
+        {
+          "id": "f08-timeout-circuit-breaker-e-fallback",
+          "label": "Timeout, circuit breaker e fallback"
+        },
+        {
+          "id": "f08-outbox-pattern",
+          "label": "Outbox pattern"
+        }
+      ]
+    },
+    {
+      "id": "f09",
+      "kind": "phase",
+      "phase": 9,
+      "title": "Testes, qualidade e manutenção",
+      "shortTitle": "TESTES",
+      "who": "Você escreve testes depois de o código pronto e tem medo de mexer em código que não conhece.",
+      "becomes": "Mantém código legado com testes de caracterização e refatora em passos pequenos e seguros.",
+      "items": [
+        {
+          "id": "f09-piramide-de-testes",
+          "label": "Pirâmide de testes"
+        },
+        {
+          "id": "f09-doubles-mocks-stubs-e-spies",
+          "label": "Doubles: mocks, stubs e spies"
+        },
+        {
+          "id": "f09-fixtures-factories-e-testes-deterministi",
+          "label": "Fixtures, factories e testes determinísticos"
+        },
+        {
+          "id": "f09-banco-isolado-e-testcontainers",
+          "label": "Banco isolado e Testcontainers"
+        },
+        {
+          "id": "f09-testes-de-contrato-e-de-concorrencia",
+          "label": "Testes de contrato e de concorrência"
+        },
+        {
+          "id": "f09-cobertura-e-mutation-testing-conceitual",
+          "label": "Cobertura e mutation testing conceitual"
+        },
+        {
+          "id": "f09-testes-de-caracterizacao-em-codigo-legad",
+          "label": "Testes de caracterização em código legado"
+        },
+        {
+          "id": "f09-refatoracao-segura-em-prs-pequenos",
+          "label": "Refatoração segura em PRs pequenos"
+        },
+        {
+          "id": "f09-relatorio-antes-depois-de-uma-refatoraca",
+          "label": "Relatório antes/depois de uma refatoração"
+        }
+      ]
+    },
+    {
+      "id": "f10",
+      "kind": "phase",
+      "phase": 10,
+      "title": "Arquitetura e design de software",
+      "shortTitle": "ARQUITETURA",
+      "who": "Você faz o código funcionar, mas ainda decide a estrutura pelo hábito, sem comparar alternativas.",
+      "becomes": "Projeta um monólito modular com fronteiras claras e defende cada decisão com seus trade-offs.",
+      "items": [
+        {
+          "id": "f10-coesao-acoplamento-e-solid-com-senso-cri",
+          "label": "Coesão, acoplamento e SOLID com senso crítico"
+        },
+        {
+          "id": "f10-ports-and-adapters-e-arquitetura-hexagon",
+          "label": "Ports and adapters e arquitetura hexagonal"
+        },
+        {
+          "id": "f10-use-cases-repositories-e-service-layer",
+          "label": "Use cases, repositories e service layer"
+        },
+        {
+          "id": "f10-entities-value-objects-e-ddd-tatico",
+          "label": "Entities, value objects e DDD tático"
+        },
+        {
+          "id": "f10-patterns-uteis-strategy-factory-adapter",
+          "label": "Patterns úteis: strategy, factory, adapter"
+        },
+        {
+          "id": "f10-idempotency-key-outbox-e-saga-conceitual",
+          "label": "Idempotency key, outbox e saga conceitual"
+        },
+        {
+          "id": "f10-eventos-de-dominio-e-pub-sub",
+          "label": "Eventos de domínio e pub/sub"
+        },
+        {
+          "id": "f10-consistencia-forte-vs-eventual-e-cap-pra",
+          "label": "Consistência forte vs. eventual e CAP prático"
+        },
+        {
+          "id": "f10-monolito-modular-do-ticketatlas",
+          "label": "Monólito modular do TicketAtlas"
+        }
+      ]
+    },
+    {
+      "id": "f11",
+      "kind": "phase",
+      "phase": 11,
+      "title": "Docker, CI/CD, AWS e observabilidade",
+      "shortTitle": "DOCKER+AWS+CI",
+      "who": "Você roda tudo na sua máquina e nunca respondeu por um serviço no ar.",
+      "becomes": "Publica um serviço com pipeline, infraestrutura básica na AWS e logs, métricas e alertas.",
+      "items": [
+        {
+          "id": "f11-dockerfile-multi-stage-e-usuario-nao-roo",
+          "label": "Dockerfile multi-stage e usuário não-root"
+        },
+        {
+          "id": "f11-docker-compose-com-api-postgres-redis-e",
+          "label": "Docker Compose com API, Postgres, Redis e worker"
+        },
+        {
+          "id": "f11-health-checks-e-logs-de-container",
+          "label": "Health checks e logs de container"
+        },
+        {
+          "id": "f11-github-actions-lint-testes-build-e-image",
+          "label": "GitHub Actions: lint, testes, build e imagem"
+        },
+        {
+          "id": "f11-deploy-em-staging-aprovacao-e-rollback",
+          "label": "Deploy em staging, aprovação e rollback"
+        },
+        {
+          "id": "f11-iam-com-least-privilege-e-alertas-de-cus",
+          "label": "IAM com least privilege e alertas de custo"
+        },
+        {
+          "id": "f11-s3-rds-ecr-ecs-fargate-e-sqs",
+          "label": "S3, RDS, ECR, ECS/Fargate e SQS"
+        },
+        {
+          "id": "f11-logs-estruturados-metricas-e-alertas",
+          "label": "Logs estruturados, métricas e alertas"
+        },
+        {
+          "id": "f11-terraform-basico",
+          "label": "Terraform básico"
+        }
+      ]
+    },
+    {
+      "id": "f12",
+      "kind": "dsa",
+      "phase": 12,
+      "title": "Estruturas de dados e algoritmos (paralelo)",
+      "shortTitle": "DSA",
+      "who": "Você resolve problemas por tentativa e erro, sem medir o custo da solução.",
+      "becomes": "Escolhe a estrutura de dados certa, analisa complexidade e resolve problemas clássicos com método.",
+      "items": []
+    },
+    {
+      "id": "f13",
+      "kind": "phase",
+      "phase": 13,
+      "title": "Full-stack capability",
+      "shortTitle": "FULL-STACK",
+      "who": "Você domina o backend, mas o frontend ainda é uma caixa-preta e você não vê o contrato real entre as pontas.",
+      "becomes": "Constrói o produto completo, do React ao banco, e entende o contrato real entre frontend e backend.",
+      "items": [
+        {
+          "id": "f13-autorizacao-no-backend-nao-so-na-interfa",
+          "label": "Autorização no backend, não só na interface"
+        },
+        {
+          "id": "f13-fluxo-de-autenticacao-completo-com-401-4",
+          "label": "Fluxo de autenticação completo com 401/403 tratados"
+        },
+        {
+          "id": "f13-html-semantico-e-css-responsivo",
+          "label": "HTML semântico e CSS responsivo"
+        },
+        {
+          "id": "f13-react-com-typescript-e-vite",
+          "label": "React com TypeScript e Vite"
+        },
+        {
+          "id": "f13-tailwind-e-design-system-basico",
+          "label": "Tailwind e design system básico"
+        },
+        {
+          "id": "f13-consumo-de-endpoint-paginado-com-tanstac",
+          "label": "Consumo de endpoint paginado com TanStack Query"
+        },
+        {
+          "id": "f13-cache-e-invalidation-corretos-no-cliente",
+          "label": "Cache e invalidation corretos no cliente"
+        },
+        {
+          "id": "f13-processamento-assincrono-por-polling-ou",
+          "label": "Processamento assíncrono por polling ou SSE"
+        },
+        {
+          "id": "f13-quando-usar-next-js-numa-vaga-real",
+          "label": "Quando usar Next.js numa vaga real"
+        }
+      ]
+    },
+    {
+      "id": "f14",
+      "kind": "phase",
+      "phase": 14,
+      "title": "Projeto final full-stack (TicketAtlas)",
+      "shortTitle": "TICKETATLAS",
+      "who": "Você tem as peças do backend, do frontend e da infraestrutura, mas nunca integrou tudo num único produto.",
+      "becomes": "Entrega um produto multi-tenant completo no ar, com testes, observabilidade e decisões documentadas.",
+      "items": [
+        {
+          "id": "f14-multi-tenancy-usuarios-roles-e-permissio",
+          "label": "Multi-tenancy, usuários, roles e permissions"
+        },
+        {
+          "id": "f14-autenticacao-segura",
+          "label": "Autenticação segura"
+        },
+        {
+          "id": "f14-busca-por-proximidade-com-geolocalizacao",
+          "label": "Busca por proximidade com geolocalização"
+        },
+        {
+          "id": "f14-mapa-de-assentos-e-trava-com-timeout",
+          "label": "Mapa de assentos e trava com timeout"
+        },
+        {
+          "id": "f14-checkout-e-emissao-de-ingresso-com-qr",
+          "label": "Checkout e emissão de ingresso com QR"
+        },
+        {
+          "id": "f14-revenda-p2p-com-transferencia-atomica",
+          "label": "Revenda P2P com transferência atômica"
+        },
+        {
+          "id": "f14-filas-cache-e-importacao-assincrona",
+          "label": "Filas, cache e importação assíncrona"
+        },
+        {
+          "id": "f14-webhooks-integracao-de-pagamento-e-audit",
+          "label": "Webhooks, integração de pagamento e auditoria"
+        },
+        {
+          "id": "f14-testes-observabilidade-aws-e-ci-cd",
+          "label": "Testes, observabilidade, AWS e CI/CD"
+        }
+      ]
+    },
+    {
+      "id": "f15",
+      "kind": "phase",
+      "phase": 15,
+      "title": "Performance Engineering & Node.js Profiling",
+      "shortTitle": "PERFORMANCE",
+      "who": "Você otimiza por intuição e mede a latência pela média.",
+      "becomes": "Mede, perfila e otimiza com baseline e evidência, olhando p99 e não só a média.",
+      "items": [
+        {
+          "id": "f15-testes-de-carga-stress-spike-e-soak",
+          "label": "Testes de carga, stress, spike e soak"
+        },
+        {
+          "id": "f15-baseline-de-performance-performance-base",
+          "label": "Baseline de performance (performance-baseline.md)"
+        },
+        {
+          "id": "f15-latencia-p50-p95-p99-throughput-e-error",
+          "label": "Latência p50/p95/p99, throughput e error rate"
+        },
+        {
+          "id": "f15-cpu-e-heap-profiling-com-flamegraphs",
+          "label": "CPU e heap profiling com flamegraphs"
+        },
+        {
+          "id": "f15-event-loop-lag-e-memory-leaks",
+          "label": "Event loop lag e memory leaks"
+        },
+        {
+          "id": "f15-connection-pool-e-keep-alive",
+          "label": "Connection pool e keep-alive"
+        },
+        {
+          "id": "f15-benchmark-antes-depois-de-uma-otimizacao",
+          "label": "Benchmark antes/depois de uma otimização"
+        }
+      ]
+    },
+    {
+      "id": "f16",
+      "kind": "phase",
+      "phase": 16,
+      "title": "Capacity Planning & Reliability Engineering",
+      "shortTitle": "CAPACIDADE",
+      "who": "Você sabe que o sistema aguenta hoje, mas não quanto nem por quê.",
+      "becomes": "Estima capacidade e aplica padrões de confiabilidade sem piorar uma degradação com retries.",
+      "items": [
+        {
+          "id": "f16-estimativa-de-capacidade-e-primeiro-garg",
+          "label": "Estimativa de capacidade e primeiro gargalo"
+        },
+        {
+          "id": "f16-timeout-retry-backoff-e-jitter",
+          "label": "Timeout, retry, backoff e jitter"
+        },
+        {
+          "id": "f16-circuit-breaker-bulkhead-e-fallback",
+          "label": "Circuit breaker, bulkhead e fallback"
+        },
+        {
+          "id": "f16-graceful-degradation-e-load-shedding",
+          "label": "Graceful degradation e load shedding"
+        },
+        {
+          "id": "f16-rate-limiting-e-health-checks",
+          "label": "Rate limiting e health checks"
+        },
+        {
+          "id": "f16-idempotencia-e-deduplicacao",
+          "label": "Idempotência e deduplicação"
+        },
+        {
+          "id": "f16-retry-mal-configurado-derruba-servico-de",
+          "label": "Retry mal configurado derruba serviço degradado"
+        }
+      ]
+    },
+    {
+      "id": "f17",
+      "kind": "phase",
+      "phase": 17,
+      "title": "Chaos Engineering & Site Reliability Engineering (SRE)",
+      "shortTitle": "CAOS+SRE",
+      "who": "Você descobre as falhas quando elas acontecem em produção.",
+      "becomes": "Provoca falhas de forma segura, define SLOs e responde a incidentes com runbook e postmortem.",
+      "items": [
+        {
+          "id": "f17-failure-injection-local-e-seguro",
+          "label": "Failure injection local e seguro"
+        },
+        {
+          "id": "f17-experimento-de-falha-no-ticketatlas",
+          "label": "Experimento de falha no TicketAtlas"
+        },
+        {
+          "id": "f17-sli-slo-sla-e-error-budget",
+          "label": "SLI, SLO, SLA e error budget"
+        },
+        {
+          "id": "f17-mttd-mttr-e-severidade-de-incidente",
+          "label": "MTTD, MTTR e severidade de incidente"
+        },
+        {
+          "id": "f17-runbooks-e-alertas-sem-fadiga",
+          "label": "Runbooks e alertas sem fadiga"
+        },
+        {
+          "id": "f17-postmortem-sem-culpa",
+          "label": "Postmortem sem culpa"
+        },
+        {
+          "id": "f17-proposta-de-mitigacao-a-partir-do-experi",
+          "label": "Proposta de mitigação a partir do experimento"
+        }
+      ]
+    },
+    {
+      "id": "f18",
+      "kind": "phase",
+      "phase": 18,
+      "title": "Observabilidade avançada & Debugging de produção",
+      "shortTitle": "OBSERVABILIDADE",
+      "who": "Você investiga problema lendo log até achar alguma pista.",
+      "becomes": "Diagnostica incidentes com hipótese, evidência, causa, correção e validação.",
+      "items": [
+        {
+          "id": "f18-logs-estruturados-correlation-id-e-trace",
+          "label": "Logs estruturados, correlation ID e trace ID"
+        },
+        {
+          "id": "f18-metricas-e-tracing-distribuido-com-opent",
+          "label": "Métricas e tracing distribuído com OpenTelemetry"
+        },
+        {
+          "id": "f18-red-use-e-golden-signals",
+          "label": "RED, USE e Golden Signals"
+        },
+        {
+          "id": "f18-dashboards-e-alertas-com-cardinalidade-c",
+          "label": "Dashboards e alertas com cardinalidade controlada"
+        },
+        {
+          "id": "f18-seguranca-de-logs-sem-pii-segredos-ou-to",
+          "label": "Segurança de logs: sem PII, segredos ou tokens"
+        },
+        {
+          "id": "f18-diagnostico-de-3-cenarios-de-production",
+          "label": "Diagnóstico de 3 cenários de production-debugging"
+        }
+      ]
+    },
+    {
+      "id": "f19",
+      "kind": "phase",
+      "phase": 19,
+      "title": "PostgreSQL avançado, Concorrência & Sistemas Distribuídos",
+      "shortTitle": "POSTGRES AVANÇADO",
+      "who": "Você usa transação e índice, mas ainda não sabe o que acontece quando dois pedidos chegam ao mesmo tempo.",
+      "becomes": "Reproduz e corrige condições de corrida e raciocina sobre consistência em sistemas distribuídos.",
+      "items": [
+        {
+          "id": "f19-mvcc-locks-e-deadlocks",
+          "label": "MVCC, locks e deadlocks"
+        },
+        {
+          "id": "f19-locking-otimista-vs-pessimista",
+          "label": "Locking otimista vs. pessimista"
+        },
+        {
+          "id": "f19-anomalias-de-isolamento",
+          "label": "Anomalias de isolamento"
+        },
+        {
+          "id": "f19-explain-analyze-e-investigacao-de-query",
+          "label": "EXPLAIN ANALYZE e investigação de query lenta"
+        },
+        {
+          "id": "f19-indices-parciais-covering-e-vacuum",
+          "label": "Índices parciais, covering e vacuum"
+        },
+        {
+          "id": "f19-replicas-lag-e-backup-com-point-in-time",
+          "label": "Réplicas, lag e backup com point-in-time recovery"
+        },
+        {
+          "id": "f19-consistencia-forte-vs-eventual-cap-e-pac",
+          "label": "Consistência forte vs. eventual, CAP e PACELC"
+        },
+        {
+          "id": "f19-saga-outbox-e-inbox",
+          "label": "Saga, outbox e inbox"
+        },
+        {
+          "id": "f19-overselling-de-assento-corrigido-com-tes",
+          "label": "Overselling de assento corrigido com teste concorrente"
+        }
+      ]
+    },
+    {
+      "id": "f20",
+      "kind": "phase",
+      "phase": 20,
+      "title": "Mensageria avançada & Cache avançado",
+      "shortTitle": "MENSAGERIA+CACHE",
+      "who": "Você usa filas e cache, mas ainda sofre com mensagem duplicada e dado velho.",
+      "becomes": "Evolui eventos sem quebrar consumidores antigos e opera cache sem stampede nem dado velho.",
+      "items": [
+        {
+          "id": "f20-consumer-groups-retries-e-dlq",
+          "label": "Consumer groups, retries e DLQ"
+        },
+        {
+          "id": "f20-poison-message-e-ordenacao",
+          "label": "Poison message e ordenação"
+        },
+        {
+          "id": "f20-consumer-idempotente-e-deduplicacao",
+          "label": "Consumer idempotente e deduplicação"
+        },
+        {
+          "id": "f20-versionamento-de-eventos-e-replay",
+          "label": "Versionamento de eventos e replay"
+        },
+        {
+          "id": "f20-outbox-inbox-e-contratos-de-evento",
+          "label": "Outbox, inbox e contratos de evento"
+        },
+        {
+          "id": "f20-write-through-write-behind-e-invalidacao",
+          "label": "Write-through, write-behind e invalidação"
+        },
+        {
+          "id": "f20-stampede-penetration-e-avalanche-de-cach",
+          "label": "Stampede, penetration e avalanche de cache"
+        },
+        {
+          "id": "f20-politicas-de-eviction-e-hot-keys",
+          "label": "Políticas de eviction e hot keys"
+        }
+      ]
+    },
+    {
+      "id": "f21",
+      "kind": "phase",
+      "phase": 21,
+      "title": "Security Engineering avançada & Supply Chain",
+      "shortTitle": "SEC AVANÇADA",
+      "who": "Você aplica as proteções que conhece, mas ainda não modela como um atacante pensa.",
+      "becomes": "Produz threat models, protege a cadeia de dependências e responde a incidentes de segurança.",
+      "items": [
+        {
+          "id": "f21-threat-modeling-com-stride-e-abuse-cases",
+          "label": "Threat modeling com STRIDE e abuse cases"
+        },
+        {
+          "id": "f21-tenant-escape-e-abuso-de-logica-de-negoc",
+          "label": "Tenant escape e abuso de lógica de negócio"
+        },
+        {
+          "id": "f21-rotacao-de-segredos-e-chaves-kms-e-iam-a",
+          "label": "Rotação de segredos e chaves, KMS e IAM avançado"
+        },
+        {
+          "id": "f21-roubo-de-refresh-token-e-credential-stuf",
+          "label": "Roubo de refresh token e credential stuffing"
+        },
+        {
+          "id": "f21-audit-logs-e-resposta-a-incidente-de-seg",
+          "label": "Audit logs e resposta a incidente de segurança"
+        },
+        {
+          "id": "f21-dependabot-sast-dast-e-scan-de-container",
+          "label": "Dependabot, SAST, DAST e scan de container"
+        },
+        {
+          "id": "f21-lockfiles-pinning-e-typosquatting",
+          "label": "Lockfiles, pinning e typosquatting"
+        },
+        {
+          "id": "f21-threat-model-md-da-revenda-p2p",
+          "label": "threat-model.md da revenda P2P"
+        }
+      ]
+    },
+    {
+      "id": "f22",
+      "kind": "phase",
+      "phase": 22,
+      "title": "API Engineering avançada & Zero-Downtime Engineering",
+      "shortTitle": "ZERO-DOWNTIME",
+      "who": "Você publica mudanças torcendo para ninguém notar o deploy.",
+      "becomes": "Evolui APIs e bancos sem downtime e sem quebrar quem já consome.",
+      "items": [
+        {
+          "id": "f22-rate-limiting-distribuido-e-idempotency",
+          "label": "Rate limiting distribuído e idempotency keys"
+        },
+        {
+          "id": "f22-paginacao-por-cursor",
+          "label": "Paginação por cursor"
+        },
+        {
+          "id": "f22-versionamento-e-deprecation-de-api",
+          "label": "Versionamento e deprecation de API"
+        },
+        {
+          "id": "f22-cancelamento-timeout-e-retry-seguro",
+          "label": "Cancelamento, timeout e retry seguro"
+        },
+        {
+          "id": "f22-assinatura-de-webhook-e-protecao-contra",
+          "label": "Assinatura de webhook e proteção contra replay"
+        },
+        {
+          "id": "f22-contract-testing-e-consumer-driven-contr",
+          "label": "Contract testing e consumer-driven contracts"
+        },
+        {
+          "id": "f22-rolling-blue-green-canary-e-feature-flag",
+          "label": "Rolling, blue/green, canary e feature flags"
+        },
+        {
+          "id": "f22-migration-expand-contract-sem-downtime",
+          "label": "Migration expand/contract sem downtime"
+        },
+        {
+          "id": "f22-rollback-e-roll-forward-de-migration-fal",
+          "label": "Rollback e roll-forward de migration falha"
+        }
+      ]
+    },
+    {
+      "id": "f23",
+      "kind": "phase",
+      "phase": 23,
+      "title": "Disaster Recovery, Cloud avançado & FinOps",
+      "shortTitle": "DR+CLOUD+FINOPS",
+      "who": "Você tem backup configurado, mas nunca provou que consegue restaurar.",
+      "becomes": "Prova a recuperação com restore real, define RTO e RPO e investiga custo de nuvem com método.",
+      "items": [
+        {
+          "id": "f23-estrategia-de-backup-e-restore-testado",
+          "label": "Estratégia de backup e restore testado"
+        },
+        {
+          "id": "f23-rto-rpo-e-point-in-time-recovery",
+          "label": "RTO, RPO e point-in-time recovery"
+        },
+        {
+          "id": "f23-runbook-de-desastre",
+          "label": "Runbook de desastre"
+        },
+        {
+          "id": "f23-corrupcao-de-dados-e-recuperacao-de-serv",
+          "label": "Corrupção de dados e recuperação de serviço"
+        },
+        {
+          "id": "f23-outage-regional-em-nivel-de-design",
+          "label": "Outage regional em nível de design"
+        },
+        {
+          "id": "f23-cloud-avancado-sobre-a-base-da-fase-11",
+          "label": "Cloud avançado sobre a base da Fase 11"
+        },
+        {
+          "id": "f23-investigacao-e-controle-de-custo-finops",
+          "label": "Investigação e controle de custo (FinOps)"
+        },
+        {
+          "id": "f23-disaster-recovery-plan-md-e-cost-analysi",
+          "label": "disaster-recovery-plan.md e cost-analysis.md"
+        }
+      ]
+    },
+    {
+      "id": "f24",
+      "kind": "phase",
+      "phase": 24,
+      "title": "System Design avançado, RFCs & Code Review sênior",
+      "shortTitle": "SYSTEM DESIGN",
+      "who": "Você desenha soluções boas, mas raramente as escreve para outras pessoas avaliarem.",
+      "becomes": "Propõe mudanças arquiteturais por RFC e revisa design e código dos outros apontando risco e severidade.",
+      "items": [
+        {
+          "id": "f24-system-design-com-requisitos-e-trade-off",
+          "label": "System design com requisitos e trade-offs explícitos"
+        },
+        {
+          "id": "f24-estimativas-e-gargalos-de-um-sistema",
+          "label": "Estimativas e gargalos de um sistema"
+        },
+        {
+          "id": "f24-estrutura-de-um-rfc",
+          "label": "Estrutura de um RFC"
+        },
+        {
+          "id": "f24-alternativas-e-riscos-num-rfc",
+          "label": "Alternativas e riscos num RFC"
+        },
+        {
+          "id": "f24-rfc-completo-para-o-ticketatlas",
+          "label": "RFC completo para o TicketAtlas"
+        },
+        {
+          "id": "f24-code-review-de-nivel-senior",
+          "label": "Code review de nível sênior"
+        },
+        {
+          "id": "f24-simular-pr-com-8-problemas-por-severidad",
+          "label": "SIMULAR_PR com 8 problemas por severidade"
+        }
+      ]
+    },
+    {
+      "id": "f25",
+      "kind": "phase",
+      "phase": 25,
+      "title": "Liderança técnica",
+      "shortTitle": "LIDERANÇA",
+      "who": "Você entrega bem o que lhe pedem, mas ainda não decompõe uma iniciativa nem negocia escopo.",
+      "becomes": "Conduz uma entrega do começo ao fim, comunica risco a quem não é técnico e orienta outra pessoa.",
+      "items": [
+        {
+          "id": "f25-decompor-iniciativas-e-escrever-proposta",
+          "label": "Decompor iniciativas e escrever propostas"
+        },
+        {
+          "id": "f25-estimar-priorizar-e-negociar-escopo",
+          "label": "Estimar, priorizar e negociar escopo"
+        },
+        {
+          "id": "f25-comunicar-divida-tecnica-e-trade-offs-a",
+          "label": "Comunicar dívida técnica e trade-offs a produto"
+        },
+        {
+          "id": "f25-revisar-codigo-e-orientar-outro-desenvol",
+          "label": "Revisar código e orientar outro desenvolvedor"
+        },
+        {
+          "id": "f25-responder-a-incidentes-e-conduzir-postmo",
+          "label": "Responder a incidentes e conduzir postmortems"
+        },
+        {
+          "id": "f25-decidir-com-informacao-incompleta",
+          "label": "Decidir com informação incompleta"
+        },
+        {
+          "id": "f25-simular-trabalho-de-ponta-a-ponta",
+          "label": "SIMULAR_TRABALHO de ponta a ponta"
+        }
+      ]
+    },
+    {
+      "id": "f26",
+      "kind": "phase",
+      "phase": 26,
+      "title": "Production Engineering & Reliability Project (TicketAtlas)",
+      "shortTitle": "PRODUÇÃO",
+      "who": "Você aplicou técnicas isoladas em várias fases, mas ainda não as juntou sobre um sistema só.",
+      "becomes": "Apresenta o sistema como se estivesse em produção, com capacidade, SLOs e planos apoiados em evidência.",
+      "items": [
+        {
+          "id": "f26-capacidade-atual-medida",
+          "label": "Capacidade atual medida"
+        },
+        {
+          "id": "f26-primeiro-gargalo-identificado",
+          "label": "Primeiro gargalo identificado"
+        },
+        {
+          "id": "f26-slos-definidos",
+          "label": "SLOs definidos"
+        },
+        {
+          "id": "f26-plano-de-resposta-a-incidente",
+          "label": "Plano de resposta a incidente"
+        },
+        {
+          "id": "f26-plano-de-recuperacao-de-desastre",
+          "label": "Plano de recuperação de desastre"
+        },
+        {
+          "id": "f26-apresentacao-do-ticketatlas-como-em-prod",
+          "label": "Apresentação do TicketAtlas como em produção"
+        },
+        {
+          "id": "f26-evidencia-nao-opiniao-em-cada-afirmacao",
+          "label": "Evidência, não opinião, em cada afirmação"
+        }
+      ]
+    },
+    {
+      "id": "f27",
+      "kind": "phase",
+      "phase": 27,
+      "title": "Cenários obrigatórios de senioridade & Gates finais",
+      "shortTitle": "GATES FINAIS",
+      "who": "Você já fez cada parte do caminho, mas ainda não resolveu um sistema quebrado do zero.",
+      "becomes": "Mostra competência sênior sob cenários reais. Isso não garante o cargo, que depende também de experiência real.",
+      "items": [
+        {
+          "id": "f27-p99-que-sobe-de-150-ms-para-3-s",
+          "label": "p99 que sobe de 150 ms para 3 s"
+        },
+        {
+          "id": "f27-banco-com-cpu-a-95",
+          "label": "Banco com CPU a 95%"
+        },
+        {
+          "id": "f27-fila-com-1-000-000-de-jobs-atrasados",
+          "label": "Fila com 1.000.000 de jobs atrasados"
+        },
+        {
+          "id": "f27-tenant-que-viu-dado-de-outro-tenant",
+          "label": "Tenant que viu dado de outro tenant"
+        },
+        {
+          "id": "f27-deploy-que-aumenta-http-500-em-300",
+          "label": "Deploy que aumenta HTTP 500 em 300%"
+        },
+        {
+          "id": "f27-migration-em-tabela-gigante-sem-downtime",
+          "label": "Migration em tabela gigante sem downtime"
+        },
+        {
+          "id": "f27-evento-alterado-sem-quebrar-consumidores",
+          "label": "Evento alterado sem quebrar consumidores"
+        },
+        {
+          "id": "f27-dois-pedidos-vendem-o-ultimo-item",
+          "label": "Dois pedidos vendem o último item"
+        },
+        {
+          "id": "f27-conta-aws-que-triplica",
+          "label": "Conta AWS que triplica"
+        },
+        {
+          "id": "f27-incidente-as-02-00-sob-sua-responsabilid",
+          "label": "Incidente às 02:00 sob sua responsabilidade"
+        }
+      ]
+    },
+    {
+      "id": "java-1",
+      "kind": "java",
+      "phase": null,
+      "title": "JAVA 01–03 · Spring Boot",
+      "shortTitle": "SPRING BOOT",
+      "who": "Você domina o stack TypeScript e Node e quer ver como o mesmo problema se resolve em Java.",
+      "becomes": "Escreve Java idiomático e entrega uma API Spring Boot com projeto profissional.",
+      "items": [
+        {
+          "id": "java-01",
+          "label": "Java moderno para quem vem de TypeScript"
+        },
+        {
+          "id": "java-02",
+          "label": "Ferramentas e projeto profissional"
+        },
+        {
+          "id": "java-03",
+          "label": "Spring Boot e APIs"
+        }
+      ]
+    },
+    {
+      "id": "java-2",
+      "kind": "java",
+      "phase": null,
+      "title": "JAVA 04–06 · JPA, Security, Testes",
+      "shortTitle": "JPA+SEC+TESTES",
+      "who": "Você tem uma API Spring no ar e agora precisa persistir, proteger e testar como no stack principal.",
+      "becomes": "Persiste com JPA, protege com Spring Security e testa a API Java.",
+      "items": [
+        {
+          "id": "java-04",
+          "label": "Persistência"
+        },
+        {
+          "id": "java-05",
+          "label": "Segurança"
+        },
+        {
+          "id": "java-06",
+          "label": "Testes"
+        }
+      ]
+    },
+    {
+      "id": "java-3",
+      "kind": "java",
+      "phase": null,
+      "title": "JAVA 07–09 · Async, Produção, Comparativo",
+      "shortTitle": "ASYNC+PROD",
+      "who": "Você tem uma API Java sólida e quer operá-la em produção e comparar com o stack principal.",
+      "becomes": "Opera a API Java e compara com honestidade as escolhas entre Java e o stack Node.",
+      "items": [
+        {
+          "id": "java-07",
+          "label": "Processamento assíncrono"
+        },
+        {
+          "id": "java-08",
+          "label": "Produção"
+        },
+        {
+          "id": "java-09",
+          "label": "Projeto comparativo"
+        }
+      ]
+    }
+  ]
+}
