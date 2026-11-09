@@ -593,3 +593,29 @@ h3 {
 .unit-btn:active:not(:disabled) {
   transform: translateY(2px);
 }
+
+/* Fixed left sidebar: sticky broke because body has overflow-x: hidden. */
+.app-shell {
+  --sidebar-w: 236px;
+}
+.app-shell.sidebar-collapsed {
+  --sidebar-w: 78px;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 20;
+}
+.content-shell {
+  grid-column: 2;
+}
+@media (max-width: 1050px) {
+  .app-shell {
+    --sidebar-w: 78px;
+  }
+}
