@@ -11,3 +11,4 @@ tools/forge-web/dist/
 .claude/
 .obsidian/
 .superpowers/
+*.stackdump
