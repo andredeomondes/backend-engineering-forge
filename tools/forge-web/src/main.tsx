@@ -6,6 +6,7 @@ import "./globals.css";
 import "./styles.css";
 import "./styles/trail.css";
 import "./styles/unit.css";
+import "./styles/mmo.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

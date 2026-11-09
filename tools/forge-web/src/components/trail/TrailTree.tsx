@@ -1,5 +1,16 @@
 import type { TrailData, TrailNode } from "../../types";
+import { useHero } from "../rpg/hero";
+import { Sprite } from "../rpg/Sprite";
 import { blockBar, nodeCode } from "./format";
+
+function HereHero() {
+  const { hero } = useHero();
+  return (
+    <span className="trail-node-hero" aria-hidden="true">
+      <Sprite name={hero} anim="run" width={16} height={28} scale={2} fps={8} />
+    </span>
+  );
+}
 
 type Props = {
   levels: TrailData["levels"];
@@ -50,6 +61,7 @@ function NodeButton({
         {blockBar(node.percent)} {node.percent}%
         {node.state === "current" && <span className="trail-node-here"> ◀ AQUI</span>}
       </span>
+      {node.state === "current" && <HereHero />}
     </button>
   );
 }

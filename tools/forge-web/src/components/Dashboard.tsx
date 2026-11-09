@@ -4,6 +4,8 @@ import { FormEvent, ReactNode, useState } from "react";
 import { api } from "../api";
 import type { DashboardData } from "../types";
 import { ConfirmDialog } from "./ConfirmDialog";
+import { useHero } from "./rpg/hero";
+import { Sprite } from "./rpg/Sprite";
 
 type Props = {
   data: DashboardData;
@@ -58,6 +60,7 @@ export function Dashboard({ data, onContinue, onRefresh }: Props) {
   return (
     <div className="page-stack">
       <section className="current-band">
+        <CurrentHero />
         <div className="current-copy">
           <span className="eyebrow">Foco atual</span>
           <h2>{data.currentUnit.title}</h2>
@@ -173,6 +176,8 @@ export function Dashboard({ data, onContinue, onRefresh }: Props) {
         </section>
       </div>
 
+      <AdventureLog data={data} />
+
       <section className="utility-bar">
         <div>
           <span className="eyebrow">Portabilidade</span>
@@ -217,6 +222,56 @@ function Metric({
         <strong>{value}</strong>
       </div>
     </article>
+  );
+}
+
+function CurrentHero() {
+  const { hero } = useHero();
+  return (
+    <div className="current-hero" aria-hidden="true">
+      <Sprite name={hero} anim="run" width={16} height={28} scale={3} fps={8} />
+    </div>
+  );
+}
+
+type LogEntry = { key: string; day: string; tone: "lv" | "ok" | "info"; text: string };
+
+/** Console de aventura: unidades concluídas e sessões, do mais novo ao mais antigo. */
+function AdventureLog({ data }: { data: DashboardData }) {
+  const entries: LogEntry[] = [
+    ...data.units
+      .filter((unit) => unit.completedAt)
+      .map((unit) => ({
+        key: `u-${unit.id}`,
+        day: unit.completedAt!.slice(0, 10),
+        tone: "lv" as const,
+        text: `Unidade concluída: ${unit.id.toUpperCase()} · ${unit.title}`,
+      })),
+    ...data.recentSessions.map((session) => ({
+      key: `s-${session.id}`,
+      day: session.date.slice(0, 10),
+      tone: "info" as const,
+      text: `Sessão de ${session.minutes} min em ${session.unitId.toUpperCase()}: ${session.summary}`,
+    })),
+  ]
+    .sort((a, b) => b.day.localeCompare(a.day))
+    .slice(0, 10);
+
+  return (
+    <section className="adventure-log" aria-labelledby="adventure-log-title">
+      <h3 id="adventure-log-title">Diário de aventura</h3>
+      {entries.length ? (
+        <ol>
+          {entries.map((entry) => (
+            <li key={entry.key} className={`is-${entry.tone}`}>
+              <time>{formatDate(entry.day)}</time> {entry.text}
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p>Nenhum feito registrado ainda. Sua primeira missão aparece aqui.</p>
+      )}
+    </section>
   );
 }
 

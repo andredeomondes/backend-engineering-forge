@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Press+Start+2P&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=VT323&display=swap");
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 
@@ -81,7 +81,7 @@
   body {
     background: var(--background);
     color: var(--foreground);
-    font-family: "Press Start 2P", ui-monospace, monospace;
+    font-family: "Jersey 10", ui-monospace, monospace;
   }
 }
 

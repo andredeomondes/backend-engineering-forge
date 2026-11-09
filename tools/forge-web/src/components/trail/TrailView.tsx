@@ -112,7 +112,7 @@ export function TrailView({ onOpenUnit, onChanged }: Props) {
 
   return (
     <div className="page-stack trail-page">
-      <CharacterSheet sheet={trail.sheet} />
+      <CharacterSheet sheet={trail.sheet} nodes={trail.nodes} />
       <div className="trail-layout">
         <TrailTree
           levels={trail.levels}

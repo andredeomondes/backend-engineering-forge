@@ -1,6 +1,7 @@
 import type { KeyboardEvent } from "react";
 
 import type { Mission, MissionStatus } from "../../types";
+import { Sprite } from "../rpg/Sprite";
 import {
   STATUS_LABEL,
   groupLabel,
@@ -75,6 +76,12 @@ export function QuestLog({ missions, selectedId, onSelect }: Props) {
         >
           <i style={{ width: `${percent}%` }} />
         </div>
+        {missions.length > 0 && done === missions.length && (
+          <div className="quest-chest" aria-hidden="true">
+            <img className="sprite" src="/sprites/chest_full_open_anim_f2.png" alt="" width={32} height={32} />
+            <span>Baú liberado</span>
+          </div>
+        )}
       </div>
 
       {missions.length === 0 ? (
@@ -88,6 +95,16 @@ export function QuestLog({ missions, selectedId, onSelect }: Props) {
                 <h4 className="quest-group-title">
                   {groupLabel(group)} · {groupDone}/{items.length}
                 </h4>
+                {isBossGroup(group) && (
+                  <div className="quest-boss" aria-hidden="true">
+                    {groupDone === items.length ? (
+                      <img className="sprite" src="/sprites/skull.png" alt="" width={32} height={32} />
+                    ) : (
+                      <Sprite name="big_demon" width={32} height={36} scale={2} fps={5} />
+                    )}
+                    <span>{groupDone === items.length ? "Chefão derrotado" : "Chefão à espreita"}</span>
+                  </div>
+                )}
                 <ul>
                   {items.map((mission) => {
                     const selected = mission.id === selectedId;

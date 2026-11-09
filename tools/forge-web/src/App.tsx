@@ -13,6 +13,8 @@ import { api } from "./api";
 import { Dashboard } from "./components/Dashboard";
 import { PomodoroWidget } from "./components/PomodoroWidget";
 import { ProgressView } from "./components/ProgressView";
+import { useHero } from "./components/rpg/hero";
+import { Sprite } from "./components/rpg/Sprite";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { TrailView } from "./components/trail/TrailView";
 import { UnitView } from "./components/UnitView";
@@ -127,8 +129,8 @@ export function App() {
     <div className={`app-shell ${collapsed ? "sidebar-collapsed" : ""}`}>
       <aside className="sidebar">
         <div className="brand">
-          <span className="brand-mark">
-            <Flame size={20} fill="currentColor" />
+          <span className="brand-mark mmo-brand-hero">
+            <SidebarHero />
           </span>
           <div>
             <strong>Backend Engineering</strong>
@@ -220,6 +222,11 @@ export function App() {
       <PomodoroWidget unitId={data.currentUnit.id} onLogged={refresh} />
     </div>
   );
+}
+
+function SidebarHero() {
+  const { hero, label } = useHero();
+  return <Sprite name={hero} width={16} height={28} scale={2} label={label} />;
 }
 
 function pageLabel(page: Page) {
