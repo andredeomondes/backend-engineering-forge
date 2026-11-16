@@ -5,6 +5,8 @@
 Formação backend-first, orientada a projetos, com um painel local em estilo RPG
 para acompanhar unidades, testes, dicas e revisões.
 
+![Java](https://img.shields.io/badge/Java-21+-b07219?logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/Spring_Boot-3-6db33f?logo=springboot&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-24-3c873a?logo=nodedotjs&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=black)
@@ -41,23 +43,11 @@ para acompanhar unidades, testes, dicas e revisões.
 
 | | | |
 | --- | --- | --- |
-| <img src="docs/assets/icons/book-open.svg" width="20" alt=""> | **Currículo** | 28 fases (0–27), de JavaScript até confiabilidade e sistemas distribuídos. |
-| <img src="docs/assets/icons/flask-conical.svg" width="20" alt=""> | **Exercícios com testes** | Cada unidade tem aula em Markdown, um `exercises.js` para implementar e um `exercises.test.js` que valida. |
+| <img src="docs/assets/icons/book-open.svg" width="20" alt=""> | **Currículo** | 28 fases com TicketAtlas em TypeScript, LedgerFlow em Java/Spring, React web e inglês falado. |
+| <img src="docs/assets/icons/flask-conical.svg" width="20" alt=""> | **Exercícios com testes** | Cada unidade tem aula em Markdown, código para implementar e testes que validam (`node --test` para JS/TS, JUnit 5 via Maven para Java). |
 | <img src="docs/assets/icons/terminal.svg" width="20" alt=""> | **Ferramentas locais** | CLI e painel web que registram sessões, rodam testes, liberam dicas, marcam progresso e agendam revisões. |
 
-Divisão de tempo e ordem dos temas:
-
-```text
-80% backend e engenharia de software · 20% frontend para capacidade full-stack
-
-JavaScript → TypeScript → Node.js → HTTP → PostgreSQL/SQL
-→ API com framework leve → NestJS → autenticação/autorização/segurança
-→ Redis, filas e integrações → arquitetura e qualidade
-→ Docker, CI/CD, AWS e observabilidade → React/Vite + integração real → Tailwind CSS
-→ projeto full-stack
-```
-
-Microsserviços, Kubernetes e frontend ficam para depois da base.
+A sequência de prática está no [roteiro de 180 dias](docs/curriculum/study-sessions.md).
 
 ## Painel
 
@@ -67,7 +57,7 @@ equipamento por tecnologia e registro de eventos.
 
 ### <img src="docs/assets/icons/map.svg" width="20" alt=""> Trilha
 
-Ficha do personagem com nível (LV1 Júnior em construção até LV4 Sênior), XP
+Ficha do personagem com nível (Nível 0 Fundamentos até Nível 4 Engenharia sênior), XP
 da formação, slots de equipamento que acendem conforme você avança em cada
 tecnologia e skills em porcentagem. Abaixo, a árvore das 28 fases, com o
 herói no nó atual. Cada fase abre um painel com o perfil daquele estágio, o
@@ -115,7 +105,7 @@ navegação fica na barra inferior.
 
 Regras de progresso:
 
-- Toda unidade, fase, projeto e a trilha Java ficam abertos. O progresso é
+- Toda unidade, fase e projeto ficam abertos. O progresso é
   marcado livremente.
 - Gate é conquista, não bloqueio: suíte verde, reflexão de pelo menos 30
   caracteres e confiança 3 ou mais rendem um selo.
@@ -125,25 +115,25 @@ Regras de progresso:
 
 ## Estado atual
 
-Retrato de 2026-11-09. O estado narrativo oficial fica em
+Retrato de 2026-11-13. O estado narrativo oficial fica em
 [`PROGRESS.md`](PROGRESS.md) e as marcações do painel em `.forge/forge.db`.
 Se este bloco divergir, valem essas fontes.
 
 | Frente | Situação |
 | --- | --- |
 | Fase 0 — Ambiente e fundamentos da Web | Em andamento: repositório, lint, testes e painel prontos; tópicos conceituais pendentes |
-| Fase 1 — JavaScript profundo | Em andamento: unidades 1–8 concluídas, unidade 9 (map/filter/reduce) ativa, 10–27 geradas |
-| Fase 2 — TypeScript | Disponível: 8/8 unidades geradas |
-| Fase 3 — Node.js | Disponível: 7 unidades preparadas |
-| Fase 4 — SQL e PostgreSQL | Disponível: 8/8 unidades, ambiente Docker e Projeto 4 preparados |
+| Fase 1 — JavaScript essencial | Em andamento: unidades 1–8 concluídas, unidade 9 ativa; 17 essenciais, 10 opcionais |
+| Fase 2 — Java base | Disponível: 3 unidades prontas (Maven + JUnit 5) |
+| Fase 3 — SQL e PostgreSQL | Disponível: 8/8 unidades e ambiente Docker |
+| Fases 4–11 — LedgerFlow | Catálogo e marcos Java definidos |
 | Fase 12 — DSA em paralelo | Em andamento: sessão 01 (Big O e arrays) entregue, aguardando tentativa |
 | Project 01 — Order Workbench CLI | Concluído: 12/12 testes, retrospectiva e explicação oral |
 | Project 04 — Marketplace Database Lab | Disponível: material preparado |
-| Trilha poliglota (Java, .NET, Go) | Disponível: nenhuma selecionada |
+| Trilhas opcionais (.NET, Go) | Disponíveis: nenhuma selecionada |
 
 Números:
 
-- 51 unidades catalogadas (27 JS, 8 TS, 7 Node, 8 SQL, 1 DSA).
+- 54 unidades catalogadas (27 JS, 3 Java, 8 SQL, 8 TS, 7 Node, 1 DSA).
 - 8/51 unidades concluídas; personagem em LV1, Fase 1, XP 3%.
 - Suíte de sistema: 74/74 testes (`npm run test:system`).
 - Autonomia: 83% (baseada no nível de dica revelado).
@@ -165,7 +155,7 @@ Regras completas do método e da mentoria em
 
 ## Como rodar
 
-Requer Node.js 24 ou superior.
+Requer Node.js 24 ou superior. Para as unidades Java (Fase 2 em diante): JDK 21+ e Maven 3.9+.
 
 ```bash
 npm install
@@ -187,7 +177,7 @@ na primeira execução.
 | `npm run forge -- <comando>` | CLI |
 | `npm run lint` / `typecheck` / `format` | qualidade do código |
 | `npm run build:web` | build do painel |
-| `npm run sql:up` / `sql:down` / `sql:test` | PostgreSQL em Docker (Fase 4) |
+| `npm run sql:up` / `sql:down` / `sql:test` | PostgreSQL em Docker (Fase 3) |
 
 ## CLI
 
@@ -220,29 +210,19 @@ Unidades concluídas: 8/51
 
 ## Roadmap
 
-```text
-PARTE I   — Backend Foundations              (Fases 0-3)
-PARTE II  — Professional Backend Engineering (Fases 4-8)
-PARTE III — Production Backend Engineering   (Fases 9-14, até Pleno + full-stack capability)
-PARTE IV  — Senior Backend Engineering       (Fases 15-27, após Pleno)
-```
+Abra **Roteiro** no painel para navegar pelos [180 dias de estudo](docs/curriculum/study-sessions.md).
+O TicketAtlas usa TypeScript, Express, NestJS e React. O LedgerFlow usa
+Java/Spring. Cada dia tem 20 minutos de inglês por voz e um prompt para copiar.
+MuleSoft/Salesforce é uma extensão opcional do TicketAtlas.
 
-Sequência: Fundamentos, Backend Engineering, Backend Pleno, Full-stack
-capability (React, Vite, TanStack Query, React Hook Form e Zod integrados à
-API NestJS; Next.js como módulo opcional na Fase 13.6), Production
-Engineering, Reliability Engineering, Distributed Systems e Senior Backend
-Engineering.
-
-A Parte IV cobre responsabilidade por sistemas em produção: performance,
-confiabilidade, segurança, sistemas distribuídos, operação, incidentes,
-arquitetura e liderança técnica. Tabela fase a fase em
+Os [cinco níveis de competência](docs/curriculum/competency-levels.md) agrupam
+as fases por evidência. O [catálogo de projetos](projects/README.md) organiza
+as entregas de Java, NestJS, React e GCP. Tabela fase a fase em
 [`ROADMAP.md`](ROADMAP.md); índice completo em
 [`BACKEND_ENGINEERING_FORGE.md`](BACKEND_ENGINEERING_FORGE.md).
 
-Trilha poliglota opcional: Java/Spring, C#/.NET ou Go podem ser ativados a
-qualquer momento. TypeScript, Node.js e NestJS seguem como formação
-principal, numa divisão de cerca de 70%/30% depois da escolha. Detalhes em
-[`docs/tracks/POLYGLOT_BACKEND_TRACK.md`](docs/tracks/POLYGLOT_BACKEND_TRACK.md).
+Trilhas opcionais: C#/.NET ou Go podem ser ativados a qualquer momento.
+Detalhes em [`docs/tracks/POLYGLOT_BACKEND_TRACK.md`](docs/tracks/POLYGLOT_BACKEND_TRACK.md).
 
 ## Arquitetura do painel
 

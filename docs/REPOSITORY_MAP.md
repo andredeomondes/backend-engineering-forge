@@ -5,10 +5,12 @@
 | Informação | Fonte |
 |---|---|
 | Estado atual | `PROGRESS.md` |
-| Ordem, status e bloqueios | `ROADMAP.md` |
+| Ordem e referências por fase | `ROADMAP.md` |
+| Sequência diária | [Roteiro de 180 dias](curriculum/study-sessions.md) |
 | Competência demonstrada | `SKILLS_MATRIX.md` |
 | Regras de estudo | `LEARNING_CONTRACT.md` |
-| Currículo | `docs/curriculum/` |
+| Currículo | [Níveis de competência](curriculum/competency-levels.md) |
+| Projetos e portfólio | [Catálogo](../projects/README.md) |
 | Decisão arquitetural | `docs/adr/` |
 
 O README apresenta o projeto, mas não deve repetir detalhes voláteis do
@@ -32,12 +34,14 @@ Pastas vazias não devem ser criadas apenas para completar uma árvore ideal.
 
 ## Convenções de descoberta
 
-- IDs são estáveis: `js-05`, `ts-01`, `JAVA-01`, `project-01-order-workbench`.
+- IDs são estáveis: `js-05`, `java-01`, `ts-01`, `JAVA-01`, `project-02-ledgerflow`.
+- Unidades Java ficam num projeto Maven único (`exercises/13-java-core`): enunciado
+  em `units/unit-NN-*/`, código em `src/main/java`, testes em `src/test/java`.
 - Pastas usam inglês e `kebab-case`.
 - Documentos podem ser escritos em português.
 - Cada unidade e projeto começa com frontmatter contendo `id`, `title`, estado,
   estimativa e condição de liberação.
-- Termos pesquisáveis como `Fase 9`, `JAVA-01` e `TicketAtlas` devem aparecer
+- Termos pesquisáveis como `Fase 4`, `JAVA-01` e `LedgerFlow` devem aparecer
   literalmente; não invente aliases.
 
 ## Materialização progressiva

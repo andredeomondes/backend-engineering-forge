@@ -1,6 +1,21 @@
 # Java com Spring
 
-Estado: `disponível`.
+Estado: **trilha principal** (ADR 0002). Não é mais opcional nem depende da Fase 9.
+
+Mapa dos módulos na cronologia atual:
+
+| Módulo | Fase | Onde |
+|---|---|---|
+| `JAVA-01` | 2 | `exercises/13-java-core` (java-01..03 e seguintes) |
+| `JAVA-02` | 2 | Maven/JUnit no próprio `exercises/13-java-core` |
+| `JAVA-03`, `JAVA-04` | 4 | LedgerFlow M1 |
+| `JAVA-05`, `JAVA-06` | 5 e 4 | LedgerFlow M1–M2 (segurança e testes) |
+| `JAVA-07` | 7 | LedgerFlow M3 (async e mensageria) |
+| `JAVA-08` | 10 | LedgerFlow M6 (produção) |
+| `JAVA-09` | 9 | comparativo com NestJS |
+
+Os pré-requisitos "Fase 9 concluída e trilha selecionada" abaixo são da
+versão anterior e não valem mais; o restante do catálogo segue válido.
 
 Padrão da trilha: JDK LTS suportado no momento da liberação, Maven como build
 tool inicial, Spring Boot, PostgreSQL e Testcontainers. Versões são confirmadas

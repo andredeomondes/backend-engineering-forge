@@ -1,6 +1,8 @@
 import {
   BookOpenText,
+  CalendarCheck,
   ChartNoAxesColumnIncreasing,
+  ListChecks,
   ChevronLeft,
   ChevronRight,
   Flame,
@@ -13,6 +15,7 @@ import { api } from "./api";
 import { Dashboard } from "./components/Dashboard";
 import { PomodoroWidget } from "./components/PomodoroWidget";
 import { ProgressView } from "./components/ProgressView";
+import { RoadmapView } from "./components/RoadmapView";
 import { useHero } from "./components/rpg/hero";
 import { Sprite } from "./components/rpg/Sprite";
 import { ThemeToggle } from "./components/ThemeToggle";
@@ -22,12 +25,14 @@ import { Button } from "./components/ui/8bit/button";
 import { sfx } from "./lib/sound";
 import type { DashboardData } from "./types";
 
-type Page = "dashboard" | "unit" | "trail" | "progress";
+type Page = "dashboard" | "today" | "unit" | "trail" | "roadmap" | "progress";
 
 const navigation = [
   { id: "dashboard" as const, label: "Dashboard", icon: LayoutDashboard },
+  { id: "today" as const, label: "Dia atual", icon: CalendarCheck },
   { id: "unit" as const, label: "Unidade", icon: BookOpenText },
   { id: "trail" as const, label: "Trilha", icon: Map },
+  { id: "roadmap" as const, label: "Roteiro", icon: ListChecks },
   { id: "progress" as const, label: "Progresso", icon: ChartNoAxesColumnIncreasing },
 ];
 
@@ -197,8 +202,14 @@ export function App() {
           {page === "unit" && (
             <UnitView key="unit" unitId={data.currentUnit.id} onChanged={refresh} />
           )}
+          {page === "today" && (
+            <RoadmapView key="today" mode="today" units={data.units} onOpenUnit={selectUnit} />
+          )}
           {page === "trail" && (
             <TrailView key="trail" onOpenUnit={selectUnit} onChanged={refresh} />
+          )}
+          {page === "roadmap" && (
+            <RoadmapView key="roadmap" units={data.units} onOpenUnit={selectUnit} />
           )}
           {page === "progress" && (
             <ProgressView key="progress" data={data} onSelect={selectUnit} />

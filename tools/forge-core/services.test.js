@@ -14,7 +14,7 @@ test("qualquer unidade pode virar foco", () => {
   assert.ok(dashboard.phases.every((p) => p.status !== "locked"));
   assert.ok(dashboard.projects.every((p) => p.status === "available"));
   assert.ok(dashboard.polyglotTracks.every((t) => t.status === "available"));
-  assert.equal(dashboard.phases.find((p) => p.number === 2).status, "active");
+  assert.equal(dashboard.phases.find((p) => p.number === 6).status, "active");
 });
 
 test("marcar todas as missões conclui a unidade e agenda revisões", () => {

@@ -4,6 +4,7 @@ import matter from "gray-matter";
 
 import {
   DSA_UNITS_PATH,
+  JAVA_UNITS_PATH,
   JAVASCRIPT_UNITS_PATH,
   NODE_UNITS_PATH,
   PROJECTS_PATH,
@@ -12,13 +13,27 @@ import {
   TYPESCRIPT_UNITS_PATH,
 } from "./paths.js";
 
+// Fase de cada trilha na cronologia Java-first (ver ROADMAP.md e ADR 0002).
 const TRACK_CONFIG = {
   javascript: { prefix: "js", phase: 1, extension: "js" },
-  typescript: { prefix: "ts", phase: 2, extension: "ts" },
-  node: { prefix: "node", phase: 3, extension: "ts" },
-  sql: { prefix: "sql", phase: 4, extension: "sql" },
+  java: { prefix: "java", phase: 2, extension: "java" },
+  sql: { prefix: "sql", phase: 3, extension: "sql" },
+  typescript: { prefix: "ts", phase: 6, extension: "ts" },
+  node: { prefix: "node", phase: 9, extension: "ts" },
   dsa: { prefix: "dsa", phase: 12, extension: "js" },
 };
+
+// Unidades Java vivem num projeto Maven único: o código fica em src/ e test/ do
+// módulo, não ao lado do README. Ex.: java-01 -> Unit01Exercises.java.
+function javaUnitFiles(number) {
+  const className = `Unit${String(number).padStart(2, "0")}Exercises`;
+  const base = path.join(JAVA_UNITS_PATH, "src");
+  return {
+    className,
+    exercisePath: path.join(base, "main", "java", "forge", "java", `${className}.java`),
+    testPath: path.join(base, "test", "java", "forge", "java", `${className}Test.java`),
+  };
+}
 
 function titleFromMarkdown(markdown, fallback) {
   return markdown.match(/^#\s+(.+)$/m)?.[1]?.trim() || fallback;
@@ -130,10 +145,10 @@ function readUnit(root, directoryName, track) {
   const { prefix, phase, extension } = TRACK_CONFIG[track];
   const hintsPath = path.join(directory, "hints.md");
   const hintsRaw = existsSync(hintsPath) ? readFileSync(hintsPath, "utf8") : "";
-  const exercisePath = path.join(
-    directory,
-    track === "sql" ? "exercises.sql" : `exercises.${extension}`,
-  );
+  const javaFiles = track === "java" ? javaUnitFiles(number) : null;
+  const exercisePath =
+    javaFiles?.exercisePath ??
+    path.join(directory, track === "sql" ? "exercises.sql" : `exercises.${extension}`);
   const exerciseRaw = existsSync(exercisePath) ? readFileSync(exercisePath, "utf8") : "";
   const { missions, missionsPath } = readMissions(directory);
   const baseExercises =
@@ -150,10 +165,13 @@ function readUnit(root, directoryName, track) {
     prerequisites: parsed.data.prerequisites || [],
     directory,
     readmePath,
-    testPath: path.join(
-      directory,
-      track === "sql" ? "checks.sql" : `exercises.test.${extension}`,
-    ),
+    testPath:
+      javaFiles?.testPath ??
+      path.join(
+        directory,
+        track === "sql" ? "checks.sql" : `exercises.test.${extension}`,
+      ),
+    javaClass: javaFiles?.className ?? null,
     exercisePath,
     markdown: parsed.content,
     exercises: mergeMissions(baseExercises, missions, missionsPath),
@@ -165,7 +183,7 @@ function readUnit(root, directoryName, track) {
 function scanRoot(root, track) {
   if (!existsSync(root)) return [];
   return readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
+    .filter((entry) => entry.isDirectory() && /^(?:unit|session)-\d+/.test(entry.name))
     .map((entry) => readUnit(root, entry.name, track))
     .filter(Boolean)
     .sort((a, b) => a.number - b.number);
@@ -174,9 +192,10 @@ function scanRoot(root, track) {
 export function listUnits() {
   return [
     ...scanRoot(JAVASCRIPT_UNITS_PATH, "javascript"),
+    ...scanRoot(path.join(JAVA_UNITS_PATH, "units"), "java"),
+    ...scanRoot(SQL_UNITS_PATH, "sql"),
     ...scanRoot(TYPESCRIPT_UNITS_PATH, "typescript"),
     ...scanRoot(NODE_UNITS_PATH, "node"),
-    ...scanRoot(SQL_UNITS_PATH, "sql"),
     ...scanRoot(DSA_UNITS_PATH, "dsa"),
   ];
 }
@@ -221,14 +240,9 @@ export function listPhases() {
   });
 }
 
+// Java virou trilha principal (Fases 2, 4 e 5); restam .NET e Go como opcionais.
 export function listPolyglotTracks() {
   return [
-    {
-      id: "java",
-      title: "Java + Spring",
-      modules: "JAVA-01–JAVA-09",
-      status: "available",
-    },
     {
       id: "dotnet",
       title: "C# + .NET",

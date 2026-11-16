@@ -1,3 +1,9 @@
+
+> **Renumeração Java-first (2026-11-13, ADR 0002).** Este documento usa a
+> numeração anterior e continua valendo como referência de conteúdo. A ordem e as
+> fases atuais estão em [`ROADMAP.md`](../../ROADMAP.md), que traz a tabela de
+> equivalência completa. Aqui: 4 SQL → 3, 5 Express → absorvida (4 e 9), 6 NestJS → 9, 7 Auth → 5, 8 Redis/filas → 7.
+
 ## Fase 4 — SQL e PostgreSQL de verdade
 
 Não permitir que o ORM esconda esta fase.

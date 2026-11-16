@@ -12,7 +12,7 @@ const isChecked = (itemId) => db.listTopicChecks().some((row) => row.itemId === 
 test("export → restore preserva missão manual e tópico marcado", () => {
   const missionId = services.getUnitDetail("js-09").missions[0].id;
   services.markMission("js-09", missionId, true);
-  services.setTrailItem("f05-idempotencia", true);
+  services.setTrailItem("f04-transacional", true);
 
   const backup = JSON.parse(JSON.stringify(services.exportData()));
   assert.ok(Array.isArray(backup.exerciseProgress));
@@ -20,26 +20,26 @@ test("export → restore preserva missão manual e tópico marcado", () => {
 
   // O estado muda depois do backup; o restore deve voltar ao exportado.
   services.markMission("js-09", missionId, false);
-  services.setTrailItem("f05-idempotencia", false);
-  services.setTrailItem("f06-swagger-serializacao", true);
+  services.setTrailItem("f04-transacional", false);
+  services.setTrailItem("f05-jwt-filtro", true);
 
   services.importData(backup);
   assert.equal(services.getUnitDetail("js-09").missions[0].status, "manual");
-  assert.equal(isChecked("f05-idempotencia"), true);
-  assert.equal(isChecked("f06-swagger-serializacao"), false);
+  assert.equal(isChecked("f04-transacional"), true);
+  assert.equal(isChecked("f05-jwt-filtro"), false);
 });
 
 test("backup antigo (sem missões/tópicos) restaura e mantém as linhas atuais", () => {
   const missionId = services.getUnitDetail("js-09").missions[0].id;
   services.markMission("js-09", missionId, true);
-  services.setTrailItem("f05-openapi", true);
+  services.setTrailItem("f04-flyway-migrations", true);
 
   const { exerciseProgress, topicChecks, ...oldBackup } = services.exportData();
   assert.ok(exerciseProgress && topicChecks);
 
   assert.doesNotThrow(() => services.importData(oldBackup));
   assert.equal(services.getUnitDetail("js-09").missions[0].status, "manual");
-  assert.equal(isChecked("f05-openapi"), true);
+  assert.equal(isChecked("f04-flyway-migrations"), true);
 });
 
 test("backup antigo com unidade concluída mostra as missões passadas", () => {

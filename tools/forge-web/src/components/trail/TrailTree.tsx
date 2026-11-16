@@ -79,13 +79,8 @@ function NodeStack({
 }) {
   return (
     <ol className="trail-stack">
-      {nodes.map((node, index) => (
+      {nodes.map((node) => (
         <li key={node.id}>
-          {index > 0 && (
-            <span className="trail-arrow" aria-hidden="true">
-              ▼
-            </span>
-          )}
           <NodeButton
             node={node}
             selected={node.id === selectedId}
@@ -101,9 +96,8 @@ function NodeStack({
 export function TrailTree({ levels, nodes, selectedId, onSelect }: Props) {
   const byPhase = new Map<number, TrailNode>();
   for (const node of nodes) {
-    if (node.kind === "phase" && node.phase !== null) byPhase.set(node.phase, node);
+    if (node.kind === "phase") byPhase.set(node.phase, node);
   }
-  const java = nodes.filter((node) => node.kind === "java");
   const dsa = nodes.find((node) => node.kind === "dsa");
 
   return (
@@ -124,7 +118,7 @@ export function TrailTree({ levels, nodes, selectedId, onSelect }: Props) {
           </li>
           <li>
             <i className="lg-side" aria-hidden="true" />
-            java · dsa
+            dsa
           </li>
         </ul>
       </header>
@@ -143,10 +137,10 @@ export function TrailTree({ levels, nodes, selectedId, onSelect }: Props) {
               )}
               <section
                 className="trail-group"
-                aria-label={`${level.id.toUpperCase()} · ${level.name}`}
+                aria-label={`${level.name}`}
               >
                 <h4 className="trail-group-title">
-                  {level.id.toUpperCase()} · {level.name.toUpperCase()}
+                  {level.name.toUpperCase()}
                 </h4>
                 <NodeStack
                   nodes={levelNodes}
@@ -171,17 +165,6 @@ export function TrailTree({ levels, nodes, selectedId, onSelect }: Props) {
           </div>
         )}
 
-        {java.length > 0 && (
-          <div className="trail-area trail-area-java">
-            <span className="trail-side-link" aria-hidden="true">
-              da fase 09
-            </span>
-            <section className="trail-group is-side" aria-label="Side quest · Java">
-              <h4 className="trail-group-title">SIDE QUEST · JAVA</h4>
-              <NodeStack nodes={java} selectedId={selectedId} onSelect={onSelect} />
-            </section>
-          </div>
-        )}
       </div>
     </section>
   );

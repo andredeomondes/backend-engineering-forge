@@ -1,5 +1,10 @@
 # 34. Trilha de Estruturas de Dados e Algoritmos para Entrevistas Internacionais
 
+> **Atualização 2026-11-13 (ADR 0002):** DSA é praticado em JavaScript até a
+> Fase 2 e depois em Java, a linguagem das entrevistas-alvo. Onde este texto
+> diz "sempre em TypeScript", leia "em Java". Renumeração Java-first em
+> [`ROADMAP.md`](../../ROADMAP.md).
+
 Esta trilha deve ser executada **em paralelo**, sem substituir projetos backend,
 banco de dados, testes, segurança ou System Design.
 

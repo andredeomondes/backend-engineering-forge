@@ -1,6 +1,6 @@
 # ADR 0001 — Estado da seleção poliglota
 
-- Status: aceita
+- Status: substituída pela [ADR 0002](0002-java-spring-main-stack.md)
 - Data: 2026-08-16
 
 ## Contexto

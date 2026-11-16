@@ -21,16 +21,14 @@ export function pad2(value: number) {
   return String(value).padStart(2, "0");
 }
 
-/** Short code shown before the node name: "01", "12", "JAVA 01–03". */
+/** Short code shown before the node name: "01", "12". */
 export function nodeCode(node: TrailNode) {
-  if (node.kind === "java") return node.title.split(" · ")[0];
-  return node.phase === null ? "" : pad2(node.phase);
+  return pad2(node.phase);
 }
 
 export function nodeLevelTag(node: TrailNode, levels: TrailData["levels"]) {
-  if (node.kind === "java") return "SIDE QUEST · JAVA";
   if (node.kind === "dsa") return "PARALELO · DSA";
   const level = levels.find((candidate) => candidate.id === node.level);
   if (!level) return "";
-  return `${level.id.toUpperCase()} · ${level.name.toUpperCase()}`;
+  return level.name.toUpperCase();
 }

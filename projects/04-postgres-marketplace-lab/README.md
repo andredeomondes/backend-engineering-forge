@@ -8,7 +8,7 @@ estimatedHours: 24
 
 # Projeto 4 — Marketplace Database Lab
 
-Estado: `BLOQUEADO — libera após o gate de sql-08`.
+Estado: `disponível` — sugerido após `sql-08` (Fase 3).
 
 Projete o banco de um marketplace de pedidos sem ORM. O projeto consolida
 modelagem, consultas, transações, concorrência, índices, migrations, segurança

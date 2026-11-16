@@ -1,8 +1,10 @@
 # Backend Engineering Forge
 
-Formação backend-first, orientada a projetos, para desenvolver competências
-profissionais com TypeScript, Node.js, NestJS, PostgreSQL, segurança, cloud e
-engenharia de produção.
+Formação orientada a projetos com dois backends. A sequência de estudo começa
+com TypeScript, Node, Express e React no TicketAtlas, evolui com NestJS e inclui
+Java/Spring no LedgerFlow. O roteiro inclui inglês falado e uma extensão
+opcional de integração com MuleSoft e Salesforce.
+Siga o [Roteiro de 180 dias](docs/curriculum/study-sessions.md) no painel.
 
 Este arquivo é o índice canônico da formação. O conteúdo foi dividido por
 responsabilidade para que pessoas, ferramentas e agentes de IA carreguem apenas
@@ -14,37 +16,30 @@ o contexto necessário para cada tarefa.
 
 ## Estrutura da formação
 
+Ordem e numeração atuais: [`ROADMAP.md`](ROADMAP.md) (ADR
+[`0002`](docs/adr/0002-java-spring-main-stack.md)).
+
 | Parte | Escopo | Documento |
 |---|---|---|
-| Visão geral | identidade, princípios, estrutura e stack | [`docs/curriculum/overview.md`](docs/curriculum/overview.md) |
-| Parte I | Fases 0–3 — fundamentos | [`docs/curriculum/foundations.md`](docs/curriculum/foundations.md) |
-| Parte II | Fases 4–8 — backend profissional | [`docs/curriculum/professional-backend.md`](docs/curriculum/professional-backend.md) |
-| Parte III | Fases 9–14 — arquitetura, produção e full-stack | [`docs/curriculum/production-backend.md`](docs/curriculum/production-backend.md) |
-| Parte IV | Fases 15–27 — engenharia sênior | [`docs/curriculum/senior-backend.md`](docs/curriculum/senior-backend.md) |
+| Níveis | diagnóstico, competências e ritmos | [Currículo por competências](docs/curriculum/competency-levels.md) |
+| Parte I | Fases 0–3 — JS essencial, Java base, SQL | [`docs/curriculum/foundations.md`](docs/curriculum/foundations.md) + [`java-spring.md`](docs/curriculum/java-spring.md) |
+| Parte II | Fases 4–6 — Spring Boot, segurança, deploy, React | [`docs/curriculum/java-spring.md`](docs/curriculum/java-spring.md) |
+| Parte III | Fases 7–12 — mensageria, automação e RAG em TypeScript, NestJS, cloud, arquitetura, DSA | [`docs/curriculum/platform-and-ai.md`](docs/curriculum/platform-and-ai.md) |
+| Parte IV | Fases 13–25 — engenharia sênior | [`docs/curriculum/senior-backend.md`](docs/curriculum/senior-backend.md) |
+| Referência | conteúdo detalhado na numeração anterior | [`professional-backend.md`](docs/curriculum/professional-backend.md), [`production-backend.md`](docs/curriculum/production-backend.md) |
 | Método | sessões, gates, anotações e mentoria | [`docs/curriculum/learning-method.md`](docs/curriculum/learning-method.md) |
 | Entrevistas | DSA, System Design e behavioral | [`docs/curriculum/interview-preparation.md`](docs/curriculum/interview-preparation.md) |
 
 ## Sequência principal
 
 ```text
-Fases 0–8
-→ Fase 9 e seu gate
-→ TRILHA PARALELA OPCIONAL — Polyglot Backend Engineering
-→ Fases 10–27 continuam como formação principal
+JS, TS, Node e SQL em rotação → TicketAtlas com Express, React e NestJS
+→ Java Core e LedgerFlow com Spring em paralelo à prática em TypeScript
+→ automação e RAG no TicketAtlas → qualidade do fluxo React web
 ```
 
-A trilha poliglota não substitui nem renumera nenhuma fase. O estudante pode
-escolher uma opção a qualquer momento (o gate da Fase 9 é recomendado):
-
-- Java com Spring;
-- C# com .NET;
-- Go para backend.
-
-Distribuição após a escolha: aproximadamente 70% do tempo no Forge principal e
-30% na especialização escolhida. As três opções estão
-`disponível`.
-
-Regras, seleção e integração: [`docs/tracks/POLYGLOT_BACKEND_TRACK.md`](docs/tracks/POLYGLOT_BACKEND_TRACK.md).
+Trilhas opcionais: C# + .NET e Go, abertas por escolha a qualquer momento
+([`docs/tracks/POLYGLOT_BACKEND_TRACK.md`](docs/tracks/POLYGLOT_BACKEND_TRACK.md)).
 
 ## Fontes de estado
 
@@ -58,26 +53,15 @@ estado atual desses arquivos.
 
 ## Projetos
 
-Os projetos 1–8 desenvolvem capacidades progressivas. A partir do Projeto 9,
-o TicketAtlas torna-se o sistema contínuo da formação:
-
-```text
-Projeto 9  → backend modular do TicketAtlas
-Projeto 10 → deploy, CI/CD e observabilidade
-Projeto 11 → painel administrativo full-stack
-Fase 14    → experiência completa, assentos, checkout e revenda
-Fases 15–27 → laboratório de produção e confiabilidade
-Fase 20    → consumer Kafka na linguagem poliglota escolhida
-```
-
-Projetos são catalogados antecipadamente, mas seus arquivos completos são
-materializados somente perto da liberação. O Projeto 1 é a exceção atual por
-estar próximo do foco de estudo.
+[Catálogo dos oito projetos, rubrica e portfólio](projects/README.md).
+O LedgerFlow reúne os marcos de Java/Spring. A [auditoria](docs/curriculum/audit.md)
+registra a origem da reestruturação. As [leituras por tema](docs/curriculum/resources.md)
+vinculam documentação à prática.
 
 ## Navegação rápida
 
 - Índice documental: [`docs/README.md`](docs/README.md)
 - Mapa do repositório: [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md)
 - Painel local: [`docs/architecture/forge-web-local.md`](docs/architecture/forge-web-local.md)
-- Projeto atual: [`projects/01-order-workbench-cli/README.md`](projects/01-order-workbench-cli/README.md)
+- Projeto central: [`projects/02-ledgerflow/README.md`](projects/02-ledgerflow/README.md)
 - ADRs: [`docs/adr/README.md`](docs/adr/README.md)

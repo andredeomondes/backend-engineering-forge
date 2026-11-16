@@ -1,8 +1,6 @@
 // Pure trail computation: content + unit summaries + topic checks -> TrailData.
-const PHASES_WITH_UNITS = new Set([1, 2, 3, 4, 12]);
-const XP_PHASES = Array.from({ length: 28 }, (_, phase) => phase).filter(
-  (phase) => phase !== 12,
-);
+// Fases e unidades vêm de trilha.json (`units: true`); nada de número fixo aqui.
+const JAVA_PHASE = 2;
 
 function percentOf(done, total) {
   return total === 0 ? 0 : Math.round((100 * done) / total);
@@ -15,24 +13,34 @@ function average(values) {
 }
 
 export function buildNodeItems(node, units, checked) {
-  if (node.phase !== null && PHASES_WITH_UNITS.has(node.phase)) {
-    return units
-      .filter((unit) => unit.phase === node.phase)
-      .sort((a, b) => a.number - b.number)
-      .map((unit) => ({
-        id: unit.id,
-        label: unit.title,
-        kind: "unit",
-        done: unit.status === "completed",
-        unitId: unit.id,
-      }));
-  }
-  return node.items.map((item) => ({
+  const optional = new Set(node.optionalUnits || []);
+  const unitItems = node.units
+    ? units
+        .filter((unit) => unit.phase === node.phase)
+        .sort((a, b) => a.number - b.number)
+        .map((unit) => ({
+          id: unit.id,
+          label: unit.title,
+          kind: "unit",
+          done: unit.status === "completed",
+          unitId: unit.id,
+          optional: optional.has(unit.id),
+        }))
+    : [];
+  const topicItems = node.items.map((item) => ({
     id: item.id,
     label: item.label,
     kind: "topic",
     done: checked.has(item.id),
+    optional: false,
   }));
+  return [...unitItems, ...topicItems];
+}
+
+// Itens opcionais aparecem na trilha, mas não contam para o percentual da fase.
+function nodePercent(items) {
+  const required = items.filter((item) => !item.optional);
+  return percentOf(required.filter((item) => item.done).length, required.length);
 }
 
 export function computeTrail({ content, units, checkedItemIds, currentUnitId }) {
@@ -42,14 +50,16 @@ export function computeTrail({ content, units, checkedItemIds, currentUnitId }) 
 
   const built = content.nodes.map((node) => {
     const items = buildNodeItems(node, units, checked);
-    const done = items.filter((item) => item.done).length;
-    return { node, items, percent: percentOf(done, items.length) };
+    return { node, items, percent: nodePercent(items) };
   });
-  const byPhase = new Map(
-    built.filter((entry) => entry.node.phase !== null).map((e) => [e.node.phase, e]),
-  );
+  const byPhase = new Map(built.map((entry) => [entry.node.phase, entry]));
 
-  const xpPhases = XP_PHASES.map((phase) => byPhase.get(phase)).filter(Boolean);
+  // XP conta as fases principais; DSA (paralela) fica de fora.
+  const xpPhaseNumbers = built
+    .filter((entry) => entry.node.kind === "phase")
+    .map((entry) => entry.node.phase)
+    .sort((a, b) => a - b);
+  const xpPhases = xpPhaseNumbers.map((phase) => byPhase.get(phase));
   const xpPercent = Math.round(average(xpPhases.map((entry) => entry.percent)));
   const phasesDone = xpPhases.filter((entry) => entry.percent === 100).length;
 
@@ -57,7 +67,9 @@ export function computeTrail({ content, units, checkedItemIds, currentUnitId }) 
     content.levels.find((level) => level.phases.includes(phase)) || null;
   let level = levelOfPhase(currentPhase);
   if (!level) {
-    const pending = XP_PHASES.find((phase) => (byPhase.get(phase)?.percent ?? 100) < 100);
+    const pending = xpPhaseNumbers.find(
+      (phase) => (byPhase.get(phase)?.percent ?? 100) < 100,
+    );
     level =
       (pending === undefined ? null : levelOfPhase(pending)) ||
       content.levels[content.levels.length - 1];
@@ -68,12 +80,12 @@ export function computeTrail({ content, units, checkedItemIds, currentUnitId }) 
   const nodes = built.map(({ node, items, percent }) => {
     let state = "todo";
     if (percent === 100) state = "done";
-    else if (node.kind !== "java" && node.phase === currentPhase) state = "current";
+    else if (node.phase === currentPhase) state = "current";
     return {
       id: node.id,
       kind: node.kind,
       phase: node.phase,
-      level: node.phase === null ? null : levelOfPhase(node.phase)?.id || null,
+      level: levelOfPhase(node.phase)?.id || null,
       title: node.title,
       shortTitle: node.shortTitle,
       who: node.who,
@@ -84,7 +96,6 @@ export function computeTrail({ content, units, checkedItemIds, currentUnitId }) 
     };
   });
 
-  const javaNodes = built.filter((entry) => entry.node.kind === "java");
   const currentEntry = byPhase.get(currentPhase);
   const unitsDone = units.filter((unit) => unit.status === "completed").length;
 
@@ -93,11 +104,11 @@ export function computeTrail({ content, units, checkedItemIds, currentUnitId }) 
       className: "Backend Dev",
       level: { id: level.id, name: level.name },
       nextLevel: next
-        ? { id: next.id, name: next.name, firstPhase: Math.min(...next.phases) }
+        ? { id: next.id, name: next.name, firstPhase: next.phases[0] }
         : null,
       xpPercent,
       phasesDone,
-      phasesTotal: 27,
+      phasesTotal: xpPhases.length,
       unitsDone,
       unitsTotal: units.length,
       currentPhase,
@@ -105,8 +116,10 @@ export function computeTrail({ content, units, checkedItemIds, currentUnitId }) 
       remainingInPhase: currentEntry
         ? currentEntry.items.filter((item) => !item.done).length
         : 0,
-      java: { percent: Math.round(average(javaNodes.map((entry) => entry.percent))) },
-      dsa: { percent: byPhase.get(12)?.percent ?? 0 },
+      java: { percent: byPhase.get(JAVA_PHASE)?.percent ?? 0 },
+      dsa: {
+        percent: built.find((entry) => entry.node.kind === "dsa")?.percent ?? 0,
+      },
     },
     levels: content.levels,
     nodes,

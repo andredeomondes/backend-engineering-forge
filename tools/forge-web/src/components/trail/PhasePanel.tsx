@@ -33,6 +33,7 @@ function ItemRow({
         <span className="trail-check" aria-hidden="true" />
         <span className="trail-item-label">
           {item.label}
+          {item.optional && <small className="trail-optional">opcional</small>}
           <span className="sr-only">{item.done ? " (concluída)" : " (pendente)"}</span>
         </span>
         <button
@@ -74,7 +75,8 @@ export function PhasePanel({
   onOpenUnit,
 }: Props) {
   const [confirming, setConfirming] = useState(false);
-  const done = node.items.filter((item) => item.done);
+  const required = node.items.filter((item) => !item.optional);
+  const done = required.filter((item) => item.done);
   const pending = node.items.filter((item) => !item.done);
   // Unidades concluídas nunca reabrem e agendam revisões: o diálogo precisa avisar.
   const pendingUnits = pending.filter((item) => item.kind === "unit").length;
@@ -107,7 +109,7 @@ export function PhasePanel({
         <i style={{ width: `${percent}%` }} />
       </div>
       <span className="trail-panel-pct">
-        {percent}% · {done.length}/{node.items.length}
+        {percent}% · {done.length}/{required.length}
       </span>
 
       {node.who && (

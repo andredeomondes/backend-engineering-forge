@@ -136,11 +136,7 @@ function trailPhasePercents(units, currentUnitId) {
     console.error("[forge] trilha indisponível para o status das fases:", error);
     return new Map();
   }
-  return new Map(
-    trail.nodes
-      .filter((node) => node.phase !== null && node.kind !== "java")
-      .map((node) => [node.phase, node.percent]),
-  );
+  return new Map(trail.nodes.map((node) => [node.phase, node.percent]));
 }
 
 const MIN_REFLECTION_LENGTH = 30;

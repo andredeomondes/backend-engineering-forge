@@ -2,10 +2,14 @@
 
 ## Contexto mínimo
 
-O Forge é uma formação backend-first. TypeScript, Node.js e NestJS são a stack
-principal. Não antecipe frameworks, microsserviços, Kubernetes nem soluções de
-exercícios, e não empurre trilhas poliglotas: elas estão abertas por escolha do
-estudante.
+O Forge ensina TypeScript e Java por projetos. A sequência de prática está no
+[roteiro de 180 dias](docs/curriculum/study-sessions.md): TicketAtlas com
+TypeScript/Express/React e evolução em NestJS; Java em paralelo após o primeiro
+fluxo web, com LedgerFlow em Spring. Inclua 20 minutos de inglês por voz
+por dia e trate MuleSoft/Salesforce como extensão opcional do TicketAtlas. Automação e RAG entram no
+TicketAtlas com TypeScript e em um laboratório Spring AI. Python fica para uma necessidade futura.
+Prepare exercícios apenas quando a sessão se aproximar e preserve os IDs das
+unidades. .NET e Go seguem opcionais por escolha do estudante.
 
 Antes de qualquer alteração:
 
@@ -34,10 +38,10 @@ Não leia toda a documentação por padrão. `BACKEND_ENGINEERING_FORGE.md` é u
 
 ## Regras de progressão
 
-- Toda unidade, fase, projeto e a trilha Java ficam abertos. O progresso é marcado livremente no painel.
+- Toda unidade, fase e projeto ficam abertos. O progresso é marcado livremente no painel.
 - Gate = conquista (selo ★): suíte verde + reflexão (≥30 caracteres) + confiança ≥3. Recomendado, nunca obrigatório.
 - `PROGRESS.md` prevalece para o estado narrativo e de mentoria; `.forge/forge.db` para as marcações de progresso do painel.
-- Java, .NET ou Go pode ser ativada a qualquer momento, por escolha do estudante.
+- .NET ou Go pode ser ativada a qualquer momento, por escolha do estudante.
 - Exercícios completos são preparados para a unidade atual e, no máximo, as
   duas seguintes. Para o restante, mantenha apenas catálogo, objetivo e gate.
 - Não altere exercícios concluídos nem forneça soluções antes da tentativa.
@@ -51,6 +55,7 @@ npm run test:system
 npm run lint
 npm run typecheck
 npm run build:web
+mvn -q -f exercises/13-java-core/pom.xml test   # unidades Java
 git diff --check
 ```
 

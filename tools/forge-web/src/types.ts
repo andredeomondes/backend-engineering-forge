@@ -1,6 +1,6 @@
 export type UnitSummary = {
   id: string;
-  track: "javascript" | "typescript" | "node" | "sql" | "dsa";
+  track: "javascript" | "java" | "sql" | "typescript" | "node" | "dsa";
   phase: number;
   number: number;
   title: string;
@@ -51,7 +51,7 @@ export type DashboardData = {
     status: "completed" | "active" | "available";
   }>;
   polyglotTracks: Array<{
-    id: "java" | "dotnet" | "go";
+    id: "dotnet" | "go";
     title: string;
     modules: string;
     status: "available";
@@ -118,7 +118,7 @@ export type TestResult = {
 
 export type TestResponse = { result: TestResult; unit: UnitDetail; noTests: boolean };
 
-export type TrailLevelId = "lv1" | "lv2" | "lv3" | "lv4";
+export type TrailLevelId = "lv1" | "lv2" | "lv3" | "lv4" | "lv5";
 
 export type TrailItem = {
   id: string;
@@ -126,12 +126,14 @@ export type TrailItem = {
   kind: "unit" | "topic";
   done: boolean;
   unitId?: string;
+  /** Aparece na trilha, mas não conta para o percentual da fase. */
+  optional: boolean;
 };
 
 export type TrailNode = {
   id: string;
-  kind: "phase" | "java" | "dsa";
-  phase: number | null;
+  kind: "phase" | "dsa";
+  phase: number;
   level: TrailLevelId | null;
   title: string;
   shortTitle: string;
@@ -149,7 +151,7 @@ export type TrailData = {
     nextLevel: { id: string; name: string; firstPhase: number } | null;
     xpPercent: number;
     phasesDone: number;
-    phasesTotal: 27;
+    phasesTotal: number;
     unitsDone: number;
     unitsTotal: number;
     currentPhase: number;

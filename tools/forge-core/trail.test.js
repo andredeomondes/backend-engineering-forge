@@ -9,6 +9,7 @@ const services = await import("./services.js");
 test("XP pesa fases igualmente e ignora a Fase 12", () => {
   services.markTrailNode("f00");
   const t = services.getTrail();
+  assert.equal(t.sheet.phasesTotal, 27);
   assert.equal(t.sheet.xpPercent, Math.round(100 / 27));
   assert.equal(t.sheet.phasesDone, 1);
 });
@@ -30,7 +31,7 @@ test("fase 1 lista unidades e nível LV1", () => {
   const t = services.getTrail();
   assert.equal(t.nodes.find((n) => n.id === "f01").items[0].kind, "unit");
   assert.equal(t.sheet.level.id, "lv1");
-  assert.equal(t.sheet.nextLevel.firstPhase, 4);
+  assert.equal(t.sheet.nextLevel.firstPhase, 26);
   assert.equal(t.nodes.find((n) => n.id === "f01").state, "current");
 });
 
@@ -65,4 +66,25 @@ test("setTrailItem recusa id de unidade e done não booleano", () => {
   assert.throws(() => services.setTrailItem("js-01", true));
   const id = services.getTrail().nodes.find((n) => n.id === "f06").items[0].id;
   assert.throws(() => services.setTrailItem(id, "yes"));
+});
+
+test("unidades opcionais aparecem, mas não contam no percentual da fase", () => {
+  const f01 = services.getTrail().nodes.find((n) => n.id === "f01");
+  const js10 = f01.items.find((item) => item.id === "js-10");
+  assert.equal(js10.optional, true);
+  assert.equal(f01.items.find((item) => item.id === "js-09").optional, false);
+  for (const item of f01.items.filter((i) => !i.optional))
+    services.markAllMissions(item.unitId);
+  assert.equal(services.getTrail().nodes.find((n) => n.id === "f01").percent, 100);
+});
+
+test("Fase 2 lista as unidades Java e alimenta o slot Java da ficha", () => {
+  const t = services.getTrail();
+  const f02 = t.nodes.find((n) => n.id === "f02");
+  assert.deepEqual(
+    f02.items.filter((i) => i.kind === "unit").map((i) => i.id),
+    ["java-01", "java-02", "java-03"],
+  );
+  assert.ok(f02.items.some((i) => i.kind === "topic"));
+  assert.equal(t.sheet.java.percent, f02.percent);
 });

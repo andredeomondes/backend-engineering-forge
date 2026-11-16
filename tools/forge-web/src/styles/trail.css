@@ -62,14 +62,15 @@
 .trail-legend .lg-current { background: var(--foreground); outline: 1px solid var(--foreground); outline-offset: 1px; }
 .trail-legend .lg-side { border-style: dashed; }
 
-/* Tree: level groups stacked; DSA beside LV1–LV2, Java beside LV3. */
+/* Tree: level groups stacked with DSA alongside the foundations. */
 .trail-tree {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(150px, 200px);
   grid-template-areas:
     "lv1 dsa"
     "lv2 dsa"
-    "lv3 java"
+    "lv3 ."
+    "lv5 ."
     "lv4 .";
   column-gap: 14px;
   padding: 12px;
@@ -80,15 +81,14 @@
 .trail-area-lv3 { grid-area: lv3; }
 .trail-area-lv4 { grid-area: lv4; }
 .trail-area-dsa { grid-area: dsa; align-self: center; }
-.trail-area-java { grid-area: java; align-self: start; padding-top: 22px; }
+.trail-area-lv5 { grid-area: lv5; }
 
 @container (max-width: 520px) {
   .trail-tree {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "lv1" "lv2" "dsa" "lv3" "java" "lv4";
+    grid-template-areas: "lv1" "lv2" "dsa" "lv3" "lv5" "lv4";
     row-gap: 10px;
   }
-  .trail-area-java { padding-top: 0; }
 }
 
 .trail-group { border: 1px solid var(--border); padding: 10px; }
@@ -101,7 +101,16 @@
   font-weight: 400;
 }
 
-.trail-stack { display: grid; margin: 0; padding: 0; list-style: none; }
+.trail-stack { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.trail-stack > li { min-width: 0; }
+.trail-stack .trail-node { height: 100%; }
+.trail-group.is-side .trail-stack { grid-template-columns: minmax(0, 1fr); }
+@container (max-width: 780px) {
+  .trail-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container (max-width: 400px) {
+  .trail-stack { grid-template-columns: minmax(0, 1fr); }
+}
 .trail-arrow { display: block; text-align: center; font-size: 8px; line-height: 1; padding: 5px 0; color: var(--foreground); }
 .trail-arrow-group { padding: 8px 0; }
 
@@ -246,3 +255,4 @@
   }
   .trail-node:hover { transform: none; }
 }
+.trail-optional { margin-left: 6px; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted-foreground); }

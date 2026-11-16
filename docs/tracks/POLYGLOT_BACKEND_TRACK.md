@@ -1,5 +1,9 @@
 # TRILHA PARALELA OPCIONAL — Polyglot Backend Engineering
 
+> Desde 2026-11-13 (ADR 0002) Java + Spring é a trilha **principal** e saiu desta
+> lista. Restam .NET e Go como opcionais. Onde este texto fala em "formação
+> principal em TypeScript", leia "formação principal Java-first".
+
 ## Propósito
 
 Adicionar profundidade em uma segunda stack sem substituir a formação principal
@@ -10,7 +14,6 @@ concluir a Fase 9 antes é recomendado, não obrigatório.
 
 | Opção | Módulos | Estado |
 |---|---:|---|
-| Java + Spring | `JAVA-01`–`JAVA-09` | disponível |
 | C# + .NET | `DOTNET-01`–`DOTNET-09` | disponível |
 | Go | `GO-01`–`GO-09` | disponível |
 
@@ -19,7 +22,6 @@ Nenhuma opção está selecionada.
 ## Comando de mentoria
 
 ```text
-SELECIONAR_TRILHA JAVA
 SELECIONAR_TRILHA DOTNET
 SELECIONAR_TRILHA GO
 ```

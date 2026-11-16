@@ -64,11 +64,11 @@ function buildGear(sheet: TrailData["sheet"], nodes: TrailNode[]): Gear[] {
     {
       slot: "shield",
       skill: "TypeScript",
-      percent: phasePercent(nodes, 2),
+      percent: phasePercent(nodes, 6),
       item: { src: "/rpgui/icons/shield.png", w: 12, h: 12 },
     },
-    { slot: "shoes", skill: "Node.js", percent: phasePercent(nodes, 3) },
-    { slot: "armor", skill: "SQL", percent: phasePercent(nodes, 4) },
+    { slot: "shoes", skill: "Node.js", percent: phasePercent(nodes, 9) },
+    { slot: "armor", skill: "SQL", percent: phasePercent(nodes, 3) },
     {
       slot: "ring",
       skill: "DSA",
@@ -130,7 +130,7 @@ export function CharacterSheet({ sheet, nodes }: Props) {
       <div className="mmo-stats">
         <span className="trail-k">{sheet.className}</span>
         <strong className="mmo-level">
-          {sheet.level.id.toUpperCase()} · {sheet.level.name}
+          {sheet.level.name}
         </strong>
         <div className="mmo-stat-row">
           <span>XP</span>

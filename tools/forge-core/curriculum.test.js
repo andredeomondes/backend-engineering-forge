@@ -19,11 +19,38 @@ test("currículo descobre as unidades preparadas", () => {
   assert.equal(units.filter((unit) => unit.track === "javascript").length, 27);
   assert.equal(units.filter((unit) => unit.track === "dsa").length, 1);
   assert.equal(units.filter((unit) => unit.track === "sql").length, 8);
+  assert.equal(units.filter((unit) => unit.track === "java").length, 3);
+});
+
+test("fase de cada trilha segue a cronologia Java-first", () => {
+  const phaseOf = (id) => getUnit(id).phase;
+  assert.equal(phaseOf("js-01"), 1);
+  assert.equal(phaseOf("java-01"), 2);
+  assert.equal(phaseOf("sql-01"), 3);
+  assert.equal(phaseOf("ts-01"), 6);
+  assert.equal(phaseOf("node-01"), 9);
+  assert.equal(phaseOf("dsa-01"), 12);
+});
+
+test("unidade Java aponta para o projeto Maven e extrai os exercícios do README", () => {
+  const unit = getUnit("java-03");
+  assert.equal(unit.javaClass, "Unit03Exercises");
+  assert.match(
+    unit.exercisePath,
+    /13-java-core[\\/]src[\\/]main[\\/]java[\\/]forge[\\/]java[\\/]Unit03Exercises\.java$/,
+  );
+  assert.match(unit.testPath, /Unit03ExercisesTest\.java$/);
+  assert.equal(unit.exercises.length, 10);
+  assert.equal(unit.exercises[0].id, "doubleAll");
+  assert.deepEqual(
+    unit.hints.map((hint) => hint.level),
+    [1, 2, 3],
+  );
 });
 
 test("unidade SQL expõe exercícios, checks e três níveis de dica", () => {
   const unit = getUnit("sql-01");
-  assert.equal(unit.phase, 4);
+  assert.equal(unit.phase, 3);
   assert.match(unit.exercisePath, /exercises\.sql$/);
   assert.match(unit.testPath, /checks\.sql$/);
   assert.ok(unit.exercises.length >= 4);
@@ -49,21 +76,22 @@ test("currículo inclui projeto progressivo", () => {
   assert.equal(projects[0].unlockAfter, "js-06");
 });
 
-test("roadmap expõe as fases sem renumerar a trilha principal", () => {
+test("roadmap expõe as fases 0–27 do catálogo", () => {
   const phases = listPhases();
   assert.equal(phases.length, 28);
   assert.deepEqual(
     phases.map((phase) => phase.number),
     Array.from({ length: 28 }, (_, index) => index),
   );
+  assert.match(phases.find((phase) => phase.number === 2).title, /Java/);
   assert.equal(phases.find((phase) => phase.number === 1)?.status, "available");
 });
 
-test("trilhas poliglotas ficam disponíveis", () => {
+test("trilhas opcionais (.NET e Go) ficam disponíveis; Java é principal", () => {
   const tracks = listPolyglotTracks();
   assert.deepEqual(
     tracks.map((track) => track.id),
-    ["java", "dotnet", "go"],
+    ["dotnet", "go"],
   );
   assert.ok(tracks.every((track) => track.status === "available"));
 });

@@ -3,6 +3,7 @@ import {
   Braces,
   Check,
   Code2,
+  Coffee,
   Database,
   FolderKanban,
   Compass,
@@ -12,6 +13,7 @@ import {
   TableProperties,
 } from "lucide-react";
 
+import trailContent from "../../../../docs/curriculum/trilha.json";
 import type { DashboardData } from "../types";
 
 type Props = {
@@ -21,10 +23,13 @@ type Props = {
 
 export function ProgressView({ data, onSelect }: Props) {
   const javascript = data.units.filter((unit) => unit.track === "javascript");
+  const java = data.units.filter((unit) => unit.track === "java");
   const typescript = data.units.filter((unit) => unit.track === "typescript");
   const node = data.units.filter((unit) => unit.track === "node");
   const sql = data.units.filter((unit) => unit.track === "sql");
   const dsa = data.units.filter((unit) => unit.track === "dsa");
+
+  const lastPhase = Math.max(0, ...data.phases.map((phase) => phase.number));
 
   return (
     <div className="page-stack">
@@ -39,28 +44,44 @@ export function ProgressView({ data, onSelect }: Props) {
       <section className="roadmap-section">
         <div className="track-heading">
           <Map size={20} />
-          <div><h3>Fases do Forge</h3><span>0–27 · tudo aberto · o gate vira selo</span></div>
+          <div><h3>Fases do Forge</h3><span>0–{lastPhase} · tudo aberto · o gate vira selo</span></div>
         </div>
         <div className="phase-groups">
-          <PhaseGroup title="Fundamentos" phases={data.phases.filter((phase) => phase.number <= 3)} />
-          <PhaseGroup title="Backend profissional" phases={data.phases.filter((phase) => phase.number >= 4 && phase.number <= 8)} />
-          <PhaseGroup title="Produção e full-stack" phases={data.phases.filter((phase) => phase.number >= 9 && phase.number <= 14)} />
-          <PhaseGroup title="Engenharia sênior" phases={data.phases.filter((phase) => phase.number >= 15)} />
+          {trailContent.levels.map((level) => (
+            <PhaseGroup key={level.id} title={level.name} phases={level.phases.flatMap((number) => data.phases.filter((phase) => phase.number === number))} />
+          ))}
+          <PhaseGroup title="DSA em paralelo" phases={data.phases.filter((phase) => phase.number === 12)} />
         </div>
       </section>
 
       <section className="track-section">
         <div className="track-heading">
           <Code2 size={20} />
-          <div><h3>JavaScript profundo</h3><span>Fase 1</span></div>
+          <div><h3>JavaScript essencial</h3><span>Fase 1</span></div>
         </div>
         <UnitTable units={javascript} currentId={data.currentUnit.id} onSelect={onSelect} />
       </section>
 
       <section className="track-section">
         <div className="track-heading">
+          <Coffee size={20} />
+          <div><h3>Java base</h3><span>Fase 2 · LedgerFlow</span></div>
+        </div>
+        <UnitTable units={java} currentId={data.currentUnit.id} onSelect={onSelect} />
+      </section>
+
+      <section className="track-section">
+        <div className="track-heading">
+          <TableProperties size={20} />
+          <div><h3>SQL e PostgreSQL de verdade</h3><span>Fase 3</span></div>
+        </div>
+        <UnitTable units={sql} currentId={data.currentUnit.id} onSelect={onSelect} />
+      </section>
+
+      <section className="track-section">
+        <div className="track-heading">
           <Braces size={20} />
-          <div><h3>TypeScript profissional</h3><span>Fase 2</span></div>
+          <div><h3>TypeScript (base do React)</h3><span>Fase 6</span></div>
         </div>
         <UnitTable units={typescript} currentId={data.currentUnit.id} onSelect={onSelect} />
       </section>
@@ -68,17 +89,9 @@ export function ProgressView({ data, onSelect }: Props) {
       <section className="track-section">
         <div className="track-heading">
           <Server size={20} />
-          <div><h3>Node.js por baixo dos frameworks</h3><span>Fase 3</span></div>
+          <div><h3>Node.js (base do Express e NestJS)</h3><span>Fase 9</span></div>
         </div>
         <UnitTable units={node} currentId={data.currentUnit.id} onSelect={onSelect} />
-      </section>
-
-      <section className="track-section">
-        <div className="track-heading">
-          <TableProperties size={20} />
-          <div><h3>SQL e PostgreSQL de verdade</h3><span>Fase 4</span></div>
-        </div>
-        <UnitTable units={sql} currentId={data.currentUnit.id} onSelect={onSelect} />
       </section>
 
       <section className="track-section">
@@ -114,7 +127,7 @@ export function ProgressView({ data, onSelect }: Props) {
       <section className="polyglot-section">
         <div className="track-heading">
           <Languages size={20} />
-          <div><h3>Polyglot Backend Engineering</h3><span>Side quest · sugerida a partir da Fase 9</span></div>
+          <div><h3>Trilhas opcionais</h3><span>.NET e Go · a qualquer momento, por escolha</span></div>
         </div>
         <div className="polyglot-list">
           {data.polyglotTracks.map((track) => (
@@ -125,7 +138,6 @@ export function ProgressView({ data, onSelect }: Props) {
             </article>
           ))}
         </div>
-        <p className="track-note">Nenhuma trilha selecionada · futura divisão 70% Forge / 30% especialização</p>
       </section>
     </div>
   );

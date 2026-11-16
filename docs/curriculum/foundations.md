@@ -1,5 +1,10 @@
 # 7. Plano completo por fases
 
+> **Renumeração Java-first (2026-11-13, ADR 0002).** Este documento usa a
+> numeração anterior e continua valendo como referência de conteúdo. A ordem e as
+> fases atuais estão em [`ROADMAP.md`](../../ROADMAP.md), que traz a tabela de
+> equivalência completa. Aqui: Fase 1 continua JS (só essencial), Fase 2 TypeScript → Fase 6, Fase 3 Node → Fase 9. Java base (nova Fase 2) está em [`java-spring.md`](java-spring.md).
+
 As durações são referências, não promessas. Avance por competência.
 
 ---

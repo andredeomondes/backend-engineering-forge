@@ -1,15 +1,15 @@
 ---
 id: phase-04-sql-postgresql
-title: Fase 4 — SQL e PostgreSQL de verdade
-phase: 4
-status: locked
-unlockAfter: node-07
+title: Fase 3 — SQL e PostgreSQL de verdade
+phase: 3
+status: available
+unlockAfter: java-03
 estimatedHours: 64
 ---
 
-# Fase 4 — SQL e PostgreSQL de verdade
+# Fase 3 — SQL e PostgreSQL de verdade
 
-Estado: `BLOQUEADA — libera após o gate da Fase 3`.
+Estado: `disponível`. Numerada como Fase 3 desde a cronologia Java-first (ADR 0002); era a antiga Fase 4.
 
 Esta fase ensina banco relacional antes de ORM. O material está preparado, mas
 não deve competir com a Unidade 5 atual.

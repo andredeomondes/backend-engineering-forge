@@ -6,20 +6,44 @@ import { loadTrailContent, validateTrailContent } from "./trail-content.js";
 const clone = () => structuredClone(loadTrailContent());
 const node = (c, id) => c.nodes.find((n) => n.id === id);
 
-test("trilha cobre fases 0–27 e três blocos Java", () => {
+test("trilha cobre fases 0–27, Java na Fase 2 e DSA paralela na 12", () => {
   const c = loadTrailContent();
-  const phases = c.nodes
-    .filter((n) => n.phase !== null)
-    .map((n) => n.phase)
-    .sort((a, b) => a - b);
+  const phases = c.nodes.map((n) => n.phase).sort((a, b) => a - b);
   assert.deepEqual(
     phases,
     Array.from({ length: 28 }, (_, i) => i),
   );
+  assert.equal(node(c, "f02").units, true);
+  assert.match(node(c, "f02").title, /Java/);
   assert.deepEqual(
-    c.nodes.filter((n) => n.kind === "java").map((n) => n.id),
-    ["java-1", "java-2", "java-3"],
+    c.nodes.filter((n) => n.kind === "dsa").map((n) => n.id),
+    ["f12"],
   );
+});
+
+test("cinco níveis cobrem cada fase principal uma única vez", () => {
+  const { levels, nodes } = loadTrailContent();
+  const phases = nodes.filter((node) => node.kind === "phase").map((node) => node.phase);
+  assert.deepEqual(levels.map((level) => level.id), ["lv1", "lv2", "lv3", "lv5", "lv4"]);
+  const studyOrder = levels.flatMap((level) => level.phases);
+  assert.deepEqual([...studyOrder].sort((a, b) => a - b), phases);
+  assert.deepEqual(studyOrder.slice(0, 9), [0, 1, 6, 3, 9, 26, 2, 4, 5]);
+  assert.ok(studyOrder.indexOf(27) > studyOrder.indexOf(4));
+});
+
+test("fases com unidades são declaradas no conteúdo", () => {
+  const withUnits = loadTrailContent()
+    .nodes.filter((n) => n.units)
+    .map((n) => n.phase);
+  assert.deepEqual(withUnits, [1, 2, 3, 6, 9, 12]);
+});
+
+test("unidades opcionais da Fase 1 existem e não incluem as essenciais", () => {
+  const optional = node(loadTrailContent(), "f01").optionalUnits;
+  assert.equal(optional.length, 10);
+  for (const id of ["js-09", "js-12", "js-13", "js-18", "js-23"]) {
+    assert.ok(!optional.includes(id), `${id} é essencial`);
+  }
 });
 
 test("ids de itens são únicos", () => {
@@ -30,14 +54,14 @@ test("ids de itens são únicos", () => {
 test("ids de itens são slugs curtos de palavras inteiras", () => {
   for (const n of loadTrailContent().nodes)
     for (const i of n.items) {
-      assert.match(i.id, /^(f\d{2}|java)-[a-z0-9]+(-[a-z0-9]+){0,4}$/, i.id);
+      assert.match(i.id, /^f\d{2}-[a-z0-9]+(-[a-z0-9]+){0,4}$/, i.id);
       assert.ok(i.id.length <= 32, `${i.id} tem mais de 32 caracteres`);
     }
 });
 
 test("fases sem unidades têm de 5 a 10 itens", () => {
   for (const n of loadTrailContent().nodes.filter(
-    (n) => n.kind === "phase" && ![0, 1, 2, 3, 4].includes(n.phase),
+    (n) => n.kind === "phase" && !n.units && n.phase !== 0,
   ))
     assert.ok(n.items.length >= 5 && n.items.length <= 10, `fase ${n.phase}`);
 });
@@ -66,9 +90,9 @@ test("validação recusa id de item duplicado entre nós", () => {
 
 test("validação recusa fase ausente", () => {
   const c = clone();
-  c.nodes = c.nodes.filter((n) => n.id !== "f27");
-  c.levels = c.levels.map((l) => ({ ...l, phases: l.phases.filter((p) => p !== 27) }));
-  assert.throws(() => validateTrailContent(c), /fase 27 ausente/);
+  c.nodes = c.nodes.filter((n) => n.id !== "f20");
+  c.levels = c.levels.map((l) => ({ ...l, phases: l.phases.filter((p) => p !== 20) }));
+  assert.throws(() => validateTrailContent(c), /fase 20 ausente/);
 });
 
 test("validação recusa quantidade de itens fora de 5–10", () => {
@@ -86,6 +110,12 @@ test("validação recusa quantidade de itens fora de 5–10", () => {
     () => validateTrailContent(many),
     /f11: precisa de 5–10 itens \(tem 11\)/,
   );
+});
+
+test("validação recusa optionalUnits sem units", () => {
+  const c = clone();
+  node(c, "f05").optionalUnits = ["js-10"];
+  assert.throws(() => validateTrailContent(c), /f05: optionalUnits exige units: true/);
 });
 
 test("validação recusa nível que referencia fase desconhecida", () => {

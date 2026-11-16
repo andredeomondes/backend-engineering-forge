@@ -32,5 +32,6 @@ export const TYPESCRIPT_UNITS_PATH = path.join(
 );
 export const NODE_UNITS_PATH = path.join(WORKSPACE_ROOT, "exercises", "03-node-core");
 export const DSA_UNITS_PATH = path.join(WORKSPACE_ROOT, "exercises", "12-dsa-algorithms");
+export const JAVA_UNITS_PATH = path.join(WORKSPACE_ROOT, "exercises", "13-java-core");
 export const SQL_UNITS_PATH = path.join(WORKSPACE_ROOT, "exercises", "04-sql-postgresql");
 export const PROJECTS_PATH = path.join(WORKSPACE_ROOT, "projects");

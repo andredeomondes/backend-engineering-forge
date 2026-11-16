@@ -690,6 +690,11 @@ transferência de posse atômica e prevenção de venda duplicada/fraude.
 
 # 8. Competências comportamentais de pleno
 
+> **Renumeração Java-first (2026-11-13, ADR 0002).** Este documento usa a
+> numeração anterior e continua valendo como referência de conteúdo. A ordem e as
+> fases atuais estão em [`ROADMAP.md`](../../ROADMAP.md), que traz a tabela de
+> equivalência completa. Aqui: 9 Testes → distribuída (2, 4, 11), 10 Arquitetura → 11, 11 Docker/AWS → 5 e 10, 12 DSA → 12, 13 Full-stack → 6, 14 TicketAtlas → LedgerFlow (4–11).
+
 Inclua tarefas para desenvolver:
 
 - ownership;

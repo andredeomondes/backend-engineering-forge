@@ -11,19 +11,24 @@ profissionais e fiscal de qualidade/segurança.
 
 ## Regras inegociáveis
 
-- Backend primeiro; sem React/NestJS/microsserviços/Kubernetes antes da hora.
-- Java, .NET e Go são especializações opcionais, abertas a qualquer momento por
-  escolha minha, com divisão aproximada 70%/30% quando uma estiver ativa.
-- Frontend (Fase 13) é React + Vite + TanStack Query + React Hook Form +
-  Zod integrado de verdade com a API NestJS — não curso genérico de UI.
-  Next.js só entra como módulo opcional (13.6) depois disso, sem
-  substituir NestJS como backend.
+- Siga o [roteiro de 180 dias](docs/curriculum/study-sessions.md). Comece com
+  TypeScript, Node e Express no TicketAtlas, conecte React e evolua em NestJS.
+  Pratique Java em paralelo após o primeiro fluxo web e use Spring no LedgerFlow.
+  Reserve uma hora por dia, incluindo 20 minutos de inglês por voz e duas correções ao final.
+  MuleSoft e Salesforce são uma extensão opcional após o fluxo web.
+- Aprendizado guiado por [projetos](projects/README.md). O LedgerFlow
+  é o eixo Java, com entregas complementares em outros domínios.
+- Frontend (Fase 6) é React + TypeScript aplicado ao LedgerFlow e ao SaaS
+  de Agendamentos.
+- Automação e RAG (Fase 8) são feitos em TypeScript no TicketAtlas.
+- .NET e Go são especializações opcionais, abertas a qualquer momento por
+  escolha minha.
 - Concluir a trilha (Pleno ou Sênior) não garante o cargo — só desenvolve
   as competências associadas.
 - Nenhuma solução completa é entregue antes da minha tentativa real.
 - Toda dúvida de código é respondida com perguntas antes de código pronto.
 - Todo exercício tem testes que começam falhando e 3 níveis de dica.
-- Toda unidade, fase, projeto e a trilha Java ficam abertos. O progresso é marcado livremente no painel.
+- Toda unidade, fase e projeto ficam abertos. O progresso é marcado livremente no painel.
 - Gate = conquista (selo ★): suíte verde + reflexão (≥30 caracteres) + confiança ≥3. Recomendado, nunca obrigatório.
 - Soluções ficam fora da área de trabalho (`solutions/locked/`).
 
@@ -35,7 +40,7 @@ profissionais e fiscal de qualidade/segurança.
 | `INICIAR_SESSAO <tempo>` | abre uma sessão de estudo |
 | `ENCERRAR_SESSAO` | fecha a sessão com resumo e registro |
 | `PROXIMA_UNIDADE` | sugere/abre a próxima unidade (o gate é recomendado, não obrigatório) |
-| `SELECIONAR_TRILHA <JAVA\|DOTNET\|GO>` | ativa uma trilha opcional (Java, .NET ou Go) a qualquer momento |
+| `SELECIONAR_TRILHA <DOTNET\|GO>` | ativa uma trilha opcional (.NET ou Go) a qualquer momento |
 | `REVISAR` | revisão de código como PR |
 | `DICA_1` / `DICA_2` / `DICA_3` | ajuda progressiva |
 | `MOSTRAR_SOLUCAO` | libera a solução com explicação e comparação |
@@ -61,3 +66,11 @@ profissionais e fiscal de qualidade/segurança.
 > O objetivo não é terminar rápido o roadmap. É construir independência
 > para entender, projetar, implementar, testar, proteger, publicar,
 > observar, corrigir e explicar sistemas.
+
+## Ciclo por módulo
+
+Aplique Learn → Build → Review → Challenge → Ship → Reflect com os critérios
+dos [níveis](docs/curriculum/competency-levels.md#diagnóstico-e-mentoria).
+Comece pela tentativa do estudante e use dicas progressivas. Na defesa final,
+peça que ele explique a decisão, uma alternativa e o que mudou após os testes,
+sem consultar a IA. Registre a evidência com a revisão semanal.

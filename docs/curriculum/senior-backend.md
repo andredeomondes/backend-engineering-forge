@@ -1,5 +1,10 @@
 # PARTE IV — Senior Backend Engineering Track
 
+> **Renumeração Java-first (2026-11-13, ADR 0002).** Este documento usa a
+> numeração anterior e continua valendo como referência de conteúdo. A ordem e as
+> fases atuais estão em [`ROADMAP.md`](../../ROADMAP.md), que traz a tabela de
+> equivalência completa. Aqui: Fases 15–27 viraram 13–25 (subtraia 2). TicketAtlas virou LedgerFlow.
+
 > Recomendado depois da Definição de Pronto da seção 10 (competências técnicas
 > de pleno). Nenhuma fase desta parte fica bloqueada; o gate de pleno é a
 > referência recomendada.

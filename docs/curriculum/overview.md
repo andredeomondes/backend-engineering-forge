@@ -1,5 +1,10 @@
 # Backend Engineering Forge — Formação Backend-First com TypeScript, do iniciante a competências de Sênior
 
+> **Renumeração Java-first (2026-11-13, ADR 0002).** Este documento usa a
+> numeração anterior e continua valendo como referência de conteúdo. A ordem e as
+> fases atuais estão em [`ROADMAP.md`](../../ROADMAP.md), que traz a tabela de
+> equivalência completa. A stack principal agora é Java + Spring; leia "TypeScript-first" como histórico.
+
 > **Como usar:** copie este arquivo inteiro e cole no Codex, Claude Code ou outra IA com acesso ao repositório.  
 > O objetivo é a IA criar e conduzir uma formação prática, com estrutura de pastas, exercícios, testes, projetos, avaliações e revisões de código.
 >
