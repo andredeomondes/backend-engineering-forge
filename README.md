@@ -2,8 +2,9 @@
 
 # Backend Engineering Forge
 
-Formação backend-first, orientada a projetos, com um painel local em estilo RPG
-para acompanhar unidades, testes, dicas e revisões.
+Formação backend-first em Java/Spring e TypeScript, orientada a projetos e com
+engenharia de IA aplicada, com um painel local em estilo RPG para acompanhar
+unidades, testes, dicas e revisões.
 
 ![Java](https://img.shields.io/badge/Java-21+-b07219?logo=openjdk&logoColor=white)
 ![Spring](https://img.shields.io/badge/Spring_Boot-3-6db33f?logo=springboot&logoColor=white)
@@ -12,7 +13,7 @@ para acompanhar unidades, testes, dicas e revisões.
 ![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-8-646cff?logo=vite&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-local-003b57?logo=sqlite&logoColor=white)
-![Testes](https://img.shields.io/badge/suíte_de_sistema-74%2F74-2f9c6e)
+![Testes](https://img.shields.io/badge/suíte_de_sistema-84%2F84-2f9c6e)
 
 ![Dashboard do Forge Web](docs/screenshots/dashboard.png)
 
@@ -43,7 +44,7 @@ para acompanhar unidades, testes, dicas e revisões.
 
 | | | |
 | --- | --- | --- |
-| <img src="docs/assets/icons/book-open.svg" width="20" alt=""> | **Currículo** | 28 fases com TicketAtlas em TypeScript, LedgerFlow em Java/Spring, React web e inglês falado. |
+| <img src="docs/assets/icons/book-open.svg" width="20" alt=""> | **Currículo** | 28 fases com TicketAtlas em TypeScript, LedgerFlow em Java/Spring, React web, [ementa de engenharia de IA](docs/curriculum/ai-engineering.md) e inglês falado. |
 | <img src="docs/assets/icons/flask-conical.svg" width="20" alt=""> | **Exercícios com testes** | Cada unidade tem aula em Markdown, código para implementar e testes que validam (`node --test` para JS/TS, JUnit 5 via Maven para Java). |
 | <img src="docs/assets/icons/terminal.svg" width="20" alt=""> | **Ferramentas locais** | CLI e painel web que registram sessões, rodam testes, liberam dicas, marcam progresso e agendam revisões. |
 
@@ -115,17 +116,19 @@ Regras de progresso:
 
 ## Estado atual
 
-Retrato de 2026-11-13. O estado narrativo oficial fica em
+Retrato de 2026-11-16. O estado narrativo oficial fica em
 [`PROGRESS.md`](PROGRESS.md) e as marcações do painel em `.forge/forge.db`.
 Se este bloco divergir, valem essas fontes.
 
 | Frente | Situação |
 | --- | --- |
 | Fase 0 — Ambiente e fundamentos da Web | Em andamento: repositório, lint, testes e painel prontos; tópicos conceituais pendentes |
-| Fase 1 — JavaScript essencial | Em andamento: unidades 1–8 concluídas, unidade 9 ativa; 17 essenciais, 10 opcionais |
+| Fase 1 — JavaScript essencial | Em andamento: unidades 1–9 concluídas; faltam 8 essenciais (12, 13 e 18–23); 10 opcionais |
 | Fase 2 — Java base | Disponível: 3 unidades prontas (Maven + JUnit 5) |
 | Fase 3 — SQL e PostgreSQL | Disponível: 8/8 unidades e ambiente Docker |
 | Fases 4–11 — LedgerFlow | Catálogo e marcos Java definidos |
+| Fase 8 — Engenharia de IA aplicada | Ementa A0–A8 pronta, com 9 tópicos no painel; unidades com teste serão criadas perto do dia 60 |
+| Fases 26–27 — TicketAtlas | Planejado: primeiro projeto web, com Express, React e evolução em NestJS |
 | Fase 12 — DSA em paralelo | Em andamento: sessão 01 (Big O e arrays) entregue, aguardando tentativa |
 | Project 01 — Order Workbench CLI | Concluído: 12/12 testes, retrospectiva e explicação oral |
 | Project 04 — Marketplace Database Lab | Disponível: material preparado |
@@ -134,9 +137,9 @@ Se este bloco divergir, valem essas fontes.
 Números:
 
 - 54 unidades catalogadas (27 JS, 3 Java, 8 SQL, 8 TS, 7 Node, 1 DSA).
-- 8/51 unidades concluídas; personagem em LV1, Fase 1, XP 3%.
-- Suíte de sistema: 74/74 testes (`npm run test:system`).
-- Autonomia: 83% (baseada no nível de dica revelado).
+- 9/54 unidades concluídas; personagem em LV1, Fase 1, XP 3%.
+- Suíte de sistema: 84/84 testes (`npm run test:system`).
+- Autonomia: 78% (baseada no nível de dica revelado).
 
 ## Como funciona uma unidade
 
@@ -169,7 +172,8 @@ na primeira execução.
 | --- | --- |
 | `npm run forge:web` | painel web local |
 | `npm test` | testes da unidade ativa |
-| `npm run test:unit -- js-02` | testes de uma unidade específica |
+| `npm run test:unit -- js-02` | testes de uma unidade específica (`java-01` roda via Maven) |
+| `mvn -q -f exercises/13-java-core/pom.xml test` | todos os testes Java (Fase 2) |
 | `npm run test:system` | suíte das ferramentas do Forge |
 | `npm run test:dsa` | sessão de DSA |
 | `npm run test:project-01` | Project 01 — Order Workbench CLI |
@@ -192,7 +196,7 @@ Backend Engineering Forge — status
 
 Foco atual: Unidade 9 — map, filter, find, some, every, reduce (js-09)
 Tempo total: 1.3h (75 min)
-Unidades concluídas: 8/51
+Unidades concluídas: 9/54
 ```
 
 | Comando | O que faz |
@@ -215,6 +219,11 @@ O TicketAtlas usa TypeScript, Express, NestJS e React. O LedgerFlow usa
 Java/Spring. Cada dia tem 20 minutos de inglês por voz e um prompt para copiar.
 MuleSoft/Salesforce é uma extensão opcional do TicketAtlas.
 
+A [ementa de engenharia de IA](docs/curriculum/ai-engineering.md) vai do básico ao
+avançado em 9 níveis (A0–A8, cerca de 150 h): LLMs, saída estruturada, RAG, evals,
+MCP, agentes com aprovação humana, segurança e LLMOps. Cada nível entra no
+TicketAtlas (TypeScript) ou no LedgerFlow (Java/Spring AI), sem projeto novo.
+
 Os [cinco níveis de competência](docs/curriculum/competency-levels.md) agrupam
 as fases por evidência. O [catálogo de projetos](projects/README.md) organiza
 as entregas de Java, NestJS, React e GCP. Tabela fase a fase em
@@ -232,7 +241,7 @@ React local (Vite)
     ▼
 API Node/Express ─────── Markdown, missions.json e arquivos de teste
     │
-    ├─────────────── execução permitida de node --test
+    ├─────────────── execução permitida de node --test e do Maven/JUnit (Java)
     │
     ▼
 SQLite local (.forge/forge.db)
@@ -240,15 +249,18 @@ SQLite local (.forge/forge.db)
 
 O executor não aceita caminho vindo do navegador: a unidade é localizada no
 currículo e o teste precisa estar dentro do workspace. O teste de uma
-missão roda com padrão ancorado no nome do exercício. Detalhes em
+missão roda com padrão ancorado no nome do exercício. Nas unidades Java, ele
+chama o Maven em `exercises/13-java-core` e lê o relatório do Surefire. Detalhes em
 [`docs/architecture/forge-web-local.md`](docs/architecture/forge-web-local.md).
 
 ## Estrutura do repositório
 
 ```text
 exercises/      unidades por fase (01-javascript-core, 02-typescript-core,
-                03-node-core, 04-sql-postgresql, 12-dsa-algorithms)
-projects/       projetos progressivos (01-order-workbench-cli, 04-postgres-marketplace-lab)
+                03-node-core, 04-sql-postgresql, 12-dsa-algorithms,
+                13-java-core: projeto Maven com JUnit 5)
+projects/       catálogo de projetos (01-order-workbench-cli, 02-ledgerflow,
+                11-ticketatlas, 04-postgres-marketplace-lab e outros; ver projects/README.md)
 labs/           laboratórios (http, database, node-runtime, queues, security, observability)
 assessments/    gates de fase, code review, debugging, system design, mock interviews
 solutions/      soluções de referência
@@ -265,7 +277,8 @@ Mapa detalhado em [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md).
 | Camada | Tecnologia |
 | --- | --- |
 | Runtime | Node.js 24, ES Modules |
-| Testes | `node --test` |
+| Linguagens dos exercícios | JavaScript, TypeScript, SQL e Java 21+ |
+| Testes | `node --test` (JS/TS) e JUnit 5 com Maven (Java) |
 | API do painel | Express 5 |
 | Interface | React 19, Vite 8, Tailwind CSS 4, Radix UI, lucide-react |
 | Visual | tema próprio, RPGUI, sprites 0x72, fontes Jersey 10 e VT323 |
@@ -277,6 +290,8 @@ Mapa detalhado em [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md).
 
 - [`PROGRESS.md`](PROGRESS.md) — estado narrativo e de mentoria.
 - [`ROADMAP.md`](ROADMAP.md) — fases completas da formação.
+- [`docs/curriculum/ai-engineering.md`](docs/curriculum/ai-engineering.md) — ementa de engenharia de IA.
+- [`docs/adr/`](docs/adr/README.md) — decisões de arquitetura (Java-first, níveis e GCP).
 - [`STUDY_LOG.md`](STUDY_LOG.md) — diário de sessões de estudo.
 - [`SKILLS_MATRIX.md`](SKILLS_MATRIX.md) — estado de cada competência.
 - [`LEARNING_CONTRACT.md`](LEARNING_CONTRACT.md) — regras do método e da mentoria.
